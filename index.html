@@ -16,17 +16,33 @@
    EDITABLE DESIGN TOKENS — change these to rebrand quickly
    ========================================================= */
 :root {
-  --bg: #f5f1ea;          /* warm off-white paper */
-  --ink: #1a1814;         /* near-black ink */
-  --ink-soft: #504a40;    /* body text */
-  --rule: #1a181422;      /* hairline rules */
-  --accent: #b8491c;      /* burnt sienna — single accent color */
+  --bg: #f5f1ea;
+  --ink: #1a1814;
+  --ink-soft: #504a40;
+  --ink-muted: #6b6358;
+  --rule: #1a181422;
+  --accent: #b8491c;
   --accent-soft: #f0d9c8;
+  --surface: rgba(255, 255, 255, 0.45);
   --serif: 'Fraunces', 'Times New Roman', serif;
   --sans: 'Inter Tight', system-ui, sans-serif;
   --mono: 'JetBrains Mono', monospace;
   --max: 1200px;
   --gutter: clamp(1.5rem, 4vw, 3rem);
+
+  /* type scale */
+  --text-xs: 0.8125rem;   /* 13px */
+  --text-sm: 0.9375rem;   /* 15px */
+  --text-base: 1.125rem;  /* 18px */
+  --text-md: 1.25rem;     /* 20px */
+  --text-lg: 1.375rem;    /* 22px */
+  --text-xl: clamp(1.625rem, 2.8vw, 2.125rem);
+  --text-2xl: clamp(2.125rem, 4.2vw, 3.25rem);
+  --text-hero: clamp(2.875rem, 6.5vw, 5.25rem);
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+  --leading-relaxed: 1.75;
+  --space-section: clamp(4.5rem, 11vh, 8rem);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,8 +53,8 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -73,18 +89,18 @@ nav {
   justify-content: space-between;
   align-items: baseline;
   font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
 }
 nav .mark {
   font-family: var(--serif);
-  font-size: 18px;
+  font-size: var(--text-md);
   font-weight: 500;
   letter-spacing: -0.01em;
 }
 nav ul { list-style: none; display: flex; gap: 2rem; }
 nav a {
-  color: var(--ink);
+  color: var(--ink-soft);
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -99,29 +115,30 @@ nav a:hover { color: var(--accent); }
 }
 .hero .meta {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 2rem;
+  color: var(--ink-muted);
+  margin-bottom: 1.75rem;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 .hero .meta::before {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--ink);
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
 }
 .hero h1 {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(3rem, 9vw, 7.5rem);
-  line-height: 0.95;
+  font-size: var(--text-hero);
+  line-height: 1;
   letter-spacing: -0.035em;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   font-variation-settings: "SOFT" 50;
+  max-width: 14ch;
 }
 .hero h1 em {
   font-style: italic;
@@ -131,21 +148,21 @@ nav a:hover { color: var(--accent); }
 .hero .lead {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-  line-height: 1.4;
-  max-width: 42ch;
+  font-size: clamp(1.1875rem, 2vw, 1.5rem);
+  line-height: var(--leading-snug);
+  max-width: 44ch;
   color: var(--ink-soft);
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
-.hero .actions { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; }
+.hero .actions { display: flex; gap: 1.25rem 2rem; flex-wrap: wrap; align-items: center; }
 .hero .actions a {
   color: var(--ink);
   text-decoration: none;
   font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--ink);
+  font-size: var(--text-xs);
+  letter-spacing: 0.05em;
+  padding: 0.55rem 0;
+  border-bottom: 1.5px solid var(--ink);
   transition: all 0.3s;
 }
 .hero .actions a:hover { color: var(--accent); border-color: var(--accent); }
@@ -203,39 +220,40 @@ nav a:hover { color: var(--accent); }
 }
 .photo-caption {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-top: 0.75rem;
-  line-height: 1.5;
+  color: var(--ink-muted);
+  margin-top: 0.875rem;
+  line-height: var(--leading-snug);
 }
 
 /* =========================================================
    SECTION TEMPLATE
    ========================================================= */
-section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule); }
+section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .section-head {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 3rem;
-  margin-bottom: 4rem;
-  align-items: baseline;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  align-items: end;
 }
 .section-head .label {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--accent);
+  font-weight: 500;
 }
 .section-head h2 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 20ch;
+  font-size: var(--text-2xl);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 22ch;
 }
 @media (max-width: 720px) {
   .section-head { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -249,15 +267,15 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   grid-template-columns: 1fr 3fr;
   gap: 3rem;
 }
-.about-grid .side { font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
-.about-grid .side strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; margin-bottom: 0.5rem; }
+.about-grid .side { font-family: var(--mono); font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--ink-soft); }
+.about-grid .side strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--text-xs); margin-bottom: 0.5rem; font-weight: 500; }
 .about-grid .side .block { margin-bottom: 1.75rem; }
 .about-grid .body p {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-  line-height: 1.55;
-  margin-bottom: 1.25rem;
+  font-size: clamp(1.125rem, 1.8vw, 1.4375rem);
+  line-height: var(--leading-relaxed);
+  margin-bottom: 1.35rem;
   color: var(--ink);
 }
 .about-grid .body p:last-child { color: var(--ink-soft); }
@@ -319,41 +337,42 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   display: block;
   font-family: var(--mono);
   font-style: normal;
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--ink-muted);
   margin-top: 1rem;
 }
 .project h3 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin-bottom: 0.5rem;
+  font-size: var(--text-xl);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.65rem;
 }
 .project .role {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
 }
 .project .summary {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
   color: var(--ink-soft);
-  margin-bottom: 2rem;
-  max-width: 55ch;
+  margin-bottom: 1.75rem;
+  max-width: 58ch;
 }
 .project .highlights {
   list-style: none;
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 .project .highlights li {
@@ -361,52 +380,80 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   grid-template-columns: auto 1fr;
   gap: 1rem;
   align-items: start;
-  font-size: 0.96rem;
-  line-height: 1.55;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
   color: var(--ink-soft);
+  padding: 0.85rem 1rem 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
 }
+.project .highlights li:last-child { border-bottom: none; }
 .project .highlights li::before {
   content: '→';
   color: var(--accent);
   font-family: var(--serif);
+  font-size: 1.1em;
+  line-height: 1.2;
+  padding-top: 0.05em;
+}
+.project .highlights li strong {
+  color: var(--ink);
+  font-weight: 500;
 }
 .project .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.625rem;
 }
 .project .tags span {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  padding: 0.35rem 0.75rem;
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  padding: 0.45rem 0.9rem;
   border: 1px solid var(--rule);
   border-radius: 999px;
   color: var(--ink-soft);
-  background: rgba(255,255,255,0.3);
+  background: var(--surface);
 }
 .project-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: var(--ink);
   text-decoration: none;
   font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--ink);
+  font-size: var(--text-xs);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  padding: 0.65rem 1.1rem;
+  border: 1.5px solid var(--ink);
   margin-bottom: 2rem;
-  transition: color 0.3s, border-color 0.3s;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
-.project-link:hover { color: var(--accent); border-color: var(--accent); }
+.project-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.project-panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+}
 .project .usage-label {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--accent);
   margin-bottom: 1rem;
+  font-weight: 500;
 }
-.project .usage { margin-bottom: 2rem; }
+.project .usage { margin-bottom: 0; }
+.project .usage li {
+  border-bottom-color: rgba(26, 24, 20, 0.08);
+  padding-left: 0;
+}
 .project-visual {
   margin: 0 0 2rem;
   max-width: 420px;
@@ -429,35 +476,37 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
 .xp-item:first-child { border-top: none; padding-top: 0; }
 .xp-item .when {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
   text-transform: uppercase;
+  font-weight: 500;
 }
 .xp-item .what h4 {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: 1.4rem;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.25rem;
+  font-size: var(--text-lg);
+  letter-spacing: -0.015em;
+  margin-bottom: 0.35rem;
 }
 .xp-item .what .company {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--text-xs);
   color: var(--accent);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-bottom: 1rem;
   text-transform: uppercase;
+  font-weight: 500;
 }
 .xp-item .what p {
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: var(--leading-relaxed);
 }
 .xp-item .where {
   font-family: var(--mono);
-  font-size: 12px;
-  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
   text-align: right;
 }
 .xp-item--visual {
@@ -485,26 +534,45 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
    ========================================================= */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.skill-block {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 1.75rem 1.5rem;
 }
 .skill-block h4 {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--ink);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 2px solid var(--accent);
+  font-weight: 500;
 }
-.skill-block ul { list-style: none; display: grid; gap: 0.4rem; }
+.skill-block ul { list-style: none; display: grid; gap: 0.55rem; }
 .skill-block li {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 1.05rem;
+  font-size: var(--text-sm);
   color: var(--ink-soft);
+  line-height: var(--leading-snug);
 }
+.skill-block .meta-line {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  line-height: var(--leading-normal);
+}
+.skill-block .meta-line--accent {
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.skill-block .meta-line--wrap { line-height: var(--leading-relaxed); }
 
 /* =========================================================
    CONTACT
@@ -514,31 +582,31 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   font-family: var(--serif);
   font-weight: 300;
   font-style: italic;
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
-  line-height: 1;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.05;
   letter-spacing: -0.025em;
   margin-bottom: 2rem;
-  max-width: 14ch;
+  max-width: 16ch;
 }
 .contact .email {
   display: inline-block;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-size: clamp(1.3125rem, 2.5vw, 1.875rem);
   color: var(--ink);
   text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 0.25rem;
-  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.3rem;
+  margin-bottom: 2.5rem;
   transition: color 0.3s, border-color 0.3s;
 }
 .contact .email:hover { color: var(--accent); border-color: var(--accent); }
 .contact .socials {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 .contact .socials a {
   color: var(--ink);
@@ -552,9 +620,9 @@ footer {
   padding: 2rem 0;
   border-top: 1px solid var(--rule);
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -699,13 +767,15 @@ footer {
           <li><span>Established mandatory proof requirements and conducted a full compliance audit across five products.</span></li>
           <li><span>Delivered a 7-point compliance improvement (85% → 92%) through structured gap analysis and stakeholder reporting.</span></li>
         </ul>
-        <div class="usage-label">How to use it</div>
-        <ul class="highlights usage">
-          <li><span>Fork the repo and fill in <strong>BRANDBOOK.md</strong> with your brand colors, fonts, and logo rules.</span></li>
-          <li><span>Add your logo to <strong>assets/</strong> and sync resolved values in <strong>DESIGN.md</strong>.</span></li>
-          <li><span>Share the guidelines hub and Standards folder with design and engineering as one source of truth.</span></li>
-          <li><span>Point app repos at <strong>DESIGN.md</strong> or <strong>AGENTS.md</strong> so code and AI tools follow the same tokens.</span></li>
-        </ul>
+        <div class="project-panel">
+          <div class="usage-label">How to use it</div>
+          <ul class="highlights usage">
+            <li><span>Fork the repo and fill in <strong>BRANDBOOK.md</strong> with your brand colors, fonts, and logo rules.</span></li>
+            <li><span>Add your logo to <strong>assets/</strong> and sync resolved values in <strong>DESIGN.md</strong>.</span></li>
+            <li><span>Share the guidelines hub and Standards folder with design and engineering as one source of truth.</span></li>
+            <li><span>Point app repos at <strong>DESIGN.md</strong> or <strong>AGENTS.md</strong> so code and AI tools follow the same tokens.</span></li>
+          </ul>
+        </div>
         <div class="tags">
           <span>Notion</span>
           <span>GitHub</span>
@@ -768,9 +838,9 @@ footer {
         <h4>Education</h4>
         <ul>
           <li>M.S. Project Management</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Northeastern University · Expected Dec 2026</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 1rem;">GPA 3.85 / 4.0</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft); line-height: 1.6;">Business Analysis · Strategic Planning · Risk Management · Project Management Fundamentals</li>
+          <li class="meta-line">Northeastern University · Expected Dec 2026</li>
+          <li class="meta-line meta-line--accent">GPA 3.85 / 4.0</li>
+          <li class="meta-line meta-line--wrap">Business Analysis · Strategic Planning · Risk Management · Project Management Fundamentals</li>
         </ul>
       </div>
 
