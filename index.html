@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreyas Shirke — Project Management & Business Analysis Portfolio</title>
+<meta name="description" content="Portfolio of Shreyas Shirke — Project Management graduate student at Northeastern University with a concentration in Business Analysis.">
+
+<!-- Fonts: Fraunces (editorial serif) + Inter Tight (clean sans for body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   EDITABLE DESIGN TOKENS — change these to rebrand quickly
+   ========================================================= */
+:root {
+  --bg: #f5f1ea;          /* warm off-white paper */
+  --ink: #1a1814;         /* near-black ink */
+  --ink-soft: #504a40;    /* body text */
+  --rule: #1a181422;      /* hairline rules */
+  --accent: #b8491c;      /* burnt sienna — single accent color */
+  --accent-soft: #f0d9c8;
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --max: 1200px;
+  --gutter: clamp(1.5rem, 4vw, 3rem);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* subtle paper grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+main, header, section, footer { position: relative; z-index: 2; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+nav {
+  padding: 2rem 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+nav .mark {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+nav ul { list-style: none; display: flex; gap: 2rem; }
+nav a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+nav a:hover { color: var(--accent); }
+@media (max-width: 640px) { nav ul { display: none; } }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  padding: clamp(4rem, 12vh, 9rem) 0 clamp(3rem, 8vh, 6rem);
+}
+.hero .meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero .meta::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin-bottom: 2rem;
+  font-variation-settings: "SOFT" 50;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.hero .lead {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+  max-width: 42ch;
+  color: var(--ink-soft);
+  margin-bottom: 3rem;
+}
+.hero .actions { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; }
+.hero .actions a {
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+  transition: all 0.3s;
+}
+.hero .actions a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* =========================================================
+   SECTION TEMPLATE
+   ========================================================= */
+section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule); }
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  align-items: baseline;
+}
+.section-head .label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.section-head h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+}
+@media (max-width: 720px) {
+  .section-head { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 3rem;
+}
+.about-grid .side { font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
+.about-grid .side strong { display: block; color: var(--ink); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; margin-bottom: 0.5rem; }
+.about-grid .side .block { margin-bottom: 1.75rem; }
+.about-grid .body p {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+.about-grid .body p:last-child { color: var(--ink-soft); }
+@media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   PROJECTS — featured case studies
+   ========================================================= */
+.project {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  padding: 3rem 0;
+  border-top: 1px solid var(--rule);
+}
+.project:first-of-type { border-top: none; padding-top: 0; }
+.project .index {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.9;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+.project .index .date {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+.project h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.5rem;
+}
+.project .role {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.project .summary {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+  max-width: 55ch;
+}
+.project .highlights {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+.project .highlights li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.project .highlights li::before {
+  content: '→';
+  color: var(--accent);
+  font-family: var(--serif);
+}
+.project .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.project .tags span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  background: rgba(255,255,255,0.3);
+}
+@media (max-width: 720px) { .project { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* =========================================================
+   EXPERIENCE
+   ========================================================= */
+.xp { display: grid; gap: 0; }
+.xp-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.xp-item:first-child { border-top: none; padding-top: 0; }
+.xp-item .when {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+.xp-item .what h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.xp-item .what .company {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.xp-item .what p {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.xp-item .where {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: right;
+}
+@media (max-width: 720px) {
+  .xp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .xp-item .where { text-align: left; }
+}
+
+/* =========================================================
+   SKILLS / CERTS
+   ========================================================= */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+}
+.skill-block h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ink);
+}
+.skill-block ul { list-style: none; display: grid; gap: 0.4rem; }
+.skill-block li {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+.contact { padding: clamp(5rem, 12vh, 9rem) 0 6rem; text-align: left; }
+.contact h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  max-width: 14ch;
+}
+.contact .email {
+  display: inline-block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.25rem;
+  margin-bottom: 3rem;
+  transition: color 0.3s, border-color 0.3s;
+}
+.contact .email:hover { color: var(--accent); border-color: var(--accent); }
+.contact .socials {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+.contact .socials a {
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.3s;
+}
+.contact .socials a:hover { color: var(--accent); }
+
+footer {
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   ENTRANCE ANIMATIONS
+   ========================================================= */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero .meta, .hero h1, .hero .lead, .hero .actions {
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.hero .meta { animation-delay: 0.05s; }
+.hero h1 { animation-delay: 0.15s; }
+.hero .lead { animation-delay: 0.35s; }
+.hero .actions { animation-delay: 0.5s; }
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[data-reveal].in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- =================== NAV =================== -->
+  <nav>
+    <div class="mark">Shreyas Shirke</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- =================== HERO =================== -->
+  <header class="hero">
+    <div class="meta">Project Management · Business Analysis · Boston, MA</div>
+    <h1>Translating <em>business need</em> into delivered outcomes.</h1>
+    <p class="lead">
+      Project Management graduate student at Northeastern University, concentrated in Business Analysis. I structure ambiguity into requirements, workflows, and measurable delivery.
+    </p>
+    <div class="actions">
+      <a href="#work">View selected work →</a>
+      <a href="mailto:shirke.sh@northeastern.edu">Get in touch</a>
+      <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </header>
+
+  <!-- =================== ABOUT =================== -->
+  <section id="about">
+    <div class="section-head">
+      <div class="label">01 — About</div>
+      <h2>A performance-driven approach to complex projects.</h2>
+    </div>
+
+    <div class="about-grid" data-reveal>
+      <aside class="side">
+        <div class="block">
+          <strong>Based in</strong>
+          Boston, MA
+        </div>
+        <div class="block">
+          <strong>Focus</strong>
+          BRD documentation, process mapping, UAT, stakeholder management
+        </div>
+        <div class="block">
+          <strong>Work Authorization</strong>
+          F-1 OPT eligible through 2029 (STEM extension eligible)
+        </div>
+        <div class="block">
+          <strong>Currently</strong>
+          Open to full-time BA / PM roles, March 2026
+        </div>
+      </aside>
+
+      <div class="body">
+        <p>
+          I'm a Business Analyst and Project Coordinator with hands-on experience translating complex business needs into actionable specifications — BRDs, process maps, and UAT frameworks that actually get read and used.
+        </p>
+        <p>
+          Before graduate school I spent two years at Powerica Limited coordinating multi-vendor infrastructure portfolios, and prior to that completed a BA internship at Apex Infrastructure Solutions. I'm also a former national-level sprinter and collegiate student-athlete — the discipline and composure that comes with that shapes how I show up in high-pressure delivery environments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== WORK =================== -->
+  <section id="work">
+    <div class="section-head">
+      <div class="label">02 — Selected Work</div>
+      <h2>Three projects. Different domains, same discipline.</h2>
+    </div>
+
+    <!-- Project 1 -->
+    <article class="project" data-reveal>
+      <div class="index">
+        01
+        <span class="date">Jan 2025 — Present</span>
+      </div>
+      <div class="content">
+        <h3>Consumer Insights &amp; Product Trend Strategy Platform</h3>
+        <div class="role">Requirement Gathering</div>
+        <p class="summary">
+          A cross-functional requirements initiative to standardize how the organization captures consumer insights and measures product trend performance.
+        </p>
+        <ul class="highlights">
+          <li><span>Executed surveys and focus sessions with end users and stakeholders, reducing specification gaps by ~20%.</span></li>
+          <li><span>Benchmarked KPI frameworks against industry standards, standardizing metrics terminology across departments.</span></li>
+          <li><span>Validated data quality through systematic reviews, strengthening accuracy of early-stage analytics and insights.</span></li>
+        </ul>
+        <div class="tags">
+          <span>Stakeholder Interviews</span>
+          <span>KPI Benchmarking</span>
+          <span>Data Validation</span>
+          <span>Requirements Gathering</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="project" data-reveal>
+      <div class="index">
+        02
+        <span class="date">Aug 2024 — Dec 2024</span>
+      </div>
+      <div class="content">
+        <h3>Voice-Enabled Travel Booking Experience Redesign</h3>
+        <div class="role">BRD Documentation</div>
+        <p class="summary">
+          A competitive and user-behavior-driven redesign that sized a new voice-booking opportunity and translated it into actionable product requirements.
+        </p>
+        <ul class="highlights">
+          <li><span>Analyzed user-behavior patterns through data review and interviews, converting findings into prioritized product requirements.</span></li>
+          <li><span>Conducted persona-based journey testing across user segments, improving usability alignment by ~20%.</span></li>
+          <li><span>Sized a ~$500K voice-booking opportunity through structured competitive analysis and market research.</span></li>
+        </ul>
+        <div class="tags">
+          <span>BRD</span>
+          <span>User Research</span>
+          <span>Market Sizing</span>
+          <span>Journey Testing</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 3 -->
+    <article class="project" data-reveal>
+      <div class="index">
+        03
+        <span class="date">Nov 2023 — Apr 2024</span>
+      </div>
+      <div class="content">
+        <h3>Generator Installation &amp; Stakeholder Coordination Program</h3>
+        <div class="role">Delivery Assurance</div>
+        <p class="summary">
+          A multi-vendor infrastructure program coordinating engineers, contractors, and suppliers through centralized scheduling and risk oversight.
+        </p>
+        <ul class="highlights">
+          <li><span>Sequenced project tasks and dependencies using MS Project, delivering commissioning phase two weeks ahead of schedule.</span></li>
+          <li><span>Coordinated engineer, contractor, and supplier workflows through centralized tracking, cutting approval times by ~20%.</span></li>
+          <li><span>Monitored risks, timelines, and budgets through weekly reviews, maintaining execution accuracy and transparency.</span></li>
+        </ul>
+        <div class="tags">
+          <span>MS Project</span>
+          <span>Vendor Coordination</span>
+          <span>Risk Monitoring</span>
+          <span>Schedule Management</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- =================== EXPERIENCE =================== -->
+  <section id="experience">
+    <div class="section-head">
+      <div class="label">03 — Experience</div>
+      <h2>Where I've coordinated, analyzed, and delivered.</h2>
+    </div>
+
+    <div class="xp" data-reveal>
+      <div class="xp-item">
+        <div class="when">Oct 2022 — Jul 2024</div>
+        <div class="what">
+          <h4>Project Coordinator</h4>
+          <div class="company">Powerica Limited</div>
+          <p>
+            Drove stakeholder alignment across multiple concurrent projects — cut scope conflicts by 18% through structured coordination checkpoints. Re-engineered vendor workflows to reduce idle workforce time by 12%, built Excel/MS Project dashboards for executive visibility, and implemented SharePoint governance for audit compliance and knowledge continuity.
+          </p>
+        </div>
+        <div class="where">Pune, India</div>
+      </div>
+
+      <div class="xp-item">
+        <div class="when">Jan 2022 — Apr 2022</div>
+        <div class="what">
+          <h4>Business Analyst Intern</h4>
+          <div class="company">Apex Infrastructure Solutions</div>
+          <p>
+            Led requirement discovery sessions that eliminated 22% of operational ambiguities. Designed Visio process maps, authored BRDs translating business needs into technical specifications and acceptance criteria, and streamlined UAT defect tracking — speeding resolution cycles by 30%.
+          </p>
+        </div>
+        <div class="where">Mumbai, India</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== EDUCATION & SKILLS =================== -->
+  <section id="skills">
+    <div class="section-head">
+      <div class="label">04 — Education, Skills &amp; Certifications</div>
+      <h2>Foundations of the craft.</h2>
+    </div>
+
+    <div class="skills-grid" data-reveal>
+
+      <div class="skill-block">
+        <h4>Education</h4>
+        <ul>
+          <li>M.S. Project Management</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Northeastern University · Mar 2026</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 1rem;">GPA 3.75 / 4.0</li>
+          <li>B.Sc. Information Technology</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Mumbai University · Apr 2022</li>
+        </ul>
+      </div>
+
+      <div class="skill-block">
+        <h4>Core Competencies</h4>
+        <ul>
+          <li>Business Analysis</li>
+          <li>Requirements Gathering</li>
+          <li>Stakeholder Management</li>
+          <li>Process Improvement</li>
+          <li>Gap &amp; Root Cause Analysis</li>
+          <li>Risk Management</li>
+        </ul>
+      </div>
+
+      <div class="skill-block">
+        <h4>Technical Skills</h4>
+        <ul>
+          <li>BRD Documentation</li>
+          <li>Process &amp; Workflow Mapping</li>
+          <li>Dashboard Development</li>
+          <li>Data Analysis</li>
+          <li>UAT Coordination</li>
+        </ul>
+      </div>
+
+      <div class="skill-block">
+        <h4>Tools</h4>
+        <ul>
+          <li>MS Project · Primavera</li>
+          <li>Power BI · Excel</li>
+          <li>SharePoint · Visio</li>
+          <li>PowerPoint · Canva</li>
+        </ul>
+      </div>
+
+      <div class="skill-block">
+        <h4>Methodologies</h4>
+        <ul>
+          <li>Waterfall · SDLC</li>
+          <li>Agile Fundamentals</li>
+          <li>Change Control</li>
+          <li>Market Research</li>
+        </ul>
+      </div>
+
+      <div class="skill-block">
+        <h4>Certifications</h4>
+        <ul>
+          <li>Scrum Fundamentals</li>
+          <li>Business Analysis Foundations</li>
+          <li>Microsoft Excel Specialist</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== CONTACT =================== -->
+  <section id="contact" class="contact">
+    <h2>Let's build something worth delivering.</h2>
+    <a class="email" href="mailto:shirke.sh@northeastern.edu">shirke.sh@northeastern.edu</a>
+    <div class="socials">
+      <a href="tel:+18573641539">+1 857-364-1539</a>
+      <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="#">Download Resume ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 Shreyas Shirke</div>
+    <div>Boston, MA · Available March 2026</div>
+  </footer>
+
+</div>
+
+<script>
+// Reveal-on-scroll for sections
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
