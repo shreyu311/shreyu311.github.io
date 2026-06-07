@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shreyas Shirke — Business & Strategy Analysis Portfolio</title>
 <meta name="description" content="Portfolio of Shreyas Shirke — Business and strategy analyst with experience supporting cross-functional initiatives across AI product development and operations.">
+<meta name="author" content="Shreyas Shirke">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://shreyu311.github.io/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shreyu311.github.io/">
+<meta property="og:title" content="Shreyas Shirke — Business & Strategy Analysis Portfolio">
+<meta property="og:description" content="Business and strategy analyst supporting cross-functional AI product initiatives. Requirements, gap analysis, stakeholder reporting, and measurable delivery.">
+<meta property="og:image" content="https://shreyu311.github.io/images/presentation-stakeholder.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shreyas Shirke — Business & Strategy Analysis Portfolio">
+<meta name="twitter:description" content="Business and strategy analyst supporting cross-functional AI product initiatives.">
+<meta name="twitter:image" content="https://shreyu311.github.io/images/presentation-stakeholder.png">
 
 <!-- Fonts: Fraunces (editorial serif) + Inter Tight (clean sans for body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,12 +105,17 @@ nav {
   font-family: var(--mono);
   font-size: var(--text-xs);
   letter-spacing: 0.04em;
+  position: relative;
 }
 nav .mark {
   font-family: var(--serif);
   font-size: var(--text-md);
   font-weight: 500;
   letter-spacing: -0.01em;
+}
+nav .mark a {
+  color: inherit;
+  text-decoration: none;
 }
 nav ul { list-style: none; display: flex; gap: 2rem; }
 nav a {
@@ -105,7 +124,46 @@ nav a {
   transition: color 0.3s;
 }
 nav a:hover { color: var(--accent); }
-@media (max-width: 640px) { nav ul { display: none; } }
+.nav-toggle {
+  display: none;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.nav-toggle:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 640px) {
+  nav { align-items: center; }
+  .nav-toggle { display: block; }
+  nav ul {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 0.5rem 0;
+    z-index: 20;
+    box-shadow: 0 12px 32px rgba(26, 24, 20, 0.08);
+  }
+  nav ul.open { display: flex; }
+  nav ul li { border-top: 1px solid var(--rule); }
+  nav ul li:first-child { border-top: none; }
+  nav ul a {
+    display: block;
+    padding: 0.85rem 1.25rem;
+    color: var(--ink);
+  }
+}
 
 /* =========================================================
    HERO
@@ -227,6 +285,13 @@ nav a:hover { color: var(--accent); }
   margin-top: 0.875rem;
   line-height: var(--leading-snug);
 }
+.photo-caption a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+.photo-caption a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* =========================================================
    SECTION TEMPLATE
@@ -697,15 +762,17 @@ footer {
 <div class="wrap">
 
   <!-- =================== NAV =================== -->
-  <nav>
-    <div class="mark">Shreyas Shirke</div>
-    <ul>
+  <nav id="site-nav-bar">
+    <div class="mark"><a href="#">Shreyas Shirke</a></div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" id="nav-toggle">Menu</button>
+    <ul id="site-nav">
       <li><a href="#about">About</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#beyond">Life</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf" target="_blank" rel="noopener">Resume ↗</a></li>
     </ul>
   </nav>
 
@@ -720,6 +787,7 @@ footer {
         </p>
         <div class="actions">
           <a href="#work">View selected work →</a>
+          <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf" target="_blank" rel="noopener">Download resume ↗</a>
           <a href="mailto:shirke.sh@northeastern.edu">Get in touch</a>
           <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub</a>
@@ -729,7 +797,7 @@ footer {
         <div class="photo-frame">
           <img src="images/presentation-stakeholder.png" alt="Shreyas Shirke presenting a stakeholder engagement strategy flowchart" width="360" height="450" loading="eager">
         </div>
-        <figcaption class="photo-caption">Stakeholder engagement strategy · Northeastern</figcaption>
+        <figcaption class="photo-caption"><a href="#stakeholder-strategy">Stakeholder engagement strategy · Northeastern</a></figcaption>
       </figure>
     </div>
   </header>
@@ -822,6 +890,32 @@ footer {
           <span>Design Tokens</span>
           <span>Gap Analysis</span>
           <span>Compliance Audit</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="project" id="stakeholder-strategy" data-reveal>
+      <div class="index">
+        02
+        <span class="date">Northeastern · Coursework</span>
+      </div>
+      <div class="content">
+        <h3>Stakeholder Engagement Strategy</h3>
+        <div class="role">Strategic Planning &amp; Communication</div>
+        <p class="summary">
+          A structured course-of-action for patient stakeholder engagement during clinical trials — mapping triggers, internal review, regulatory notification, and multi-audience communication through to a modified trial protocol.
+        </p>
+        <ul class="highlights">
+          <li><span>Designed a step-by-step flowchart from side-effect identification through investor, provider, and patient communication.</span></li>
+          <li><span>Balanced transparency and proactive disclosure while keeping the trial on track.</span></li>
+          <li><span>Presented the strategy to classmates, walking through stakeholder sequencing and decision gates.</span></li>
+        </ul>
+        <div class="tags">
+          <span>Stakeholder Management</span>
+          <span>Strategic Planning</span>
+          <span>Process Mapping</span>
+          <span>Presentation</span>
         </div>
       </div>
     </article>
@@ -971,6 +1065,8 @@ footer {
       <a href="tel:+18573641539">+1 857-364-1539</a>
       <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">UI/UX Guidelines ↗</a>
+      <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf" target="_blank" rel="noopener">Resume ↗</a>
     </div>
   </section>
 
@@ -993,6 +1089,25 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
 document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Mobile nav toggle
+const navBar = document.getElementById('site-nav-bar');
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('site-nav');
+
+navToggle.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open);
+  navToggle.textContent = open ? 'Close' : 'Menu';
+});
+
+navMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.textContent = 'Menu';
+  });
+});
 </script>
 
 </body>

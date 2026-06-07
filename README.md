@@ -1,5 +1,7 @@
-﻿# Shreyas Shirke - Portfolio
+﻿# Shreyas Shirke — Portfolio
 
-Project Management and Business Analysis portfolio site.
+Business & strategy analysis portfolio site.
 
 Live site: https://shreyu311.github.io
+
+Resume: [PDF](./resume/Shrey_Resume_Business_Strategy_Analyst.pdf)
