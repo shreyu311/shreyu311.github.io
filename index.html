@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Shreyas Shirke — Business & Strategy Analysis Portfolio</title>
 <meta name="description" content="Portfolio of Shreyas Shirke — Business and strategy analyst with experience supporting cross-functional initiatives across AI product development and operations.">
 <meta name="author" content="Shreyas Shirke">
@@ -61,7 +61,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   background: var(--bg);
@@ -91,8 +95,12 @@ main, header, section, footer { position: relative; z-index: 2; }
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
+
+img, video, svg { max-width: 100%; height: auto; }
+.photo-frame img { width: 100%; height: 100%; max-width: none; }
 
 /* =========================================================
    NAV
@@ -117,7 +125,7 @@ nav .mark a {
   color: inherit;
   text-decoration: none;
 }
-nav ul { list-style: none; display: flex; gap: 2rem; }
+nav ul { list-style: none; display: flex; gap: clamp(1rem, 2vw, 2rem); flex-wrap: wrap; justify-content: flex-end; }
 nav a {
   color: var(--ink-soft);
   text-decoration: none;
@@ -126,6 +134,8 @@ nav a {
 nav a:hover { color: var(--accent); }
 .nav-toggle {
   display: none;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
@@ -133,14 +143,38 @@ nav a:hover { color: var(--accent); }
   color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--rule);
-  padding: 0.5rem 0.85rem;
+  padding: 0.55rem 0.85rem;
+  min-height: 44px;
   cursor: pointer;
   transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
+.nav-toggle-icon {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+  height: 14px;
+}
+.nav-toggle-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-icon span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-icon span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-icon span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
 .nav-toggle:hover { color: var(--accent); border-color: var(--accent); }
-@media (max-width: 640px) {
-  nav { align-items: center; }
-  .nav-toggle { display: block; }
+@media (max-width: 960px) {
+  nav { align-items: center; padding-top: max(1.5rem, env(safe-area-inset-top, 0px)); }
+  .nav-toggle { display: inline-flex; }
   nav ul {
     display: none;
     position: absolute;
@@ -148,21 +182,29 @@ nav a:hover { color: var(--accent); }
     right: 0;
     left: 0;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: 0;
     background: var(--bg);
     border: 1px solid var(--rule);
     padding: 0.5rem 0;
     z-index: 20;
     box-shadow: 0 12px 32px rgba(26, 24, 20, 0.08);
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
   }
   nav ul.open { display: flex; }
-  nav ul li { border-top: 1px solid var(--rule); }
+  nav ul li { border-top: 1px solid var(--rule); width: 100%; }
   nav ul li:first-child { border-top: none; }
   nav ul a {
     display: block;
-    padding: 0.85rem 1.25rem;
+    padding: 0.9rem 1.25rem;
+    min-height: 44px;
     color: var(--ink);
   }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  nav ul { gap: 1.15rem; }
+  nav .mark { font-size: 1.125rem; }
 }
 
 /* =========================================================
@@ -181,6 +223,7 @@ nav a:hover { color: var(--accent); }
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 .hero .meta::before {
   content: '';
@@ -220,6 +263,9 @@ nav a:hover { color: var(--accent); }
   font-size: var(--text-xs);
   letter-spacing: 0.05em;
   padding: 0.55rem 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   border-bottom: 1.5px solid var(--ink);
   transition: all 0.3s;
 }
@@ -237,8 +283,17 @@ nav a:hover { color: var(--accent); }
 .hero-visual .photo-caption { text-align: right; }
 @media (max-width: 900px) {
   .hero-layout { grid-template-columns: 1fr; }
-  .hero-visual { order: -1; max-width: 300px; }
+  .hero-visual { order: -1; max-width: min(300px, 100%); width: 100%; }
   .hero-visual .photo-caption { text-align: left; }
+}
+@media (max-width: 1024px) {
+  .xp-item:not(.xp-item--visual) {
+    grid-template-columns: minmax(120px, 160px) 1fr;
+  }
+  .xp-item:not(.xp-item--visual) .where {
+    grid-column: 2;
+    text-align: left;
+  }
 }
 
 /* =========================================================
@@ -720,7 +775,7 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .contact .socials a:hover { color: var(--accent); }
 
 footer {
-  padding: 2rem 0;
+  padding: 2rem 0 max(2rem, env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--rule);
   font-family: var(--mono);
   font-size: var(--text-xs);
@@ -731,6 +786,92 @@ footer {
   flex-wrap: wrap;
   gap: 1rem;
   text-transform: uppercase;
+}
+
+/* =========================================================
+   RESPONSIVE — phones, tablets, large screens
+   ========================================================= */
+@media (min-width: 1400px) {
+  :root { --max: 1280px; }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --text-base: 1.0625rem;
+    --gutter: clamp(1.125rem, 4vw, 1.5rem);
+    --space-section: clamp(3.5rem, 9vh, 6rem);
+  }
+  .hero h1 { max-width: none; }
+  .hero .lead { max-width: none; }
+  .section-head h2 { max-width: none; }
+  .project .summary { max-width: none; }
+  .life-intro { max-width: none; }
+  .contact h2 { max-width: none; }
+  .contact .email {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+  .project-panel { padding: 1.25rem 1.15rem; }
+  .skill-block { padding: 1.35rem 1.2rem; }
+  .life-item { padding: 1.25rem 1.15rem; }
+  .project .highlights li {
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    padding-right: 0;
+  }
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-hero: clamp(2.25rem, 11vw, 3.25rem);
+    --text-2xl: clamp(1.75rem, 7vw, 2.25rem);
+  }
+  nav .mark { font-size: 1.0625rem; max-width: 55%; line-height: 1.2; }
+  .hero { padding-top: clamp(2.5rem, 8vh, 4rem); }
+  .hero .actions { gap: 0.85rem 1.25rem; }
+  .hero .meta { letter-spacing: 0.1em; }
+  .project .index { font-size: clamp(2.5rem, 12vw, 3.5rem); }
+  .xp-photo { max-width: 100%; width: 100%; }
+  .about-photo { max-width: 100%; width: 100%; }
+  .contact .socials { gap: 1rem 1.5rem; }
+}
+
+@media (max-width: 360px) {
+  :root { --gutter: 1rem; }
+  .project-link { width: 100%; justify-content: center; }
+}
+
+@media (min-width: 721px) and (max-width: 900px) {
+  .about-layout {
+    grid-template-columns: minmax(160px, 200px) 1fr;
+  }
+  .about-layout .about-grid {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1.5fr;
+  }
+  .about-photo {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .life-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero .meta, .hero h1, .hero .lead, .hero .actions, .hero-visual,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .photo-frame img { transition: none; }
 }
 
 /* =========================================================
@@ -764,7 +905,10 @@ footer {
   <!-- =================== NAV =================== -->
   <nav id="site-nav-bar">
     <div class="mark"><a href="#">Shreyas Shirke</a></div>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" id="nav-toggle">Menu</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" id="nav-toggle">
+      <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="nav-toggle-label">Menu</span>
+    </button>
     <ul id="site-nav">
       <li><a href="#about">About</a></li>
       <li><a href="#work">Work</a></li>
@@ -1091,22 +1235,32 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
 // Mobile nav toggle
-const navBar = document.getElementById('site-nav-bar');
 const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('site-nav');
+const navLabel = navToggle.querySelector('.nav-toggle-label');
+
+function closeNav() {
+  navMenu.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  if (navLabel) navLabel.textContent = 'Menu';
+}
 
 navToggle.addEventListener('click', () => {
   const open = navMenu.classList.toggle('open');
   navToggle.setAttribute('aria-expanded', open);
-  navToggle.textContent = open ? 'Close' : 'Menu';
+  if (navLabel) navLabel.textContent = open ? 'Close' : 'Menu';
 });
 
 navMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.textContent = 'Menu';
-  });
+  link.addEventListener('click', closeNav);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeNav();
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 960) closeNav();
 });
 </script>
 
