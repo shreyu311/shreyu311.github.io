@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shreyas Shirke — Project Management & Business Analysis Portfolio</title>
-<meta name="description" content="Portfolio of Shreyas Shirke — Project Management graduate student at Northeastern University with a concentration in Business Analysis.">
+<title>Shreyas Shirke — Business & Strategy Analysis Portfolio</title>
+<meta name="description" content="Portfolio of Shreyas Shirke — Business and strategy analyst with experience supporting cross-functional initiatives across AI product development and operations.">
 
 <!-- Fonts: Fraunces (editorial serif) + Inter Tight (clean sans for body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -150,6 +150,67 @@ nav a:hover { color: var(--accent); }
 }
 .hero .actions a:hover { color: var(--accent); border-color: var(--accent); }
 
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 360px);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
+}
+.hero-copy { min-width: 0; }
+.hero-visual { align-self: stretch; }
+.hero-visual .photo-frame { aspect-ratio: 4/5; }
+.hero-visual .photo-caption { text-align: right; }
+@media (max-width: 900px) {
+  .hero-layout { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; max-width: 300px; }
+  .hero-visual .photo-caption { text-align: left; }
+}
+
+/* =========================================================
+   PHOTOS — warm editorial blend
+   ========================================================= */
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--accent-soft);
+  border: 1px solid var(--rule);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(0.14) contrast(1.03) saturate(0.82) brightness(1.02);
+  transition: filter 0.5s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(245, 241, 234, 0.2) 0%,
+    rgba(184, 73, 28, 0.07) 45%,
+    rgba(26, 24, 20, 0.14) 100%
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.photo-frame:hover img {
+  filter: sepia(0.06) contrast(1.05) saturate(0.92) brightness(1.03);
+  transform: scale(1.015);
+}
+.photo-caption {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
 /* =========================================================
    SECTION TEMPLATE
    ========================================================= */
@@ -200,7 +261,39 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   color: var(--ink);
 }
 .about-grid .body p:last-child { color: var(--ink-soft); }
-@media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) 1fr 2fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+}
+.about-layout .about-grid {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+.about-photo { margin: 0; }
+.about-photo .photo-frame { aspect-ratio: 3/4; }
+@media (max-width: 900px) {
+  .about-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .about-photo {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    max-width: 220px;
+  }
+  .about-layout .about-grid {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .about-photo { grid-row: auto; max-width: 260px; }
+  .about-layout .about-grid { grid-template-columns: 1fr; }
+}
 
 /* =========================================================
    PROJECTS — featured case studies
@@ -292,6 +385,11 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   background: rgba(255,255,255,0.3);
 }
+.project-visual {
+  margin: 0 0 2rem;
+  max-width: 420px;
+}
+.project-visual .photo-frame { aspect-ratio: 16/10; }
 @media (max-width: 720px) { .project { grid-template-columns: 1fr; gap: 1.5rem; } }
 
 /* =========================================================
@@ -340,9 +438,24 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   text-align: right;
 }
+.xp-item--visual {
+  grid-template-columns: 1fr 2fr minmax(150px, 190px) auto;
+}
+.xp-photo {
+  margin: 0;
+  aspect-ratio: 4/5;
+  align-self: start;
+}
+@media (max-width: 900px) {
+  .xp-item--visual { grid-template-columns: 1fr 1fr; }
+  .xp-item--visual .when { grid-column: 1 / -1; }
+  .xp-item--visual .where { text-align: left; }
+  .xp-photo { max-width: 220px; }
+}
 @media (max-width: 720px) {
   .xp-item { grid-template-columns: 1fr; gap: 0.5rem; }
   .xp-item .where { text-align: left; }
+  .xp-item--visual { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
@@ -434,13 +547,14 @@ footer {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero .meta, .hero h1, .hero .lead, .hero .actions {
+.hero .meta, .hero h1, .hero .lead, .hero .actions, .hero-visual {
   animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .hero .meta { animation-delay: 0.05s; }
 .hero h1 { animation-delay: 0.15s; }
 .hero .lead { animation-delay: 0.35s; }
 .hero .actions { animation-delay: 0.5s; }
+.hero-visual { animation-delay: 0.25s; }
 
 [data-reveal] {
   opacity: 0;
@@ -468,15 +582,26 @@ footer {
 
   <!-- =================== HERO =================== -->
   <header class="hero">
-    <div class="meta">Project Management · Business Analysis · Boston, MA</div>
-    <h1>Translating <em>business need</em> into delivered outcomes.</h1>
-    <p class="lead">
-      Project Management graduate student at Northeastern University, concentrated in Business Analysis. I structure ambiguity into requirements, workflows, and measurable delivery.
-    </p>
-    <div class="actions">
-      <a href="#work">View selected work →</a>
-      <a href="mailto:shirke.sh@northeastern.edu">Get in touch</a>
-      <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <div class="meta">Business Strategy · AI Product Ops · Boston, MA</div>
+        <h1>Closing gaps between <em>strategy</em> and delivery.</h1>
+        <p class="lead">
+          Business and strategy analyst with experience supporting cross-functional initiatives across AI product development and operations — skilled in requirements gathering, gap analysis, stakeholder reporting, and driving measurable performance improvements.
+        </p>
+        <div class="actions">
+          <a href="#work">View selected work →</a>
+          <a href="mailto:shirke.sh@northeastern.edu">Get in touch</a>
+          <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <figure class="hero-visual">
+        <div class="photo-frame">
+          <img src="images/presentation-stakeholder.png" alt="Shreyas Shirke presenting a stakeholder engagement strategy flowchart" width="360" height="450" loading="eager">
+        </div>
+        <figcaption class="photo-caption">Stakeholder engagement strategy · Northeastern</figcaption>
+      </figure>
     </div>
   </header>
 
@@ -484,36 +609,45 @@ footer {
   <section id="about">
     <div class="section-head">
       <div class="label">01 — About</div>
-      <h2>A performance-driven approach to complex projects.</h2>
+      <h2>A strategy-driven approach to cross-functional delivery.</h2>
     </div>
 
-    <div class="about-grid" data-reveal>
-      <aside class="side">
-        <div class="block">
-          <strong>Based in</strong>
-          Boston, MA
+    <div class="about-layout" data-reveal>
+      <figure class="about-photo">
+        <div class="photo-frame">
+          <img src="images/about-personal.png" alt="Shreyas Shirke at home with his dog" width="220" height="293" loading="lazy">
         </div>
-        <div class="block">
-          <strong>Focus</strong>
-          BRD documentation, process mapping, UAT, stakeholder management
-        </div>
-        <div class="block">
-          <strong>Work Authorization</strong>
-          F-1 OPT eligible through 2029 (STEM extension eligible)
-        </div>
-        <div class="block">
-          <strong>Currently</strong>
-          Open to full-time BA / PM roles, March 2026
-        </div>
-      </aside>
+        <figcaption class="photo-caption">Off the track · Pune</figcaption>
+      </figure>
 
-      <div class="body">
-        <p>
-          I'm a Business Analyst and Project Coordinator with hands-on experience translating complex business needs into actionable specifications — BRDs, process maps, and UAT frameworks that actually get read and used.
-        </p>
-        <p>
-          Before graduate school I spent two years at Powerica Limited coordinating multi-vendor infrastructure portfolios, and prior to that completed a BA internship at Apex Infrastructure Solutions. I'm also a former national-level sprinter and collegiate student-athlete — the discipline and composure that comes with that shapes how I show up in high-pressure delivery environments.
-        </p>
+      <div class="about-grid">
+        <aside class="side">
+          <div class="block">
+            <strong>Based in</strong>
+            Boston, MA
+          </div>
+          <div class="block">
+            <strong>Focus</strong>
+            BRDs, gap analysis, stakeholder reporting, process improvement, dashboard development
+          </div>
+          <div class="block">
+            <strong>Currently</strong>
+            AI Project Manager Co-op, Aosenuma.ai
+          </div>
+          <div class="block">
+            <strong>Available</strong>
+            Full-time strategy / BA roles, Dec 2026
+          </div>
+        </aside>
+
+        <div class="body">
+          <p>
+            I'm a business and strategy analyst with hands-on experience supporting cross-functional initiatives across AI product development and operations — translating product needs into requirements, prototypes, and measurable delivery outcomes.
+          </p>
+          <p>
+            At Aosenuma.ai I'm coordinating sprint delivery across six parallel AI products while driving compliance audits and a company-wide design system. I'm also a national-level sprinter and Northeastern athlete — the discipline and composure that comes with high-performance sport shapes how I execute in demanding environments.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -522,83 +656,33 @@ footer {
   <section id="work">
     <div class="section-head">
       <div class="label">02 — Selected Work</div>
-      <h2>Three projects. Different domains, same discipline.</h2>
+      <h2>Standards that scale across products.</h2>
     </div>
 
     <!-- Project 1 -->
     <article class="project" data-reveal>
       <div class="index">
         01
-        <span class="date">Jan 2025 — Present</span>
+        <span class="date">Jan 2026 — Jun 2026</span>
       </div>
       <div class="content">
-        <h3>Consumer Insights &amp; Product Trend Strategy Platform</h3>
-        <div class="role">Requirement Gathering</div>
+        <h3>UI/UX Guidelines &amp; Design System (design.md)</h3>
+        <div class="role">Requirements &amp; Compliance</div>
         <p class="summary">
-          A cross-functional requirements initiative to standardize how the organization captures consumer insights and measures product trend performance.
+          A company-wide design system initiative — color tokens, semantic palettes, accessibility rules, and component standards — documented in a machine-readable token file synced across Notion, GitHub, and code.
         </p>
         <ul class="highlights">
-          <li><span>Executed surveys and focus sessions with end users and stakeholders, reducing specification gaps by ~20%.</span></li>
-          <li><span>Benchmarked KPI frameworks against industry standards, standardizing metrics terminology across departments.</span></li>
-          <li><span>Validated data quality through systematic reviews, strengthening accuracy of early-stage analytics and insights.</span></li>
+          <li><span>Defined requirements and standards for a tokenized design system adopted as the single source of truth across all active AI initiatives.</span></li>
+          <li><span>Established mandatory proof requirements and conducted a full compliance audit across five products.</span></li>
+          <li><span>Delivered a 7-point compliance improvement (85% → 92%) through structured gap analysis and stakeholder reporting.</span></li>
         </ul>
         <div class="tags">
-          <span>Stakeholder Interviews</span>
-          <span>KPI Benchmarking</span>
-          <span>Data Validation</span>
-          <span>Requirements Gathering</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- Project 2 -->
-    <article class="project" data-reveal>
-      <div class="index">
-        02
-        <span class="date">Aug 2024 — Dec 2024</span>
-      </div>
-      <div class="content">
-        <h3>Voice-Enabled Travel Booking Experience Redesign</h3>
-        <div class="role">BRD Documentation</div>
-        <p class="summary">
-          A competitive and user-behavior-driven redesign that sized a new voice-booking opportunity and translated it into actionable product requirements.
-        </p>
-        <ul class="highlights">
-          <li><span>Analyzed user-behavior patterns through data review and interviews, converting findings into prioritized product requirements.</span></li>
-          <li><span>Conducted persona-based journey testing across user segments, improving usability alignment by ~20%.</span></li>
-          <li><span>Sized a ~$500K voice-booking opportunity through structured competitive analysis and market research.</span></li>
-        </ul>
-        <div class="tags">
-          <span>BRD</span>
-          <span>User Research</span>
-          <span>Market Sizing</span>
-          <span>Journey Testing</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- Project 3 -->
-    <article class="project" data-reveal>
-      <div class="index">
-        03
-        <span class="date">Nov 2023 — Apr 2024</span>
-      </div>
-      <div class="content">
-        <h3>Generator Installation &amp; Stakeholder Coordination Program</h3>
-        <div class="role">Delivery Assurance</div>
-        <p class="summary">
-          A multi-vendor infrastructure program coordinating engineers, contractors, and suppliers through centralized scheduling and risk oversight.
-        </p>
-        <ul class="highlights">
-          <li><span>Sequenced project tasks and dependencies using MS Project, delivering commissioning phase two weeks ahead of schedule.</span></li>
-          <li><span>Coordinated engineer, contractor, and supplier workflows through centralized tracking, cutting approval times by ~20%.</span></li>
-          <li><span>Monitored risks, timelines, and budgets through weekly reviews, maintaining execution accuracy and transparency.</span></li>
-        </ul>
-        <div class="tags">
-          <span>MS Project</span>
-          <span>Vendor Coordination</span>
-          <span>Risk Monitoring</span>
-          <span>Schedule Management</span>
+          <span>Notion</span>
+          <span>GitHub</span>
+          <span>Figma</span>
+          <span>Design Tokens</span>
+          <span>Gap Analysis</span>
+          <span>Compliance Audit</span>
         </div>
       </div>
     </article>
@@ -608,32 +692,35 @@ footer {
   <section id="experience">
     <div class="section-head">
       <div class="label">03 — Experience</div>
-      <h2>Where I've coordinated, analyzed, and delivered.</h2>
+      <h2>Where I've analyzed, coordinated, and delivered.</h2>
     </div>
 
     <div class="xp" data-reveal>
       <div class="xp-item">
-        <div class="when">Oct 2022 — Jul 2024</div>
+        <div class="when">Jan 2026 — Jun 2026</div>
         <div class="what">
-          <h4>Project Coordinator</h4>
-          <div class="company">Powerica Limited</div>
+          <h4>AI Project Manager (Co-op)</h4>
+          <div class="company">Aosenuma.ai</div>
           <p>
-            Drove stakeholder alignment across multiple concurrent projects — cut scope conflicts by 18% through structured coordination checkpoints. Re-engineered vendor workflows to reduce idle workforce time by 12%, built Excel/MS Project dashboards for executive visibility, and implemented SharePoint governance for audit compliance and knowledge continuity.
+            Coordinated daily standups and sprint tracking for a cross-functional team of 12+ engineers and PMs, maintaining synchronized delivery across six parallel AI products with no milestone gaps. Translated product needs into UI/UX prototypes for the WhatsApp Summary Bot and Stake AI using Stitch (Google) and Cursor, moving both products from requirements into active development within the same sprint. Ran compliance reviews and a structured audit across five products, producing individual audit scorecards and a leadership portfolio summary that closed a 7-point compliance gap. Partnered with senior leadership to define and roll out a company-wide tokenized design system synced across Notion, GitHub, Figma, and code — raising compliance from 85% to 92%.
           </p>
         </div>
-        <div class="where">Pune, India</div>
+        <div class="where"></div>
       </div>
 
-      <div class="xp-item">
-        <div class="when">Jan 2022 — Apr 2022</div>
+      <div class="xp-item xp-item--visual">
+        <div class="when">Sept 2024 — Present</div>
         <div class="what">
-          <h4>Business Analyst Intern</h4>
-          <div class="company">Apex Infrastructure Solutions</div>
+          <h4>Sprinter, Track &amp; Field</h4>
+          <div class="company">Northeastern Club Running (NUCR)</div>
           <p>
-            Led requirement discovery sessions that eliminated 22% of operational ambiguities. Designed Visio process maps, authored BRDs translating business needs into technical specifications and acceptance criteria, and streamlined UAT defect tracking — speeding resolution cycles by 30%.
+            Compete for Northeastern University at regional, city, and state-level track and field competitions, demonstrating discipline, teamwork, and high-performance execution. Support university and community sporting events at Northeastern Athletics Facilities, assisting with event logistics and operations.
           </p>
         </div>
-        <div class="where">Mumbai, India</div>
+        <figure class="xp-photo photo-frame">
+          <img src="images/track-sprint.png" alt="Shreyas Shirke sprinting on an outdoor track" width="190" height="238" loading="lazy">
+        </figure>
+        <div class="where">Boston, MA</div>
       </div>
     </div>
   </section>
@@ -641,7 +728,7 @@ footer {
   <!-- =================== EDUCATION & SKILLS =================== -->
   <section id="skills">
     <div class="section-head">
-      <div class="label">04 — Education, Skills &amp; Certifications</div>
+      <div class="label">04 — Education &amp; Skills</div>
       <h2>Foundations of the craft.</h2>
     </div>
 
@@ -651,10 +738,9 @@ footer {
         <h4>Education</h4>
         <ul>
           <li>M.S. Project Management</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Northeastern University · Mar 2026</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 1rem;">GPA 3.75 / 4.0</li>
-          <li>B.Sc. Information Technology</li>
-          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Mumbai University · Apr 2022</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">Northeastern University · Expected Dec 2026</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 1rem;">GPA 3.85 / 4.0</li>
+          <li style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft); line-height: 1.6;">Business Analysis · Strategic Planning · Risk Management · Project Management Fundamentals</li>
         </ul>
       </div>
 
@@ -662,51 +748,35 @@ footer {
         <h4>Core Competencies</h4>
         <ul>
           <li>Business Analysis</li>
-          <li>Requirements Gathering</li>
+          <li>Requirements Gathering (BRDs)</li>
           <li>Stakeholder Management</li>
           <li>Process Improvement</li>
+          <li>Strategic Planning</li>
           <li>Gap &amp; Root Cause Analysis</li>
-          <li>Risk Management</li>
-        </ul>
-      </div>
-
-      <div class="skill-block">
-        <h4>Technical Skills</h4>
-        <ul>
-          <li>BRD Documentation</li>
-          <li>Process &amp; Workflow Mapping</li>
-          <li>Dashboard Development</li>
+          <li>Process Mapping &amp; Workflow Design</li>
+          <li>UAT · Dashboard Development</li>
           <li>Data Analysis</li>
-          <li>UAT Coordination</li>
-        </ul>
-      </div>
-
-      <div class="skill-block">
-        <h4>Tools</h4>
-        <ul>
-          <li>MS Project · Primavera</li>
-          <li>Power BI · Excel</li>
-          <li>SharePoint · Visio</li>
-          <li>PowerPoint · Canva</li>
         </ul>
       </div>
 
       <div class="skill-block">
         <h4>Methodologies</h4>
         <ul>
-          <li>Waterfall · SDLC</li>
-          <li>Agile Fundamentals</li>
-          <li>Change Control</li>
-          <li>Market Research</li>
+          <li>SDLC · Change Control</li>
+          <li>Sprint Planning</li>
+          <li>Waterfall · RACI</li>
+          <li>OKRs · KPIs</li>
         </ul>
       </div>
 
       <div class="skill-block">
-        <h4>Certifications</h4>
+        <h4>Tools &amp; Platforms</h4>
         <ul>
-          <li>Scrum Fundamentals</li>
-          <li>Business Analysis Foundations</li>
-          <li>Microsoft Excel Specialist</li>
+          <li>MS Excel · MS Project</li>
+          <li>Primavera · SharePoint</li>
+          <li>Notion · Figma</li>
+          <li>MS PowerPoint · Canva</li>
+          <li>Claude Design · Stitch (Google)</li>
         </ul>
       </div>
 
@@ -720,13 +790,13 @@ footer {
     <div class="socials">
       <a href="tel:+18573641539">+1 857-364-1539</a>
       <a href="https://linkedin.com/in/shreyas-shirke" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a href="#">Download Resume ↗</a>
+      <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </section>
 
   <footer>
     <div>© 2026 Shreyas Shirke</div>
-    <div>Boston, MA · Available March 2026</div>
+    <div>Boston, MA · Available Dec 2026</div>
   </footer>
 
 </div>
