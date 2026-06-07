@@ -575,6 +575,44 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .skill-block .meta-line--wrap { line-height: var(--leading-relaxed); }
 
 /* =========================================================
+   BEYOND WORK
+   ========================================================= */
+.life-intro {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-bottom: 2.5rem;
+}
+.life-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.life-item {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 1.5rem 1.4rem;
+}
+.life-item h4 {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.life-item p {
+  font-family: var(--serif);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-soft);
+}
+
+/* =========================================================
    CONTACT
    ========================================================= */
 .contact { padding: clamp(5rem, 12vh, 9rem) 0 6rem; text-align: left; }
@@ -666,6 +704,7 @@ footer {
       <li><a href="#work">Work</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#beyond">Life</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -880,6 +919,47 @@ footer {
         </ul>
       </div>
 
+    </div>
+  </section>
+
+  <!-- =================== BEYOND WORK =================== -->
+  <section id="beyond">
+    <div class="section-head">
+      <div class="label">05 — Beyond Work</div>
+      <h2>Same discipline. Different pace.</h2>
+    </div>
+
+    <div data-reveal>
+      <p class="life-intro">
+        I've been into sports since childhood — that curiosity never really left. Off the clock I stay moving, pay attention to how things perform, and keep routines that balance out the intensity of project work.
+      </p>
+
+      <div class="life-grid">
+        <article class="life-item">
+          <h4>Fitness &amp; sports</h4>
+          <p>I train regularly and love analyzing different sports — tactics, patterns, and what separates good execution from great.</p>
+        </article>
+        <article class="life-item">
+          <h4>Long runs</h4>
+          <p>Miles on the road or trail to reset, build endurance, and think through problems without a screen in front of me.</p>
+        </article>
+        <article class="life-item">
+          <h4>Healthy cooking</h4>
+          <p>Meal prep and cooking clean food — routine and consistency matter here just as much as they do in delivery work.</p>
+        </article>
+        <article class="life-item">
+          <h4>Music</h4>
+          <p>Always on in the background — for focus, recovery, and the transitions between work and everything else.</p>
+        </article>
+        <article class="life-item">
+          <h4>Hikes &amp; photography</h4>
+          <p>Getting out on trails when I can, camera in hand. Nature photography is how I slow down and notice the details.</p>
+        </article>
+        <article class="life-item">
+          <h4>Coffee</h4>
+          <p>Non-negotiable. The one daily ritual that starts every morning before anything else gets done.</p>
+        </article>
+      </div>
     </div>
   </section>
 
