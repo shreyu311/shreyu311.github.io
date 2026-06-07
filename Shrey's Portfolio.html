@@ -385,6 +385,28 @@ section { padding: clamp(4rem, 10vh, 7rem) 0; border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   background: rgba(255,255,255,0.3);
 }
+.project-link {
+  display: inline-block;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 2rem;
+  transition: color 0.3s, border-color 0.3s;
+}
+.project-link:hover { color: var(--accent); border-color: var(--accent); }
+.project .usage-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.project .usage { margin-bottom: 2rem; }
 .project-visual {
   margin: 0 0 2rem;
   max-width: 420px;
@@ -671,10 +693,18 @@ footer {
         <p class="summary">
           A company-wide design system initiative — color tokens, semantic palettes, accessibility rules, and component standards — documented in a machine-readable token file synced across Notion, GitHub, and code.
         </p>
+        <a class="project-link" href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">View on GitHub →</a>
         <ul class="highlights">
           <li><span>Defined requirements and standards for a tokenized design system adopted as the single source of truth across all active AI initiatives.</span></li>
           <li><span>Established mandatory proof requirements and conducted a full compliance audit across five products.</span></li>
           <li><span>Delivered a 7-point compliance improvement (85% → 92%) through structured gap analysis and stakeholder reporting.</span></li>
+        </ul>
+        <div class="usage-label">How to use it</div>
+        <ul class="highlights usage">
+          <li><span>Fork the repo and fill in <strong>BRANDBOOK.md</strong> with your brand colors, fonts, and logo rules.</span></li>
+          <li><span>Add your logo to <strong>assets/</strong> and sync resolved values in <strong>DESIGN.md</strong>.</span></li>
+          <li><span>Share the guidelines hub and Standards folder with design and engineering as one source of truth.</span></li>
+          <li><span>Point app repos at <strong>DESIGN.md</strong> or <strong>AGENTS.md</strong> so code and AI tools follow the same tokens.</span></li>
         </ul>
         <div class="tags">
           <span>Notion</span>
