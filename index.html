@@ -807,6 +807,41 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   font-weight: 500;
 }
 .life-item p { line-height: var(--leading-normal); }
+.life-athletics {
+  display: grid;
+  grid-template-columns: minmax(160px, 200px) 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.life-athletics .photo-frame { aspect-ratio: 4/5; }
+.life-athletics h3 {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 400;
+  margin-bottom: 0.35rem;
+}
+.life-athletics .life-meta {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.life-athletics p {
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-soft);
+}
+@media (max-width: 600px) {
+  .life-athletics { grid-template-columns: 1fr; }
+  .life-athletics .life-photo { max-width: 220px; }
+}
 
 /* =========================================================
    CONTACT
@@ -1128,18 +1163,27 @@ footer {
         <div class="where"></div>
       </div>
 
-      <div class="xp-item xp-item--visual">
-        <div class="when">Sept 2024 — Present</div>
+      <div class="xp-item">
+        <div class="when">Dec 2025 — Present</div>
         <div class="what">
-          <h4>Sprinter, Track &amp; Field</h4>
-          <div class="company">Northeastern Club Running (NUCR)</div>
+          <h4>Athletics Facilities Staff</h4>
+          <div class="company">Northeastern University Athletics · On-campus</div>
           <p>
-            Compete for Northeastern University at regional, city, and state-level track and field competitions, demonstrating discipline, teamwork, and high-performance execution. Support university and community sporting events at Northeastern Athletics Facilities, assisting with event logistics and operations.
+            Manage game-day operations and event logistics across Northeastern Athletics Facilities — supporting basketball, soccer, baseball, football, ice hockey, and other varsity events. Coordinate game-related activities, assist students and visitors, and help maintain a smooth, organized environment during daily facility operations and live events.
           </p>
         </div>
-        <figure class="xp-photo photo-frame">
-          <img src="images/track-sprint.png" alt="Shreyas Shirke sprinting on an outdoor track" width="190" height="238" loading="lazy">
-        </figure>
+        <div class="where">Boston, MA</div>
+      </div>
+
+      <div class="xp-item">
+        <div class="when">Dec 2025 — Present</div>
+        <div class="what">
+          <h4>RSO Proctor</h4>
+          <div class="company">Northeastern University · On-campus</div>
+          <p>
+            Assist with residence hall operations — supporting student check-ins, monitoring facility access, and helping maintain a safe, welcoming environment for residents and guests across campus housing.
+          </p>
+        </div>
         <div class="where">Boston, MA</div>
       </div>
     </div>
@@ -1269,6 +1313,21 @@ footer {
       <p class="life-intro">
         I've been into sports since childhood — that curiosity never really left. Off the clock I stay moving, pay attention to how things perform, and keep routines that balance out the intensity of project work.
       </p>
+
+      <div class="life-athletics">
+        <figure class="life-photo">
+          <div class="photo-frame">
+            <img src="images/track-sprint.png" alt="Shreyas Shirke sprinting on an outdoor track" width="200" height="250" loading="lazy">
+          </div>
+        </figure>
+        <div>
+          <h3>Sprinter, Track &amp; Field</h3>
+          <div class="life-meta">Northeastern Club Running (NUCR) · Sept 2024 — Present</div>
+          <p>
+            Compete for Northeastern University at regional, city, and state-level track and field competitions — national-level sprinter and collegiate athlete bringing discipline, resilience, and high-performance execution to everything I do.
+          </p>
+        </div>
+      </div>
 
       <div class="life-grid">
         <article class="life-item">
