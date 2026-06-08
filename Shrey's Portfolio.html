@@ -711,6 +711,78 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .skill-block .meta-line--wrap { line-height: var(--leading-relaxed); }
 
 /* =========================================================
+   GRADUATE COURSEWORK
+   ========================================================= */
+.coursework {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--rule);
+}
+.coursework-head {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.coursework-intro {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 2.5rem;
+}
+.coursework-tracks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+.coursework-track h4 {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 2px solid var(--accent);
+  font-weight: 500;
+}
+.course-list {
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+}
+.course-list li {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.course-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.course-list .course-title {
+  display: block;
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  line-height: var(--leading-snug);
+}
+.course-list .course-learn {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-soft);
+}
+
+/* =========================================================
    BEYOND WORK
    ========================================================= */
 .life-intro {
@@ -938,7 +1010,7 @@ footer {
         <div class="photo-frame">
           <img src="images/presentation-stakeholder.png" alt="Shreyas Shirke presenting a stakeholder engagement strategy flowchart" width="360" height="450" loading="eager">
         </div>
-        <figcaption class="photo-caption"><a href="#stakeholder-strategy">Stakeholder engagement strategy · Northeastern</a></figcaption>
+        <figcaption class="photo-caption">Presenting at Northeastern</figcaption>
       </figure>
     </div>
   </header>
@@ -1034,32 +1106,6 @@ footer {
         </div>
       </div>
     </article>
-
-    <!-- Project 2 -->
-    <article class="project" id="stakeholder-strategy" data-reveal>
-      <div class="index">
-        02
-        <span class="date">Northeastern · Coursework</span>
-      </div>
-      <div class="content">
-        <h3>Stakeholder Engagement Strategy</h3>
-        <div class="role">Strategic Planning &amp; Communication</div>
-        <p class="summary">
-          A structured course-of-action for patient stakeholder engagement during clinical trials — mapping triggers, internal review, regulatory notification, and multi-audience communication through to a modified trial protocol.
-        </p>
-        <ul class="highlights">
-          <li><span>Designed a step-by-step flowchart from side-effect identification through investor, provider, and patient communication.</span></li>
-          <li><span>Balanced transparency and proactive disclosure while keeping the trial on track.</span></li>
-          <li><span>Presented the strategy to classmates, walking through stakeholder sequencing and decision gates.</span></li>
-        </ul>
-        <div class="tags">
-          <span>Stakeholder Management</span>
-          <span>Strategic Planning</span>
-          <span>Process Mapping</span>
-          <span>Presentation</span>
-        </div>
-      </div>
-    </article>
   </section>
 
   <!-- =================== EXPERIENCE =================== -->
@@ -1113,8 +1159,8 @@ footer {
         <ul>
           <li>M.S. Project Management</li>
           <li class="meta-line">Northeastern University · Expected Dec 2026</li>
+          <li class="meta-line meta-line--wrap">Graduate STEM Program · Business Analysis Concentration</li>
           <li class="meta-line meta-line--accent">GPA 3.85 / 4.0</li>
-          <li class="meta-line meta-line--wrap">Business Analysis · Strategic Planning · Risk Management · Project Management Fundamentals</li>
         </ul>
       </div>
 
@@ -1154,6 +1200,61 @@ footer {
         </ul>
       </div>
 
+    </div>
+
+    <div class="coursework" data-reveal>
+      <h3 class="coursework-head">Graduate Coursework — STEM Program</h3>
+      <p class="coursework-intro">Northeastern University · M.S. Project Management</p>
+
+      <div class="coursework-tracks">
+        <div class="coursework-track">
+          <h4>Project Management Core</h4>
+          <ul class="course-list">
+            <li>
+              <span class="course-title">PJM 6100 — Foundations of Project Management (3)</span>
+              <span class="course-learn">PM lifecycle, triple constraint, and stakeholder alignment across agile and waterfall delivery.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6120 — Project Scope, Schedule, and Cost Mgt. (3)</span>
+              <span class="course-learn">WBS decomposition, CPM scheduling, budgeting, and earned-value performance tracking.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6200 — Project Risk Management (3)</span>
+              <span class="course-learn">Risk identification, qualitative/quantitative analysis, and mitigation planning.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6250 — Project Finance (3)</span>
+              <span class="course-learn">Cost estimation, financial justification (NPV/ROI), and project budget control.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6300 — Project Quality Management (3)</span>
+              <span class="course-learn">Quality planning, QA/QC standards, and continuous improvement in delivery.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="coursework-track">
+          <h4>Business Analysis Concentration</h4>
+          <ul class="course-list">
+            <li>
+              <span class="course-title">PJM 6610 — Foundations of Project Business Analysis (3)</span>
+              <span class="course-learn">BA role in projects, requirements elicitation, and process modeling.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6650 — Product Requirements Design and Ownership (3)</span>
+              <span class="course-learn">User stories, acceptance criteria, and product backlog ownership.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6660 — Quant. and Qual. Methods for Bus. Analysis (3)</span>
+              <span class="course-learn">Interviews, surveys, and data-driven validation of business requirements.</span>
+            </li>
+            <li>
+              <span class="course-title">PJM 6670 — Advanced Seminar in Business Analysis (3)</span>
+              <span class="course-learn">Applied BA strategy, complex case analysis, and executive-level recommendations.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
