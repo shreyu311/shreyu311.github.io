@@ -150,8 +150,10 @@ footer {
 .about-grid .side,
 .project .highlights li,
 .xp-item .what p,
+.xp-item .what ul li,
 .skill-block li,
-.life-item p {
+.life-item p,
+.life-athletics ul li {
   font-family: var(--font-body);
   font-size: var(--type-body-sm);
   line-height: var(--leading-normal);
@@ -648,6 +650,25 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .xp-item .what p {
   line-height: var(--leading-relaxed);
 }
+.xp-item .what ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.xp-item .what ul li {
+  line-height: var(--leading-relaxed);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.xp-item .what ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
 .xp-item .where {
   color: var(--ink-muted);
   text-align: right;
@@ -832,11 +853,30 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   margin-bottom: 1rem;
   font-weight: 500;
 }
-.life-athletics p {
+.life-athletics p,
+.life-athletics ul {
   font-family: var(--font-body);
   font-size: var(--type-body-sm);
   line-height: var(--leading-relaxed);
   color: var(--ink-soft);
+}
+.life-athletics ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.life-athletics ul li {
+  padding-left: 1.1rem;
+  position: relative;
+}
+.life-athletics ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
 }
 @media (max-width: 600px) {
   .life-athletics { grid-template-columns: 1fr; }
@@ -1031,7 +1071,7 @@ footer {
         <div class="meta">Business Strategy · AI Product Ops · Boston, MA</div>
         <h1>I turn plans into work teams can actually <em>ship</em>.</h1>
         <p class="lead">
-          Business and strategy analyst in Boston. I write BRDs, run gap analyses, and keep engineers, PMs, and leadership on the same page — mostly on AI product teams. Comfortable with requirements gathering, stakeholder reporting, process improvement, and dashboards.
+          Business and strategy analyst in Boston. I write BRDs, run gap analyses, and keep engineers, PMs, and leadership on the same page - mostly on AI product teams. Comfortable with requirements gathering, stakeholder reporting, process improvement, and dashboards.
         </p>
         <div class="actions">
           <a href="#work">View selected work →</a>
@@ -1087,10 +1127,10 @@ footer {
 
         <div class="body">
           <p>
-            I'm a business and strategy analyst finishing my M.S. in Project Management at Northeastern. Most of my recent work is on AI products: gathering requirements, mapping gaps, and helping teams move from idea to shipped feature without losing the thread.
+            At Aosenuma.ai, I coordinate standups and sprint tracking for 18+ contributors across six AI products. I've also supported design system governance and compliance audits, helping improve audit scores from 85% to 92%.
           </p>
           <p>
-            On co-op at Aosenuma.ai I run standups and sprint tracking for 12+ people across six AI products. I also built out our design system docs and ran compliance audits that moved us from 85% to 92%. Outside work I sprint for Northeastern Club Running — training keeps me steady when deadlines stack up.
+            Outside work, I'm part of Northeastern Club Running. Training regularly has reinforced the consistency and resilience I bring to both projects and teams.
           </p>
         </div>
       </div>
@@ -1156,9 +1196,13 @@ footer {
         <div class="what">
           <h4>AI Project Manager (Co-op)</h4>
           <div class="company">Aosenuma.ai</div>
-          <p>
-            Run daily standups and sprint tracking for 12+ engineers and PMs across six AI products. Built UI/UX prototypes for the WhatsApp Summary Bot and Stake AI in Stitch and Cursor — both moved from requirements into dev in the same sprint. Ran compliance reviews on five products, wrote scorecards for each, and put together a leadership summary. Worked with senior leadership to roll out a tokenized design system across Notion, GitHub, Figma, and code. Compliance went from 85% to 92%.
-          </p>
+          <ul>
+            <li>Led daily standups and sprint tracking for 18+ engineers, designers, and PMs across six AI products during a month-long co-op engagement, ensuring alignment on priorities, blockers, and delivery timelines.</li>
+            <li>Designed and validated UI/UX prototypes for multiple AI initiatives, including Stake AI and a WhatsApp Summary Bot, using Stitch (Google), Claude Design, and Cursor. Developed experimental prototypes to evaluate and refine Design.md standards and UI/UX guidelines.</li>
+            <li>Accelerated product delivery by translating requirements into development-ready specifications and moving features from planning to implementation within the same sprint cycle.</li>
+            <li>Conducted compliance and design quality audits across AI product prototypes, created detailed scorecards, identified improvement opportunities, and presented executive-level summaries to leadership.</li>
+            <li>Partnered with senior leadership to implement a tokenized design system spanning Notion, GitHub, Figma, and production code, improving design consistency and increasing compliance scores from 85% to 92%.</li>
+          </ul>
         </div>
         <div class="where"></div>
       </div>
@@ -1168,9 +1212,12 @@ footer {
         <div class="what">
           <h4>Athletics Facilities Staff</h4>
           <div class="company">Northeastern University Athletics · On-campus</div>
-          <p>
-            On-campus job at Northeastern Athletics. I help run game days for basketball, soccer, baseball, football, ice hockey, and other varsity sports — setup, crowd flow, and whatever comes up during the event. Day to day I support facility operations and help students and visitors find their way around.
-          </p>
+          <ul>
+            <li>Supported game-day operations for Northeastern Athletics across basketball, soccer, baseball, football, ice hockey, and other varsity sporting events, ensuring smooth event execution and positive spectator experiences.</li>
+            <li>Coordinated event setup, crowd flow management, and real-time operational support during athletic competitions, adapting quickly to changing event requirements.</li>
+            <li>Assisted with daily facility operations, providing customer service to students, athletes, staff, and visitors while maintaining a safe and organized environment.</li>
+            <li>Served as a primary point of contact for venue guests, resolving inquiries and directing traffic to enhance event efficiency and attendee satisfaction.</li>
+          </ul>
         </div>
         <div class="where">Boston, MA</div>
       </div>
@@ -1180,9 +1227,13 @@ footer {
         <div class="what">
           <h4>RSO Proctor</h4>
           <div class="company">Northeastern University · On-campus</div>
-          <p>
-            On-campus role in residence halls. I help with student check-ins, watch facility access, and make sure residents and guests feel safe and welcome.
-          </p>
+          <ul>
+            <li>Monitored residence hall access and verified resident and guest entry in accordance with university safety and security procedures.</li>
+            <li>Assisted with student check-ins, visitor management, and front-desk operations, helping maintain a safe, welcoming, and supportive residential environment.</li>
+            <li>Served as a first point of contact for residents and guests, answering questions, providing directions, and resolving routine concerns.</li>
+            <li>Supported emergency response and incident reporting procedures while ensuring compliance with university housing policies.</li>
+            <li>Demonstrated strong attention to detail, professionalism, and customer service in a high-traffic student residential setting.</li>
+          </ul>
         </div>
         <div class="where">Boston, MA</div>
       </div>
@@ -1323,16 +1374,19 @@ footer {
         <div>
           <h3>Sprinter, Track &amp; Field</h3>
           <div class="life-meta">Northeastern Club Running (NUCR) · Sept 2024 — Present</div>
-          <p>
-            I sprint for NUCR and compete at regional, city, and state meets. I was a national-level sprinter before grad school. Track taught me how to show up on race day — I carry that into everything else.
-          </p>
+          <ul>
+            <li>Compete in sprint and relay events at regional, state, and national NIRCA competitions.</li>
+            <li>Recognized among the Top 20 Athletes nationwide in NIRCA for sprinting and relay performance.</li>
+            <li>Former national-level sprinter with extensive experience competing in high-pressure championship environments.</li>
+            <li>Demonstrate discipline, resilience, and performance excellence while balancing graduate studies and professional responsibilities.</li>
+          </ul>
         </div>
       </div>
 
       <div class="life-grid">
         <article class="life-item">
           <h4>Fitness &amp; sports</h4>
-          <p>I lift and watch a lot of sports — I like breaking down tactics and what teams do differently under pressure.</p>
+          <p>I enjoy weight training and following sports, with a particular interest in analyzing team strategies and decision-making under pressure.</p>
         </article>
         <article class="life-item">
           <h4>Long runs</h4>
@@ -1340,7 +1394,7 @@ footer {
         </article>
         <article class="life-item">
           <h4>Healthy cooking</h4>
-          <p>I meal prep most weeks. Simple food, same routine — it saves time during busy sprints.</p>
+          <p>I enjoy meal prepping and maintaining consistent routines to stay organized and productive during busy schedules.</p>
         </article>
         <article class="life-item">
           <h4>Music</h4>
@@ -1348,7 +1402,7 @@ footer {
         </article>
         <article class="life-item">
           <h4>Hikes &amp; photography</h4>
-          <p>I hike when I can and bring a camera. Mostly nature shots — it's a good excuse to slow down.</p>
+          <p>I enjoy hiking and nature photography, using both as a way to recharge and appreciate the outdoors.</p>
         </article>
         <article class="life-item">
           <h4>Coffee</h4>
