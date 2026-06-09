@@ -351,6 +351,28 @@ nav a:hover { color: var(--accent); }
 }
 .hero .actions a:hover { color: var(--accent); border-color: var(--accent); }
 
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin: 2.25rem 0 2.5rem;
+}
+.hero-stats .stat .num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--accent);
+}
+.hero-stats .stat .lbl {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+
 .hero-layout {
   display: grid;
   grid-template-columns: 1fr minmax(240px, 360px);
@@ -782,10 +804,10 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .course-list {
   list-style: none;
   display: grid;
-  gap: 1.25rem;
+  gap: 0.75rem;
 }
 .course-list li {
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--rule);
 }
 .course-list li:last-child {
@@ -799,7 +821,6 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   letter-spacing: 0.04em;
   color: var(--ink);
   font-weight: 500;
-  margin-bottom: 0.4rem;
   line-height: var(--leading-snug);
 }
 .course-list .course-learn {
@@ -986,6 +1007,7 @@ footer {
   nav .mark { max-width: 55%; line-height: 1.2; }
   .hero { padding-top: clamp(2.5rem, 8vh, 4rem); }
   .hero .actions { gap: 0.85rem 1.25rem; }
+  .hero-stats { gap: 1.25rem 1.75rem; }
   .hero .meta { letter-spacing: 0.1em; }
   .xp-photo { max-width: 100%; width: 100%; }
   .about-photo { max-width: 100%; width: 100%; }
@@ -1078,8 +1100,14 @@ footer {
         <div class="meta">Business &amp; Strategy Analysis · AI Product Delivery · Boston, MA</div>
         <h1>I turn plans into work teams can actually <em>ship</em>.</h1>
         <p class="lead">
-          Business and strategy analyst based in Boston, completing an M.S. in Project Management at Northeastern University. Experienced in requirements gathering, gap analysis, and cross-functional stakeholder alignment, helping engineers, product managers, and leadership teams deliver AI products from concept to implementation.
+          Business and strategy analyst in Boston — M.S. Project Management at Northeastern. I help cross-functional teams take AI products from requirements to delivery.
         </p>
+        <div class="hero-stats">
+          <div class="stat"><span class="num">6</span><span class="lbl">AI products</span></div>
+          <div class="stat"><span class="num">18+</span><span class="lbl">Team members</span></div>
+          <div class="stat"><span class="num">92%</span><span class="lbl">Compliance score</span></div>
+          <div class="stat"><span class="num">3.85</span><span class="lbl">Graduate GPA</span></div>
+        </div>
         <div class="actions">
           <a href="#work">View selected work →</a>
           <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260609" target="_blank" rel="noopener">Download resume ↗</a>
@@ -1134,10 +1162,10 @@ footer {
 
         <div class="body">
           <p>
-            I specialize in aligning business goals, product strategy, and execution, helping teams make informed decisions and deliver outcomes efficiently. My recent work has focused on AI products, where I gather requirements, conduct gap analyses, and help cross-functional teams move initiatives from planning and validation to successful feature delivery.
+            I align business goals, product strategy, and execution — gathering requirements, running gap analyses, and helping teams move from planning to shipped features.
           </p>
           <p>
-            Outside work, I train with Northeastern Club Running (NUCR). Regular training keeps me steady when deadlines stack up.
+            Outside work, I sprint with Northeastern Club Running. Training keeps me steady when deadlines stack up.
           </p>
         </div>
       </div>
@@ -1161,22 +1189,14 @@ footer {
         <h3>UI/UX Guidelines &amp; Design System (design.md)</h3>
         <div class="role">Requirements &amp; Design Governance</div>
         <p class="summary">
-          Five active AI products were operating with different design standards, creating inconsistencies and rework across teams. I helped define requirements for a unified tokenized design system synchronized across Notion, GitHub, Figma, and code, then led compliance audits and scorecard reviews that provided leadership with clear visibility into adoption gaps and improvement opportunities.
+          Five AI products, five conflicting style guides. I defined requirements for one tokenized design system — synced across Notion, GitHub, Figma, and code — then ran compliance audits with scorecards for leadership.
         </p>
         <a class="project-link" href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">View on GitHub →</a>
         <ul class="highlights">
-          <li><span>Wrote requirements so every active AI product could pull from one design system instead of five separate style guides.</span></li>
-          <li><span>Audited five products, delivered individual scorecards, and presented a summary to leadership.</span></li>
-          <li><span>Closed a 7-point compliance gap (85% → 92%) through gap analysis and stakeholder reporting.</span></li>
+          <li><span>One design system replaced five separate style guides — adopted as the single source of truth.</span></li>
+          <li><span>Audited five products with individual scorecards and an executive summary.</span></li>
+          <li><span>Closed a 7-point compliance gap (85% → 92%).</span></li>
         </ul>
-        <div class="project-panel">
-          <div class="usage-label">Impact</div>
-          <ul class="highlights usage">
-            <li><span>Single source of truth adopted across five AI product initiatives.</span></li>
-            <li><span>Audit scorecards and an executive summary delivered to senior leadership.</span></li>
-            <li><span>Public GitHub repo documents the token framework for design and engineering.</span></li>
-          </ul>
-        </div>
         <div class="tags">
           <span>Notion</span>
           <span>GitHub</span>
@@ -1203,10 +1223,10 @@ footer {
           <h4>AI Project Manager (Co-op)</h4>
           <div class="company">Aosenuma.ai</div>
           <ul>
-            <li>Coordinated daily standups and sprint tracking for 18+ engineers, designers, and PMs across six AI products resulting in consistent alignment on priorities, blockers, and on-time delivery throughout a six-month co-op.</li>
-            <li>Led UI/UX prototype validation for Stake AI and a WhatsApp Summary Bot by Stitch (Google), Claude Design, and Cursor which accelerated product decisions and moved features from planning to implementation within the same sprint cycle.</li>
-            <li>Managed compliance and design quality audits across 6 AI product initiatives producing detailed scorecards, identified improvement opportunities, and delivered executive-level summaries to leadership.</li>
-            <li>Partnered with senior leadership to implement a tokenized design system spanning Notion, GitHub, Figma, and production code to establish a single source of truth and improve design consistency across all active products.</li>
+            <li>Coordinated standups and sprint tracking for 18+ engineers, designers, and PMs across six AI products.</li>
+            <li>Validated UI/UX prototypes for Stake AI and a WhatsApp Summary Bot — features moved from planning to dev in the same sprint.</li>
+            <li>Ran compliance audits with scorecards and executive summaries for leadership.</li>
+            <li>Rolled out a tokenized design system across Notion, GitHub, Figma, and code with senior leadership.</li>
           </ul>
         </div>
         <div class="where">Remote</div>
@@ -1218,10 +1238,8 @@ footer {
           <h4>Athletics Facilities Staff</h4>
           <div class="company">Northeastern University Athletics · On-campus</div>
           <ul>
-            <li>Supported game-day operations for Northeastern Athletics across basketball, soccer, baseball, football, ice hockey, and other varsity sporting events, ensuring smooth event execution and positive spectator experiences.</li>
-            <li>Coordinated event setup, crowd flow management, and real-time operational support during athletic competitions, adapting quickly to changing event requirements.</li>
-            <li>Assisted with daily facility operations, providing customer service to students, athletes, staff, and visitors while maintaining a safe and organized environment.</li>
-            <li>Served as a primary point of contact for venue guests, resolving inquiries and directing traffic to enhance event efficiency and attendee satisfaction.</li>
+            <li>Run game-day operations for varsity events — basketball, soccer, baseball, football, and ice hockey.</li>
+            <li>Coordinate event setup, crowd flow, and daily facility support for students, athletes, and visitors.</li>
           </ul>
         </div>
         <div class="where">Boston, MA</div>
@@ -1233,11 +1251,8 @@ footer {
           <h4>RSO Proctor</h4>
           <div class="company">Northeastern University · On-campus</div>
           <ul>
-            <li>Monitored residence hall access and verified resident and guest entry in accordance with university safety and security procedures.</li>
-            <li>Assisted with student check-ins, visitor management, and front-desk operations, helping maintain a safe, welcoming, and supportive residential environment.</li>
-            <li>Served as a first point of contact for residents and guests, answering questions, providing directions, and resolving routine concerns.</li>
-            <li>Supported emergency response and incident reporting procedures while ensuring compliance with university housing policies.</li>
-            <li>Demonstrated strong attention to detail, professionalism, and customer service in a high-traffic student residential setting.</li>
+            <li>Monitor residence hall access, student check-ins, and visitor management per university safety procedures.</li>
+            <li>First point of contact for residents and guests — questions, directions, and incident reporting.</li>
           </ul>
         </div>
         <div class="where">Boston, MA</div>
@@ -1310,48 +1325,21 @@ footer {
         <div class="coursework-track">
           <h4>Project Management Core</h4>
           <ul class="course-list">
-            <li>
-              <span class="course-title">PJM 6100 — Foundations of Project Management (3)</span>
-              <span class="course-learn">PM lifecycle, triple constraint, stakeholder alignment.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6120 — Project Scope, Schedule, and Cost Mgt. (3)</span>
-              <span class="course-learn">WBS, scheduling, budgeting, earned value.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6200 — Project Risk Management (3)</span>
-              <span class="course-learn">Risk identification, analysis, mitigation planning.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6250 — Project Finance (3)</span>
-              <span class="course-learn">Cost estimation, NPV/ROI, budget control.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6300 — Project Quality Management (3)</span>
-              <span class="course-learn">Quality planning, QA/QC, process improvement.</span>
-            </li>
+            <li><span class="course-title">PJM 6100 — Foundations of Project Management</span></li>
+            <li><span class="course-title">PJM 6120 — Project Scope, Schedule, and Cost Mgt.</span></li>
+            <li><span class="course-title">PJM 6200 — Project Risk Management</span></li>
+            <li><span class="course-title">PJM 6250 — Project Finance</span></li>
+            <li><span class="course-title">PJM 6300 — Project Quality Management</span></li>
           </ul>
         </div>
 
         <div class="coursework-track">
           <h4>Business Analysis Concentration</h4>
           <ul class="course-list">
-            <li>
-              <span class="course-title">PJM 6610 — Foundations of Project Business Analysis (3)</span>
-              <span class="course-learn">BA role, requirements elicitation, process modeling.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6650 — Product Requirements Design and Ownership (3)</span>
-              <span class="course-learn">User stories, acceptance criteria, backlog ownership.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6660 — Quant. and Qual. Methods for Bus. Analysis (3)</span>
-              <span class="course-learn">Interviews, surveys, requirements validation.</span>
-            </li>
-            <li>
-              <span class="course-title">PJM 6670 — Advanced Seminar in Business Analysis (3)</span>
-              <span class="course-learn">Applied BA cases and leadership presentations.</span>
-            </li>
+            <li><span class="course-title">PJM 6610 — Foundations of Project Business Analysis</span></li>
+            <li><span class="course-title">PJM 6650 — Product Requirements Design and Ownership</span></li>
+            <li><span class="course-title">PJM 6660 — Quant. and Qual. Methods for Bus. Analysis</span></li>
+            <li><span class="course-title">PJM 6670 — Advanced Seminar in Business Analysis</span></li>
           </ul>
         </div>
       </div>
@@ -1380,10 +1368,8 @@ footer {
           <h3>Sprinter, Track &amp; Field</h3>
           <div class="life-meta">Northeastern Club Running (NUCR) · Sept 2024 — Present</div>
           <ul>
-            <li>Compete in sprint and relay events at regional, state, and national NIRCA (club collegiate running) meets.</li>
-            <li>Ranked among the Top 20 athletes in NIRCA for sprinting and relay performance.</li>
-            <li>Competed in sprint events in India before grad school; now train and race with NUCR while balancing coursework and work.</li>
-            <li>Stay consistent through a regular training schedule alongside graduate studies and professional commitments.</li>
+            <li>Compete in sprint and relay events at regional, state, and national NIRCA meets — ranked Top 20 in NIRCA.</li>
+            <li>Sprinted competitively in India before grad school; now balance training with coursework and work.</li>
           </ul>
         </div>
       </div>
