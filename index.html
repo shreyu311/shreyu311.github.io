@@ -52,11 +52,11 @@
   /* unified type scale — one size per role, every section */
   --type-hero: clamp(2.875rem, 6.5vw, 5.25rem);
   --type-h2: clamp(2.125rem, 4.2vw, 3.25rem);
-  --type-h3: clamp(1.625rem, 2.8vw, 2.125rem);
-  --type-lead: clamp(1.125rem, 1.8vw, 1.4375rem);
-  --type-body: 1.125rem;
-  --type-body-sm: 0.9375rem;
-  --type-label: 0.8125rem;
+  --type-h3: clamp(1.75rem, 3vw, 2.25rem);
+  --type-lead: clamp(1.25rem, 2vw, 1.5625rem);
+  --type-body: 1.25rem;
+  --type-body-sm: 1.0625rem;
+  --type-label: 0.875rem;
   --type-index: clamp(3rem, 7vw, 5.5rem);
   --type-email: clamp(1.25rem, 2.2vw, 1.5rem);
   --type-mark: 1.25rem;
@@ -148,15 +148,21 @@ footer {
 
 .type-body-sm,
 .about-grid .side,
-.project .highlights li,
 .xp-item .what p,
-.xp-item .what ul li,
 .skill-block li,
 .life-item p,
 .life-athletics ul li {
   font-family: var(--font-body);
   font-size: var(--type-body-sm);
   line-height: var(--leading-normal);
+  color: var(--ink-soft);
+}
+
+.xp-item .what ul li,
+.project .highlights li {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--leading-relaxed);
   color: var(--ink-soft);
 }
 
@@ -212,6 +218,7 @@ nav .mark a {
 }
 nav ul { list-style: none; display: flex; gap: clamp(1rem, 2vw, 2rem); flex-wrap: wrap; justify-content: flex-end; }
 nav a {
+  font-size: 0.9375rem;
   color: var(--ink-soft);
   text-decoration: none;
   transition: color 0.3s;
@@ -940,7 +947,7 @@ footer {
 
 @media (max-width: 720px) {
   :root {
-    --type-body: 1.0625rem;
+    --type-body: 1.1875rem;
     --gutter: clamp(1.125rem, 4vw, 1.5rem);
     --space-section: clamp(3.5rem, 9vh, 6rem);
   }
@@ -1071,7 +1078,7 @@ footer {
         <div class="meta">Business &amp; Strategy Analysis · AI Product Delivery · Boston, MA</div>
         <h1>I turn plans into work teams can actually <em>ship</em>.</h1>
         <p class="lead">
-          Business and strategy analyst in Boston, finishing my M.S. in Project Management at Northeastern. I write requirements, run gap analyses, and keep engineers, PMs, and leadership aligned — mostly on AI product teams.
+          Business and strategy analyst based in Boston, completing an M.S. in Project Management at Northeastern University. Experienced in requirements gathering, gap analysis, and cross-functional stakeholder alignment, helping engineers, product managers, and leadership teams deliver AI products from concept to implementation.
         </p>
         <div class="actions">
           <a href="#work">View selected work →</a>
@@ -1127,7 +1134,7 @@ footer {
 
         <div class="body">
           <p>
-            I'm a business and strategy analyst finishing my M.S. in Project Management at Northeastern, with a Business Analysis concentration. Most of my recent work is on AI products — gathering requirements, mapping gaps, and helping teams move from planning to shipped features.
+            I specialize in aligning business goals, product strategy, and execution, helping teams make informed decisions and deliver outcomes efficiently. My recent work has focused on AI products, where I gather requirements, conduct gap analyses, and help cross-functional teams move initiatives from planning and validation to successful feature delivery.
           </p>
           <p>
             Outside work, I train with Northeastern Club Running (NUCR). Regular training keeps me steady when deadlines stack up.
@@ -1154,7 +1161,7 @@ footer {
         <h3>UI/UX Guidelines &amp; Design System (design.md)</h3>
         <div class="role">Requirements &amp; Design Governance</div>
         <p class="summary">
-          Five active AI products were each using different style guides — causing rework and inconsistent UI. I helped define requirements for one tokenized design system synced across Notion, GitHub, Figma, and code, then ran compliance audits with scorecards for leadership.
+          Five active AI products were operating with different design standards, creating inconsistencies and rework across teams. I helped define requirements for a unified tokenized design system synchronized across Notion, GitHub, Figma, and code, then led compliance audits and scorecard reviews that provided leadership with clear visibility into adoption gaps and improvement opportunities.
         </p>
         <a class="project-link" href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">View on GitHub →</a>
         <ul class="highlights">
