@@ -351,21 +351,21 @@ nav a:hover { color: var(--accent); }
 }
 .hero .actions a:hover { color: var(--accent); border-color: var(--accent); }
 
-.hero-stats {
+.xp-stats {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(1.5rem, 4vw, 3rem);
-  margin: 2.25rem 0 2.5rem;
+  margin: 1rem 0 1.5rem;
 }
-.hero-stats .stat .num {
+.xp-stats .stat .num {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
   font-weight: 500;
   line-height: 1.1;
   color: var(--accent);
 }
-.hero-stats .stat .lbl {
+.xp-stats .stat .lbl {
   font-family: var(--font-label);
   font-size: var(--type-label);
   text-transform: uppercase;
@@ -1007,7 +1007,7 @@ footer {
   nav .mark { max-width: 55%; line-height: 1.2; }
   .hero { padding-top: clamp(2.5rem, 8vh, 4rem); }
   .hero .actions { gap: 0.85rem 1.25rem; }
-  .hero-stats { gap: 1.25rem 1.75rem; }
+  .xp-stats { gap: 1.25rem 1.75rem; }
   .hero .meta { letter-spacing: 0.1em; }
   .xp-photo { max-width: 100%; width: 100%; }
   .about-photo { max-width: 100%; width: 100%; }
@@ -1102,12 +1102,6 @@ footer {
         <p class="lead">
           Business and strategy analyst in Boston — M.S. Project Management at Northeastern. I help cross-functional teams take AI products from requirements to delivery.
         </p>
-        <div class="hero-stats">
-          <div class="stat"><span class="num">6</span><span class="lbl">AI products</span></div>
-          <div class="stat"><span class="num">18+</span><span class="lbl">Team members</span></div>
-          <div class="stat"><span class="num">92%</span><span class="lbl">Compliance score</span></div>
-          <div class="stat"><span class="num">3.85</span><span class="lbl">Graduate GPA</span></div>
-        </div>
         <div class="actions">
           <a href="#work">View selected work →</a>
           <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260609" target="_blank" rel="noopener">Download resume ↗</a>
@@ -1222,6 +1216,11 @@ footer {
         <div class="what">
           <h4>AI Project Manager (Co-op)</h4>
           <div class="company">Aosenuma.ai</div>
+          <div class="xp-stats">
+            <div class="stat"><span class="num">6</span><span class="lbl">AI products</span></div>
+            <div class="stat"><span class="num">18+</span><span class="lbl">Team members</span></div>
+            <div class="stat"><span class="num">92%</span><span class="lbl">Compliance score</span></div>
+          </div>
           <ul>
             <li>Coordinated standups and sprint tracking for 18+ engineers, designers, and PMs across six AI products.</li>
             <li>Validated UI/UX prototypes for Stake AI and a WhatsApp Summary Bot — features moved from planning to dev in the same sprint.</li>
