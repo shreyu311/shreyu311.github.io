@@ -727,7 +727,7 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
    ========================================================= */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 1.5rem;
 }
 .skill-block {
@@ -801,7 +801,7 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 }
 .coursework-tracks {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 2.5rem;
 }
 .coursework-track h4 {
@@ -854,7 +854,7 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 }
 .life-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.25rem;
 }
 .life-item {
@@ -978,6 +978,27 @@ footer {
    ========================================================= */
 @media (min-width: 1400px) {
   :root { --max: 1280px; }
+}
+
+/* Laptops — slightly tighter section rhythm */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  :root { --space-section: clamp(4.5rem, 11vh, 7rem); }
+}
+
+/* Tablets portrait + small laptops */
+@media (min-width: 721px) and (max-width: 1024px) {
+  .project { grid-template-columns: minmax(110px, 150px) 1fr; gap: 2rem; }
+  .coursework-tracks { gap: 2rem; }
+}
+@media (min-width: 901px) and (max-width: 1024px) {
+  .hero-layout { grid-template-columns: 1fr minmax(220px, 300px); }
+}
+
+/* Phones landscape — keep two columns but compact */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .hero { min-height: auto; padding-top: 2rem; }
+  .hero-layout { grid-template-columns: 1fr minmax(180px, 220px); align-items: center; }
+  .hero-visual { order: 0; }
 }
 
 @media (max-width: 720px) {
