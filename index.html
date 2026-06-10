@@ -759,6 +759,16 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   margin-bottom: 0.5rem;
 }
 .skill-block .meta-line--wrap { line-height: var(--leading-relaxed); }
+.skill-block .skill-points li {
+  padding-left: 1.1rem;
+  position: relative;
+}
+.skill-block .skill-points li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
 .skill-block .edu-divider {
   border-top: 1px solid var(--rule);
   margin: 0.65rem 0;
@@ -1315,7 +1325,7 @@ footer {
 
       <div class="skill-block">
         <h4>Core Competencies</h4>
-        <ul>
+        <ul class="skill-points">
           <li>Business Analysis</li>
           <li>Requirements Gathering (BRDs)</li>
           <li>Stakeholder Management</li>
@@ -1325,22 +1335,15 @@ footer {
           <li>Process Mapping &amp; Workflow Design</li>
           <li>UAT · Dashboard Development</li>
           <li>Data Analysis</li>
-        </ul>
-      </div>
-
-      <div class="skill-block">
-        <h4>Methodologies</h4>
-        <ul>
           <li>SDLC · Change Control</li>
-          <li>Sprint Planning</li>
-          <li>Waterfall · RACI</li>
-          <li>OKRs · KPIs</li>
+          <li>Sprint Planning · Waterfall</li>
+          <li>RACI · OKRs · KPIs</li>
         </ul>
       </div>
 
       <div class="skill-block">
         <h4>Tools &amp; Platforms</h4>
-        <ul>
+        <ul class="skill-points">
           <li>MS Excel · MS Project</li>
           <li>Primavera · SharePoint</li>
           <li>Notion · Figma</li>
