@@ -391,22 +391,54 @@ nav a:hover { color: var(--accent); }
   margin-bottom: 1.25rem;
 }
 .hero-proof {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem 1.25rem;
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--rule);
+  max-width: 28rem;
+}
+.hero-proof li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 0.65rem 0.85rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+}
+.hero-proof li + li:not(.hero-proof-section) {
+  border-top: 1px solid rgba(26, 24, 20, 0.06);
+}
+.hero-proof-section {
+  grid-template-columns: 1fr;
+  padding: 0.85rem 0 0.35rem;
   font-family: var(--font-label);
   font-size: var(--type-label);
-  color: var(--ink-muted);
-  margin-bottom: 2rem;
-  letter-spacing: 0.04em;
-  max-width: 52ch;
-}
-.hero-proof span::before {
-  content: "·";
-  margin-right: 0.45rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--accent);
+  font-weight: 500;
 }
-.hero-proof span:first-child::before { content: none; margin: 0; }
+.hero-proof-section:first-child {
+  padding-top: 0;
+}
+.hero-proof .n {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 400;
+  line-height: 1;
+  text-align: right;
+  color: var(--ink);
+}
+.hero-proof .t {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.04em;
+  line-height: var(--leading-snug);
+  color: var(--ink-muted);
+}
+.hero-proof .t em {
+  font-style: normal;
+  color: var(--ink-soft);
+}
 .hero .actions { display: flex; gap: 1.25rem 2rem; flex-wrap: wrap; align-items: center; }
 .hero .actions a {
   color: var(--ink);
@@ -1239,12 +1271,13 @@ footer {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero .meta, .hero h1, .hero .lead, .hero .actions, .hero-visual {
+.hero .meta, .hero h1, .hero .lead, .hero .hero-proof, .hero .actions, .hero-visual {
   animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .hero .meta { animation-delay: 0.05s; }
 .hero h1 { animation-delay: 0.15s; }
 .hero .lead { animation-delay: 0.35s; }
+.hero .hero-proof { animation-delay: 0.42s; }
 .hero .actions { animation-delay: 0.5s; }
 .hero-visual { animation-delay: 0.25s; }
 
@@ -1291,12 +1324,14 @@ footer {
         <p class="lead">
           I help AI product teams turn messy weekly reporting and design drift into clear requirements, audit-ready deliverables, and status leadership can act on. Currently finishing my co-op at Aosenuma.ai while completing my M.S. at Northeastern.
         </p>
-        <p class="hero-proof">
-          <span>150-entry compliance log</span>
-          <span>7 UI/UX consistency prototypes</span>
-          <span>5 active live projects</span>
-          <span>GPA 3.85</span>
-        </p>
+        <ul class="hero-proof">
+          <li class="hero-proof-section">Co-op · Aosenuma.ai</li>
+          <li><span class="n">150</span><span class="t">RAD compliance log entries</span></li>
+          <li><span class="n">7</span><span class="t">UI/UX consistency prototypes <em>(UI-only, not live launches)</em></span></li>
+          <li><span class="n">5</span><span class="t">Active live projects <em>(7 at co-op start; 2 halted)</em></span></li>
+          <li class="hero-proof-section">Education</li>
+          <li><span class="n">3.85</span><span class="t">GPA · M.S. Project Management</span></li>
+        </ul>
         <div class="actions">
           <a href="#work">View selected work →</a>
           <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610g" target="_blank" rel="noopener">Download resume ↗</a>
