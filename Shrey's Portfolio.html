@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Shreyas Shirke — Business Analyst &amp; Project Manager</title>
-<meta name="description" content="Shreyas Shirke — Business Analyst and Project Manager in Boston. Requirements gathering, stakeholder management, process improvement, gap analysis, and AI product delivery. M.S. Project Management, Northeastern University.">
+<meta name="description" content="Shreyas Shirke — Business Analyst and Project Manager in Boston. BRDs, stakeholder reporting, workflow design, gap analysis, and AI product operations. M.S. Project Management, Northeastern University.">
 <meta name="author" content="Shreyas Shirke">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://shreyu311.github.io/">
@@ -37,10 +37,15 @@
     "Project Management",
     "Requirements Gathering",
     "Stakeholder Management",
+    "Stakeholder Reporting",
     "Process Improvement",
     "Gap Analysis",
+    "Workflow Design",
     "Dashboard Reporting",
-    "Agile"
+    "Agile",
+    "SDLC",
+    "Jira",
+    "Confluence"
   ]
 }
 </script>
@@ -48,12 +53,12 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shreyu311.github.io/">
 <meta property="og:title" content="Shreyas Shirke — Business Analyst &amp; Project Manager">
-<meta property="og:description" content="Business Analyst and Project Manager in Boston. Requirements gathering, stakeholder management, process improvement, and cross-functional AI product delivery.">
+<meta property="og:description" content="Business Analyst and Project Manager in Boston. BRDs, stakeholder reporting, workflow design, gap analysis, and cross-functional AI product delivery.">
 <meta property="og:image" content="https://shreyu311.github.io/images/presentation-stakeholder.png">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shreyas Shirke — Business Analyst &amp; Project Manager">
-<meta name="twitter:description" content="Business Analyst and Project Manager in Boston. Requirements gathering, stakeholder management, process improvement, and cross-functional AI product delivery.">
+<meta name="twitter:description" content="Business Analyst and Project Manager in Boston. BRDs, stakeholder reporting, workflow design, gap analysis, and cross-functional AI product delivery.">
 <meta name="twitter:image" content="https://shreyu311.github.io/images/presentation-stakeholder.png">
 
 <!-- Fonts: Fraunces (editorial serif) + Inter Tight (clean sans for body) -->
@@ -383,8 +388,25 @@ nav a:hover { color: var(--accent); }
 }
 .hero .lead {
   max-width: 44ch;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
 }
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.25rem;
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  color: var(--ink-muted);
+  margin-bottom: 2rem;
+  letter-spacing: 0.04em;
+  max-width: 52ch;
+}
+.hero-proof span::before {
+  content: "·";
+  margin-right: 0.45rem;
+  color: var(--accent);
+}
+.hero-proof span:first-child::before { content: none; margin: 0; }
 .hero .actions { display: flex; gap: 1.25rem 2rem; flex-wrap: wrap; align-items: center; }
 .hero .actions a {
   color: var(--ink);
@@ -693,6 +715,60 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 .project .usage li {
   border-bottom-color: rgba(26, 24, 20, 0.08);
   padding-left: 0;
+  list-style: none;
+  margin-bottom: 0.65rem;
+  line-height: var(--leading-relaxed);
+}
+.how-work {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 52rem;
+}
+.how-work-item {
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+.how-work-item strong {
+  display: block;
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.45rem;
+}
+.how-work-item p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: var(--leading-relaxed);
+}
+.life-jobs {
+  margin: 2rem 0 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+.life-jobs h3 {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+.life-job {
+  margin-bottom: 1.25rem;
+}
+.life-job h4 {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.life-job p {
+  color: var(--ink-soft);
+  font-size: var(--type-body-sm);
+  margin: 0;
 }
 .project-visual {
   margin: 0 0 2rem;
@@ -1192,12 +1268,13 @@ footer {
     </button>
     <ul id="site-nav">
       <li><a href="#about">About</a></li>
+      <li><a href="#how-i-work">How I Work</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#beyond">Life</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610c" target="_blank" rel="noopener">Resume ↗</a></li>
+      <li><a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610d" target="_blank" rel="noopener">Resume ↗</a></li>
     </ul>
   </nav>
 
@@ -1205,18 +1282,24 @@ footer {
   <header class="hero">
     <div class="hero-layout">
       <div class="hero-copy">
-        <div class="meta">Business Analyst · Project Manager · AI Product Delivery · Boston, MA</div>
+        <div class="meta">Business Analyst · Project Manager · Boston, MA</div>
         <h1>Shreyas Shirke</h1>
-        <p class="subtitle">Business &amp; Strategy Analyst · M.S. Project Management</p>
+        <p class="subtitle">M.S. Project Management · Business Analysis · AI Product Operations</p>
         <p class="hero-contact">
           Boston, MA · <a href="tel:+18573641539">857-364-1539</a> · <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=shirke.sh%40northeastern.edu" target="_blank" rel="noopener noreferrer">shirke.sh@northeastern.edu</a>
         </p>
         <p class="lead">
-          Business and strategy analyst at Northeastern University. I support cross-functional AI product teams through requirements gathering (BRDs), stakeholder management, process improvement, gap analysis, and dashboard reporting.
+          I help AI product teams turn messy weekly reporting and design drift into clear requirements, audit-ready deliverables, and status leadership can act on. Currently finishing my co-op at Aosenuma.ai while completing my M.S. at Northeastern.
+        </p>
+        <p class="hero-proof">
+          <span>150-entry compliance log</span>
+          <span>168-point UI audit checklist</span>
+          <span>7-project portfolio automation</span>
+          <span>GPA 3.85</span>
         </p>
         <div class="actions">
           <a href="#work">View selected work →</a>
-          <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610c" target="_blank" rel="noopener">Download resume ↗</a>
+          <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610d" target="_blank" rel="noopener">Download resume ↗</a>
           <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=shirke.sh%40northeastern.edu" target="_blank" rel="noopener noreferrer">Get in touch</a>
           <a href="https://www.linkedin.com/in/shreyas-shirke-6085481b9/" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub</a>
@@ -1250,37 +1333,64 @@ footer {
         <aside class="side">
           <div class="block">
             <strong>Based in</strong>
-            Boston, MA
+            Boston, MA · Open to hybrid / remote
           </div>
           <div class="block">
             <strong>Target roles</strong>
-            Business Analyst · Project Manager
+            Business Analyst · Project Manager · AI Product Operations
           </div>
           <div class="block">
-            <strong>Focus</strong>
-            BRDs, gap analysis, stakeholder management, process improvement, dashboard reporting
+            <strong>What I'm known for</strong>
+            Requirements (BRDs), gap analysis, stakeholder reporting, workflow design, UAT support
           </div>
           <div class="block">
-            <strong>Co-op</strong>
-            AI Project Manager, Aosenuma.ai · <br> Jan to Jun 2026
+            <strong>Current co-op</strong>
+            AI Project Manager, Aosenuma.ai · Jan–Jun 2026
           </div>
           <div class="block">
             <strong>Available</strong>
-            Full-time Business Analyst / Project Manager roles, Dec 2026
+            Full-time roles starting Dec 2026
           </div>
         </aside>
 
         <div class="body">
           <p>
-            Business and strategy analyst with experience supporting cross-functional initiatives across AI product development and operations. Skilled in requirements gathering (BRDs), stakeholder management, process improvement, gap analysis, and dashboard reporting.
+            Most weeks at Aosenuma.ai, I'm in three loops: keeping a 150-entry compliance log from going stale, running UI/UX audits against a 168-point checklist across active AI products, and maintaining a Notion agent that rebuilds our weekly Actuals vs Forecast portfolio report from live project data—not last week's deck.
           </p>
           <p>
-            I like taking messy problems and making them actionable - scoped requirements, clear priorities, and follow-through on delivery.
+            That work sits at the intersection of business analysis and project operations. I write and refine Business Requirements Documents, map gaps, run stakeholder reporting for PM cadences, and use Jira-style sprint tracking and Confluence-style documentation patterns even when the stack is Notion and GitHub. I care about one source of truth: when requirements, status, and metrics disagree, teams slow down.
           </p>
           <p>
-            Outside work, I train with Northeastern Club Running. The discipline carries over when deadlines stack up.
+            Before grad school in Boston, I sprinted competitively in India and still train with Northeastern Club Running. Long blocks of focused work—on a track or in a requirements doc—are where I do my best work.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== HOW I WORK =================== -->
+  <section id="how-i-work">
+    <div class="section-head">
+      <div class="label">02 — How I Work</div>
+      <h2>How I work — Analysis to delivery.</h2>
+    </div>
+
+    <div class="how-work" data-reveal>
+      <div class="how-work-item">
+        <strong>Discovery</strong>
+        <p>Stakeholder interviews, BRDs, user stories, and acceptance criteria before build starts.</p>
+      </div>
+      <div class="how-work-item">
+        <strong>Structure</strong>
+        <p>Process maps, RACI, workflow design, and SDLC-aligned documentation in Confluence or Notion.</p>
+      </div>
+      <div class="how-work-item">
+        <strong>Delivery</strong>
+        <p>Jira or equivalent backlog tracking, sprint planning support, UAT coordination, stakeholder reporting.</p>
+      </div>
+      <div class="how-work-item">
+        <strong>Validation</strong>
+        <p>Gap analysis, compliance audits, and dashboards (Excel, Power BI, or Notion) so leadership sees one version of the truth.</p>
       </div>
     </div>
   </section>
@@ -1288,7 +1398,7 @@ footer {
   <!-- =================== WORK =================== -->
   <section id="work">
     <div class="section-head">
-      <div class="label">02 — Selected Work</div>
+      <div class="label">03 — Selected Work</div>
       <h2>Projects — Selected work.</h2>
     </div>
 
@@ -1302,11 +1412,20 @@ footer {
         <h3>UI/UX Guidelines &amp; Design System (design.md)</h3>
         <div class="role">Requirements &amp; Design Governance</div>
         <p class="summary">
-          Architected a company-wide design system covering tokens, color palettes, accessibility guidelines, and component specs - with compliance audits across all AI products, synced across Notion, GitHub, and code.
+          Five AI products were shipping with different UI standards. I helped define requirements for a tokenized design system (UI/UX Guidelines), synced tokens and component rules across Notion, GitHub, and code, and ran compliance audits with scorecards for leadership.
         </p>
         <a class="project-link" href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">View on GitHub →</a>
+        <div class="project-panel">
+          <div class="usage-label">Case study</div>
+          <ul class="usage">
+            <li><strong>Problem:</strong> Inconsistent UI across AI products increased rework and review cycles.</li>
+            <li><strong>My role:</strong> Requirements, audit checklist design, gap analysis, stakeholder scorecards.</li>
+            <li><strong>Outcome:</strong> 85% → 92% compliance; GitHub repo adopted as reference implementation.</li>
+          </ul>
+        </div>
         <ul class="highlights">
-          <li><span>Drove compliance from 85% to 92% via gap analyses, establishing a single source of truth adopted across all active initiatives.</span></li>
+          <li><span>Drove compliance from 85% to 92% via gap analyses; established a single source of truth adopted across 5+ active initiatives.</span></li>
+          <li><span>Audited 5+ products with individual scorecards and an executive summary for leadership review.</span></li>
         </ul>
         <div class="tags">
           <span>Notion</span>
@@ -1326,23 +1445,35 @@ footer {
       </div>
       <div class="content">
         <h3>Portfolio Report Agent (Actuals vs Forecast Automation)</h3>
-        <div class="role">Reporting Automation &amp; Data Integrity</div>
+        <div class="role">Business Analysis · Reporting Automation · Portfolio Operations</div>
         <p class="summary">
-          PMs were rebuilding the same Actuals vs Forecast deck every Monday. I configured a Notion custom agent with a weekly trigger, read access to canonical project databases, and rules that use past reports for formatting only - not live metrics.
+          Every Monday, PMs were manually rebuilding the same Actuals vs Forecast deck—pulling project dates, task counts, and status notes from different Notion databases and reformatting Gantt views by hand. I configured a Notion custom agent with a weekly Monday 8:00 AM trigger, read access to canonical Projects and Tasks databases, and strict rules: reference reports define format only; live metrics always come from source databases.
         </p>
         <div class="project-actions">
           <a class="project-link" href="samples/Portfolio_Actuals_vs_Forecast_June_2026_Redacted.pdf" target="_blank" rel="noopener">View redacted sample report (PDF) ↗</a>
+          <a class="project-link" href="samples/portfolio-report-agent-case-study.md" target="_blank" rel="noopener">View case study outline ↗</a>
+        </div>
+        <div class="project-panel">
+          <div class="usage-label">Case study</div>
+          <ul class="usage">
+            <li><strong>Problem:</strong> Weekly portfolio reporting took ~2.5 hours of manual copy-paste across 7 active projects; numbers often conflicted between decks.</li>
+            <li><strong>My role:</strong> Defined reporting requirements, mapped data sources, wrote agent instructions, set weekly trigger, validated output against PM acceptance criteria.</li>
+            <li><strong>Solution:</strong> Notion custom agent → executive summary, forecast vs actual variance, portfolio Gantt, one project deep dive, top risks, and weekly action items.</li>
+            <li><strong>Outcome:</strong> Cut manual reporting prep from ~2.5 hours to ~20 minutes of review per week; leadership receives one canonical report every Monday at 8 AM.</li>
+          </ul>
         </div>
         <ul class="highlights">
-          <li><span>Runs every Monday at 8 AM across 7 projects - executive summary, forecast vs actual variance, per-project Gantt charts, and top portfolio risks.</span></li>
-          <li><span>Redacted structural sample: executive summary for 7 projects, portfolio Gantt, one full project deep dive, risks, actions, and data-source sections — same template the agent produces weekly.</span></li>
+          <li><span>Automated weekly Actuals vs Forecast reporting across a 7-project portfolio—executive summary, variance flags, Gantt views, and risk roll-ups.</span></li>
+          <li><span>Reduced manual reporting prep from ~2.5 hours to ~20 minutes of PM review; every metric traces to Projects DB or Open Tasks.</span></li>
         </ul>
         <div class="tags">
           <span>Notion Custom Agents</span>
           <span>Projects Database</span>
-          <span>Mermaid (Gantt Roadmaps)</span>
+          <span>Mermaid Gantt</span>
+          <span>Stakeholder Reporting</span>
+          <span>Workflow Design</span>
+          <span>SDLC</span>
           <span>Automation</span>
-          <span>Executive Reporting</span>
         </div>
       </div>
     </article>
@@ -1351,7 +1482,7 @@ footer {
   <!-- =================== EXPERIENCE =================== -->
   <section id="experience">
     <div class="section-head">
-      <div class="label">03 — Experience</div>
+      <div class="label">04 — Experience</div>
       <h2>Experience — Where I've worked.</h2>
     </div>
 
@@ -1362,39 +1493,13 @@ footer {
           <h4>AI Project Manager (Co-op)</h4>
           <div class="company">Aosenuma.ai</div>
           <ul>
-            <li>Published the Steward Daily Compliance Report across a 150-entry RAD log - resulting in ~30% fewer stale entries during stewardship weeks.</li>
-            <li>Drove UI/UX governance using a 168-point quality checklist - producing ~80% guideline adoption across 5+ audited projects.</li>
-            <li>Aligned portfolio status through weekly PM touchpoints and cadence meetings, keeping scope and priorities in sync across the team.</li>
-            <li>Tracked team capacity and roll-offs to match resources to project demand and prevent over-allocation.</li>
+            <li>Published the Steward Daily Compliance Report across a 150-entry RAD log—cutting stale entries by ~30% during stewardship weeks.</li>
+            <li>Drove UI/UX governance with a 168-point quality checklist—reaching ~80% guideline adoption across 5+ audited AI products.</li>
+            <li>Ran weekly PM touchpoints and portfolio cadence for a 7-project AI portfolio—surfacing scope drift and priority conflicts before they hit delivery.</li>
+            <li>Tracked capacity and roll-offs across cross-functional contributors—rebalancing work when assignments threatened active sprint commitments.</li>
           </ul>
         </div>
         <div class="where">Remote</div>
-      </div>
-
-      <div class="xp-item">
-        <div class="when">Dec 2025 — Present</div>
-        <div class="what">
-          <h4>Athletics Facilities Staff</h4>
-          <div class="company">Northeastern University Athletics · On-campus</div>
-          <ul>
-            <li>Run game-day operations for different events - basketball, soccer, baseball, football, and ice hockey.</li>
-            <li>Coordinate event setup, crowd flow, and daily facility support for students, athletes, and visitors.</li>
-          </ul>
-        </div>
-        <div class="where">Boston, MA</div>
-      </div>
-
-      <div class="xp-item">
-        <div class="when">Dec 2025 — Present</div>
-        <div class="what">
-          <h4>RSO Proctor</h4>
-          <div class="company">Northeastern University · On-campus</div>
-          <ul>
-            <li>Monitor residence hall access, student check-ins, and visitor management per university safety procedures.</li>
-            <li>First point of contact for residents and guests - questions, directions, and incident reporting.</li>
-          </ul>
-        </div>
-        <div class="where">Boston, MA</div>
       </div>
     </div>
   </section>
@@ -1402,7 +1507,7 @@ footer {
   <!-- =================== EDUCATION & SKILLS =================== -->
   <section id="skills">
     <div class="section-head">
-      <div class="label">04 — Education &amp; Skills</div>
+      <div class="label">05 — Education &amp; Skills</div>
       <h2>Education &amp; Skills — Training and tools.</h2>
     </div>
 
@@ -1432,33 +1537,42 @@ footer {
           <li>Business Analysis</li>
           <li>Requirements Gathering (BRDs)</li>
           <li>Stakeholder Management</li>
+          <li>Stakeholder Reporting</li>
           <li>Process Improvement</li>
           <li>Strategic Planning</li>
           <li>Gap Analysis</li>
           <li>Root Cause Analysis</li>
           <li>Process Mapping</li>
-          <li>UI/UX Design</li>
+          <li>Workflow Design</li>
+          <li>User Stories &amp; Acceptance Criteria</li>
           <li>UAT</li>
           <li>Dashboard Development</li>
           <li>Data Analysis</li>
-          <li>Change Control</li> 
+          <li>Change Control</li>
           <li>Agile</li>
           <li>Sprint Planning</li>
+          <li>SDLC</li>
+          <li>RACI</li>
         </ul>
       </div>
 
       <div class="skill-block">
         <h4>Tools &amp; Platforms</h4>
         <ul class="skill-points">
-          <li>MS Office</li> 
+          <li>MS Excel</li>
+          <li>MS Office</li>
           <li>MS Project</li>
-          <li>Primavera</li>  
-          <li>Notion</li>  
+          <li>MS PowerPoint</li>
+          <li>Primavera</li>
+          <li>Jira</li>
+          <li>Confluence</li>
+          <li>Notion</li>
           <li>Figma</li>
-          <li>MS PowerPoint</li>  
-          <li>Claude Design</li>  
-          <li>Stitch</li>
           <li>GitHub</li>
+          <li>SQL (reporting &amp; data pulls)</li>
+          <li>Power BI</li>
+          <li>Claude Design</li>
+          <li>Stitch</li>
           <li>Cursor</li>
           <li>NotebookLM</li>
         </ul>
@@ -1498,13 +1612,13 @@ footer {
   <!-- =================== BEYOND WORK =================== -->
   <section id="beyond">
     <div class="section-head">
-      <div class="label">05 — Beyond Work</div>
+      <div class="label">06 — Beyond Work</div>
       <h2>Leadership &amp; Activities — When I'm not at a desk.</h2>
     </div>
 
     <div data-reveal>
       <p class="life-intro">
-        I've loved sports since I was a kid and still do. I train most days, cook my own meals, and try to get outside when Boston weather cooperates.
+        I'm at my best when there's a clear goal and a routine behind it—whether that's a 200m repeat on the track or a Monday portfolio report that has to be right.
       </p>
 
       <div class="life-athletics">
@@ -1517,37 +1631,33 @@ footer {
           <h3>Sprinter, Track &amp; Field</h3>
           <div class="life-meta">Northeastern Club Running (NUCR) · Sept 2024 — Present</div>
           <ul>
-            <li>Compete in sprint and relay events at regional, state, and national NIRCA meets - ranked Top 20 in NIRCA.</li>
-            <li>Sprinted competitively in India before grad school; now balance training with coursework and work.</li>
-            <li>Support university sporting events at Northeastern Athletics Facilities - event logistics and game-day operations.</li>
+            <li>Compete in sprint and relay events at regional, state, and national NIRCA meets—ranked Top 20 in NIRCA.</li>
+            <li>Trained competitively in India before Northeastern; now balance co-op, coursework, and 5–6 training days a week.</li>
+            <li>Support game-day operations at Northeastern Athletics—the same events I used to watch from the stands.</li>
           </ul>
+        </div>
+      </div>
+
+      <div class="life-jobs">
+        <h3>On-campus leadership</h3>
+        <div class="life-job">
+          <h4>Athletics Facilities Staff · Northeastern University · Dec 2025–Present</h4>
+          <p>Game-day operations for basketball, soccer, baseball, football, and ice hockey.</p>
+        </div>
+        <div class="life-job">
+          <h4>RSO Proctor · Northeastern University · Dec 2025–Present</h4>
+          <p>Residence hall access, check-ins, and front-line support for residents and guests.</p>
         </div>
       </div>
 
       <div class="life-grid">
         <article class="life-item">
-          <h4>Fitness &amp; sports</h4>
-          <p>I enjoy weight training and following sports, with a particular interest in analyzing team strategies and decision-making under pressure.</p>
+          <h4>Cooking</h4>
+          <p>I meal-prep the same four rotations every Sunday—less decision fatigue during co-op weeks when reporting deadlines and audits stack up.</p>
         </article>
         <article class="life-item">
           <h4>Long runs</h4>
-          <p>Easy miles on roads or trails. Good way to clear my head without a laptop open.</p>
-        </article>
-        <article class="life-item">
-          <h4>Healthy cooking</h4>
-          <p>I enjoy meal prepping and maintaining consistent routines to stay organized and productive during busy schedules.</p>
-        </article>
-        <article class="life-item">
-          <h4>Music</h4>
-          <p>Usually playing in the background while I work, train, or commute.</p>
-        </article>
-        <article class="life-item">
-          <h4>Hikes &amp; photography</h4>
-          <p>I enjoy hiking and nature photography, using both as a way to recharge and appreciate the outdoors.</p>
-        </article>
-        <article class="life-item">
-          <h4>Coffee</h4>
-          <p>First thing every morning. No exceptions.</p>
+          <p>Easy miles on the Charles or Middlesex Fells. That's when I untangle requirements problems without a screen open.</p>
         </article>
       </div>
     </div>
@@ -1562,13 +1672,13 @@ footer {
       <a href="https://www.linkedin.com/in/shreyas-shirke-6085481b9/" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a href="https://github.com/shreyu311" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="https://github.com/shreyu311/UI-UX-Guidelines" target="_blank" rel="noopener">UI/UX Guidelines ↗</a>
-      <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610c" target="_blank" rel="noopener">Resume ↗</a>
+      <a href="resume/Shrey_Resume_Business_Strategy_Analyst.pdf?v=20260610d" target="_blank" rel="noopener">Resume ↗</a>
     </div>
   </section>
 
   <footer>
     <div>© 2026 Shreyas Shirke</div>
-    <div>Boston, MA · Available Dec 2026</div>
+    <div>Authorized to work in the U.S. · Available full-time from Dec 2026 · Boston, MA</div>
   </footer>
 
 </div>
