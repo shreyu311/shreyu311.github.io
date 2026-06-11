@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UI Compliance Scorecard (Redacted Sample)</title>
+<style>
+  @page { size: letter; margin: 0.55in 0.6in; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1a1814; line-height: 1.35; margin: 0; }
+  h1 { font-size: 15pt; margin: 0 0 0.15rem; }
+  h2 { font-size: 11pt; margin: 0.85rem 0 0.35rem; border-bottom: 1px solid #bbb; padding-bottom: 0.12rem; }
+  .banner { background: #f5f1ea; border: 1px solid #ccc; padding: 0.5rem 0.65rem; font-size: 8.5pt; margin-bottom: 0.65rem; }
+  .meta { color: #555; font-size: 9pt; margin-bottom: 0.5rem; }
+  .score-big { font-size: 28pt; font-weight: 700; color: #b8491c; line-height: 1; }
+  .score-row { display: flex; gap: 2rem; align-items: baseline; margin: 0.5rem 0 0.75rem; }
+  table { width: 100%; border-collapse: collapse; margin: 0.3rem 0 0.6rem; font-size: 8.5pt; }
+  th, td { border: 1px solid #bbb; padding: 0.22rem 0.3rem; vertical-align: top; }
+  th { background: #ececec; }
+  .pass { background: #e8f5e9; }
+  .fail { background: #fde8e8; }
+  .warn { background: #fef9e7; }
+  .footnote { font-size: 8pt; color: #666; margin-top: 0.6rem; border-top: 1px solid #ddd; padding-top: 0.35rem; }
+</style>
+</head>
+<body>
+
+<div class="banner"><strong>Redacted sample.</strong> Individual product UI compliance scorecard from the 168-point audit checklist. Product name and personnel anonymized.</div>
+
+<h1>UI Compliance Scorecard</h1>
+<p class="meta"><strong>Product:</strong> [Live Product C — Redacted] · <strong>Audit date:</strong> May 14, 2026 · <strong>Auditor:</strong> [Redacted] · <strong>Checklist:</strong> UI/UX Guidelines v2.1 (168 points)</p>
+
+<div class="score-row">
+  <div>
+    <div class="score-big">91%</div>
+    <div>152 / 168 points passed</div>
+  </div>
+  <div>
+    <strong>Prior audit:</strong> 85% (Apr 2026)<br>
+    <strong>Delta:</strong> +6 pts<br>
+    <strong>Guideline version:</strong> design.md v1.4
+  </div>
+</div>
+
+<h2>Category Breakdown</h2>
+<table>
+  <tr><th>Category</th><th>Points</th><th>Passed</th><th>%</th><th>Notes</th></tr>
+  <tr><td>Color &amp; tokens</td><td>24</td><td>23</td><td>96%</td><td>1 secondary hover mismatch</td></tr>
+  <tr><td>Typography</td><td>18</td><td>18</td><td>100%</td><td>—</td></tr>
+  <tr><td>Spacing &amp; layout</td><td>22</td><td>20</td><td>91%</td><td>Card padding drift on settings view</td></tr>
+  <tr><td>Components</td><td>38</td><td>34</td><td>89%</td><td>Modal close button sizing</td></tr>
+  <tr><td>Accessibility (a11y)</td><td>32</td><td>28</td><td>88%</td><td>Focus ring on modal; contrast on badge</td></tr>
+  <tr><td>Motion &amp; states</td><td>14</td><td>13</td><td>93%</td><td>Loading skeleton timing</td></tr>
+  <tr><td>Documentation</td><td>20</td><td>16</td><td>80%</td><td>Component spec link missing on 4 screens</td></tr>
+</table>
+
+<h2>Critical Gaps (sample)</h2>
+<table>
+  <tr><th>Checklist #</th><th>Item</th><th>Severity</th><th>Remediation</th><th>Owner</th></tr>
+  <tr class="fail"><td>142</td><td>Focus visible on interactive elements</td><td>High</td><td>Add focus ring per token §6.1</td><td>Eng</td></tr>
+  <tr class="warn"><td>98</td><td>Secondary button hover uses semantic token</td><td>Med</td><td>Replace hardcoded hex</td><td>Eng</td></tr>
+  <tr class="warn"><td>161</td><td>Screen linked in component registry</td><td>Low</td><td>Update Notion component map</td><td>PM / BA</td></tr>
+</table>
+
+<h2>Auditor Recommendation</h2>
+<p>Product C is <strong>approved for continued release</strong> with 2 high/med gaps scheduled for next sprint. Re-audit targeted for Jun 2026 after remediation.</p>
+
+<p class="footnote">Redacted structural sample for portfolio use · Supports portfolio claim: 85% → 92% portfolio-wide compliance · Aosenuma.ai co-op context anonymized</p>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RTM — Design System (Redacted Sample)</title>
+<style>
+  @page { size: letter; margin: 0.55in 0.6in; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1a1814; line-height: 1.35; margin: 0; }
+  h1 { font-size: 15pt; margin: 0 0 0.15rem; }
+  h2 { font-size: 11pt; margin: 0.85rem 0 0.35rem; border-bottom: 1px solid #bbb; padding-bottom: 0.12rem; }
+  .banner { background: #f5f1ea; border: 1px solid #ccc; padding: 0.5rem 0.65rem; font-size: 8.5pt; margin-bottom: 0.65rem; }
+  .meta { color: #555; font-size: 9pt; margin-bottom: 0.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 0.3rem 0 0.6rem; font-size: 8.5pt; }
+  th, td { border: 1px solid #bbb; padding: 0.22rem 0.3rem; vertical-align: top; }
+  th { background: #ececec; }
+  .status-met { background: #e8f5e9; }
+  .status-partial { background: #fef9e7; }
+  .footnote { font-size: 8pt; color: #666; margin-top: 0.6rem; border-top: 1px solid #ddd; padding-top: 0.35rem; }
+</style>
+</head>
+<body>
+
+<div class="banner"><strong>Redacted sample.</strong> Requirements Traceability Matrix linking BRD requirements to deliverables and test evidence. Product names anonymized.</div>
+
+<h1>Requirements Traceability Matrix</h1>
+<p class="meta"><strong>Initiative:</strong> UI/UX Guidelines &amp; Design System · <strong>Version:</strong> 1.1 · <strong>Date:</strong> Apr 2026</p>
+
+<h2>Traceability — Functional Requirements</h2>
+<table>
+  <tr>
+    <th>Req ID</th>
+    <th>Requirement (summary)</th>
+    <th>Design / Deliverable</th>
+    <th>Test / Evidence</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>FR-01</td>
+    <td>Machine-readable token file synced to GitHub &amp; Notion</td>
+    <td>design.md + aosenuma.tokens.json · GitHub repo</td>
+    <td>Token diff review; sync audit log</td>
+    <td class="status-met">Met</td>
+  </tr>
+  <tr>
+    <td>FR-02</td>
+    <td>168-point compliance checklist</td>
+    <td>Checklist v2.1 in Notion</td>
+    <td>5 live products audited; scorecards filed</td>
+    <td class="status-met">Met</td>
+  </tr>
+  <tr>
+    <td>FR-03</td>
+    <td>Per-product scorecard with gap notes</td>
+    <td>Scorecard template + 5 completed audits</td>
+    <td>Executive summary rollup Mar–May 2026</td>
+    <td class="status-met">Met</td>
+  </tr>
+  <tr>
+    <td>FR-04</td>
+    <td>7 UI-only consistency prototypes</td>
+    <td>Prototype set (UI validation only)</td>
+    <td>Prototype audit pass/fail log</td>
+    <td class="status-met">Met</td>
+  </tr>
+  <tr>
+    <td>FR-05</td>
+    <td>Leadership executive summary</td>
+    <td>Monthly compliance rollup deck</td>
+    <td>Leadership review sign-off</td>
+    <td class="status-met">Met</td>
+  </tr>
+  <tr>
+    <td>FR-06</td>
+    <td>LLM-ready structured UI specs</td>
+    <td>Token + component spec export</td>
+    <td>LLM prompt regression samples</td>
+    <td class="status-partial">Partial</td>
+  </tr>
+</table>
+
+<h2>Traceability — Success Metrics</h2>
+<table>
+  <tr><th>Metric</th><th>Target</th><th>Actual</th><th>Evidence</th></tr>
+  <tr><td>Design compliance</td><td>92%</td><td>92%</td><td>Gap analysis cycle 2 scorecards</td></tr>
+  <tr><td>Guideline adoption</td><td>~80%</td><td>~80%</td><td>Checklist adoption survey (PM leads)</td></tr>
+  <tr><td>Products with scorecards</td><td>5 live</td><td>5 live</td><td>Audit log (active products only)</td></tr>
+</table>
+
+<h2>Gap Log (sample)</h2>
+<table>
+  <tr><th>Gap ID</th><th>Description</th><th>Remediation</th><th>Owner</th></tr>
+  <tr><td>G-12</td><td>Secondary button hover state inconsistent on Product C</td><td>Token override in design.md §4.2</td><td>Eng lead</td></tr>
+  <tr><td>G-18</td><td>Focus ring missing on modal close in Product A</td><td>a11y checklist item 142 flagged</td><td>PM / BA</td></tr>
+</table>
+
+<p class="footnote">Redacted structural sample for portfolio use · Methodology preserved · Aosenuma.ai co-op context anonymized</p>
+</body>
+</html>
