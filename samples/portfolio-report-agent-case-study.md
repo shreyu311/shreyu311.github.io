@@ -12,8 +12,8 @@ Every Monday, PMs manually rebuilt the same **Actuals vs Forecast** portfolio de
 
 - Pulled dates, task counts, and status notes from multiple Notion databases
 - Re-formatted Gantt views and executive summaries by hand
-- ~**2.5 hours** of copy-paste per week across **7 active projects**
-- Numbers sometimes conflicted between decks and source databases
+- ~**2.5 hours** of copy-paste per week
+- Portfolio started at **7 projects** at co-op start; **2 were halted for resource crunch**, leaving **5 active**
 
 ## My role
 
@@ -25,9 +25,9 @@ Every Monday, PMs manually rebuilt the same **Actuals vs Forecast** portfolio de
 
 ## Solution
 
-Notion custom agent produces each week:
+Notion custom agent produces each week for **5 active projects**:
 
-1. Executive summary (7-project portfolio)
+1. Executive summary (5 active · 2 halted · 7 total at portfolio start)
 2. Forecast vs actual variance flags
 3. Portfolio-level Gantt (Mermaid)
 4. One project deep dive
@@ -38,7 +38,8 @@ Notion custom agent produces each week:
 | Metric | Before | After |
 |--------|--------|-------|
 | Manual prep time | ~2.5 hrs/week | ~20 min review/week |
-| Portfolio scope | 7 projects | 7 projects (automated) |
+| Active portfolio scope | 7 at start → 5 active | 5 active (automated) |
+| Halted projects | — | 2 (resource crunch) |
 | Data integrity | Conflicting deck copies | Single canonical report |
 | Schedule | Ad hoc | Every Monday 8 AM |
 
@@ -51,7 +52,7 @@ Notion custom agent produces each week:
 
 ## Artifacts
 
-- [Redacted sample report (PDF)](../samples/Portfolio_Actuals_vs_Forecast_June_2026_Redacted.pdf) — structural proof; client data removed
+- [Redacted sample report (PDF)](Portfolio_Actuals_vs_Forecast_June_2026_Redacted.pdf) — structural proof; client data removed
 
 ---
 
