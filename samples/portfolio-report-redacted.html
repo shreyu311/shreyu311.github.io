@@ -2,177 +2,387 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Portfolio Actuals vs Forecast — Redacted Sample</title>
+<title>Portfolio Actuals vs Forecast — Redacted Structural Sample</title>
 <style>
-  @page { margin: 0.75in; }
-  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #1a1814; line-height: 1.45; max-width: 8.5in; margin: 0 auto; }
-  h1 { font-size: 18pt; margin: 0 0 0.25rem; }
-  h2 { font-size: 13pt; margin: 1.25rem 0 0.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
-  h3 { font-size: 11.5pt; margin: 1rem 0 0.35rem; }
-  .banner { background: #f5f1ea; border: 1px solid #ddd; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 10pt; }
-  .meta { color: #555; font-size: 10pt; margin-bottom: 1rem; }
-  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; font-size: 10pt; }
-  th, td { border: 1px solid #ccc; padding: 0.35rem 0.45rem; text-align: left; vertical-align: top; }
-  th { background: #f0f0f0; font-weight: 600; }
-  ul { margin: 0.35rem 0 0.75rem 1.1rem; }
-  li { margin-bottom: 0.25rem; }
-  .tag { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 9pt; }
+  @page { size: letter; margin: 0.65in 0.7in; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Calibri, "Segoe UI", Arial, sans-serif;
+    font-size: 10.5pt;
+    color: #1a1814;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  h1 { font-size: 16pt; margin: 0 0 0.15rem; font-weight: 700; }
+  h2 { font-size: 12pt; margin: 1rem 0 0.4rem; font-weight: 700; border-bottom: 1px solid #bbb; padding-bottom: 0.15rem; }
+  h3 { font-size: 11pt; margin: 0.85rem 0 0.35rem; font-weight: 700; }
+  .subtitle, .meta { color: #555; font-size: 9.5pt; margin: 0.15rem 0 0.65rem; }
+  .banner {
+    background: #f5f1ea;
+    border: 1px solid #ccc;
+    padding: 0.55rem 0.7rem;
+    font-size: 9pt;
+    margin-bottom: 0.75rem;
+  }
+  .warn {
+    background: #fff8e6;
+    border-left: 3px solid #e6a700;
+    padding: 0.45rem 0.6rem;
+    font-size: 9pt;
+    margin: 0.5rem 0 0.75rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.35rem 0 0.75rem;
+    font-size: 9pt;
+  }
+  th, td {
+    border: 1px solid #bbb;
+    padding: 0.28rem 0.35rem;
+    vertical-align: top;
+    text-align: left;
+  }
+  th { background: #ececec; font-weight: 700; }
+  ul { margin: 0.25rem 0 0.6rem 1rem; padding: 0; }
+  li { margin-bottom: 0.2rem; }
+  .pill {
+    display: inline-block;
+    padding: 0.05rem 0.35rem;
+    border-radius: 3px;
+    font-size: 8.5pt;
+    white-space: nowrap;
+  }
   .red { background: #fde8e8; }
   .yellow { background: #fef9e7; }
   .green { background: #e8f5e9; }
-  .footnote { font-size: 9pt; color: #666; margin-top: 1.5rem; border-top: 1px solid #ddd; padding-top: 0.5rem; }
-  .page-break { page-break-before: always; }
+  .gray { background: #eee; }
+
+  /* Gantt-style diagram */
+  .gantt-wrap {
+    border: 1px solid #bbb;
+    padding: 0.55rem 0.6rem 0.65rem;
+    margin: 0.45rem 0 0.75rem;
+    background: #fafafa;
+  }
+  .gantt-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    margin-bottom: 0.45rem;
+  }
+  .gantt-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: #666;
+    margin: 0 0 0.35rem 7.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.15rem;
+  }
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.35rem;
+    align-items: center;
+    margin-bottom: 0.35rem;
+    font-size: 8.5pt;
+  }
+  .gantt-label { font-weight: 600; line-height: 1.2; }
+  .gantt-track {
+    position: relative;
+    height: 14px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 2px;
+  }
+  .bar-forecast { background: #9ca3af; opacity: 0.85; }
+  .bar-actual { background: #2563eb; top: 15px; height: 10px; }
+  .bar-actual.crit { background: #dc2626; }
+  .bar-actual.ok { background: #16a34a; }
+  .gantt-legend {
+    font-size: 8pt;
+    color: #555;
+    margin-top: 0.35rem;
+  }
+  .gantt-legend span { margin-right: 0.85rem; }
+  .swatch { display: inline-block; width: 10px; height: 8px; margin-right: 0.2rem; vertical-align: middle; }
+  .today-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #f66;
+    opacity: 0.85;
+    left: 72%;
+  }
+  .footnote {
+    font-size: 8.5pt;
+    color: #666;
+    margin-top: 0.75rem;
+    border-top: 1px solid #ddd;
+    padding-top: 0.4rem;
+  }
+  .skeleton-note {
+    font-size: 9pt;
+    font-style: italic;
+    color: #666;
+    margin: 0.35rem 0 0.5rem;
+  }
+  .emoji { font-family: "Segoe UI Emoji", sans-serif; }
 </style>
 </head>
 <body>
 
-<div class="banner">
-  <strong>Redacted portfolio sample.</strong> Company name, project codenames, client identifiers, and personnel names have been anonymized. Metrics, structure, and report logic reflect a real weekly Actuals vs Forecast automation deliverable.
+<!-- PAGE 1: Title + Executive Summary -->
+<div class="page">
+  <div class="banner">
+    <strong>Redacted structural sample.</strong> Same report template as the production agent output. Client names, project codenames, and personnel are anonymized. One project deep dive is shown in full; remaining projects use the same section structure.
+  </div>
+
+  <h1><span class="emoji">&#128202;</span> Portfolio Actuals vs Forecast — June 8, 2026</h1>
+  <p class="warn"><span class="emoji">&#9888;</span> <strong>Partial run (example):</strong> Report generated from canonical Projects DB + Open Tasks. PM meeting-note enrichment was not available in the sample window (no matching alignment notes in the past week).</p>
+  <p class="meta">Report date: June 8, 2026 · Prepared by: Notion custom agent · Portfolio: 7 projects · Active: 6 · Completed: 1 · Not started: 0</p>
+
+  <h2><span class="emoji">&#129517;</span> Executive Summary</h2>
+  <table>
+    <tr>
+      <th>Project</th>
+      <th>Status</th>
+      <th>Phase</th>
+      <th>Forecasted</th>
+      <th>Actual</th>
+      <th>Variance</th>
+      <th>Tasks (Done / Total)</th>
+    </tr>
+    <tr>
+      <td>Project Alpha — Internal PM Tool</td>
+      <td>Delayed</td>
+      <td>Development, Deployed</td>
+      <td>Oct 6, 2025 → Mar 23, 2026</td>
+      <td>Oct 6, 2025 → Mar 20, 2026</td>
+      <td><span class="pill red">Go-live passed; status In progress</span></td>
+      <td>49 / 49</td>
+    </tr>
+    <tr>
+      <td>Project Beta — CRM Dashboard</td>
+      <td>Sign-off pending</td>
+      <td>Testing, Deployed</td>
+      <td>Oct 6, 2025 → Mar 27, 2026</td>
+      <td>Oct 6, 2025 → Mar 20, 2026</td>
+      <td><span class="pill yellow">Build complete; acceptance pending</span></td>
+      <td>54 / 63</td>
+    </tr>
+    <tr>
+      <td><strong>Project Gamma — Community Platform</strong></td>
+      <td><strong>Overdue</strong></td>
+      <td><strong>Development</strong></td>
+      <td><strong>Feb 11 → May 27, 2026</strong></td>
+      <td><strong>Feb 11 → (open)</strong></td>
+      <td><span class="pill yellow"><strong>Bug fixes; scope pending approval</strong></span></td>
+      <td><strong>164 / 180</strong></td>
+    </tr>
+    <tr>
+      <td>Project Delta — Exec Dashboard</td>
+      <td>Delayed</td>
+      <td>Planning, Development</td>
+      <td>Feb 23 → Apr 10, 2026</td>
+      <td>Feb 23 → Mar 2, 2026</td>
+      <td><span class="pill green">High completion; closeout unclear</span></td>
+      <td>29 / 30</td>
+    </tr>
+    <tr>
+      <td>Project Epsilon — QA Hub</td>
+      <td>On hold</td>
+      <td>Maintenance only</td>
+      <td>Feb 23 → Mar 31, 2026</td>
+      <td>Feb 23 → Apr 21, 2026</td>
+      <td><span class="pill red">Go-live passed; rebaseline needed</span></td>
+      <td>33 / 37</td>
+    </tr>
+    <tr>
+      <td>Project Zeta — Stakeholder AI</td>
+      <td>On track</td>
+      <td>Development</td>
+      <td>Feb 11 → Jul 10, 2026</td>
+      <td>Feb 11 → Apr 25, 2026</td>
+      <td><span class="pill green">32 days to go-live</span></td>
+      <td>47 / 52</td>
+    </tr>
+    <tr>
+      <td>Project Eta — Document AI</td>
+      <td>At risk</td>
+      <td>Testing</td>
+      <td>Feb 16 → Jun 12, 2026</td>
+      <td>Feb 16 → (open)</td>
+      <td><span class="pill yellow">Go-live in 4 days; 3 tasks open</span></td>
+      <td>31 / 34</td>
+    </tr>
+  </table>
+  <p class="skeleton-note">Rows above mirror the live executive summary table. Project Gamma is expanded on the following pages.</p>
 </div>
 
-<h1>Portfolio Actuals vs Forecast — June 8, 2026</h1>
-<p class="meta">Report date: June 8, 2026 · Prepared by: Notion custom agent · Portfolio: 7 projects · Active: 6 · Completed: 1 · Not started: 0</p>
+<!-- PAGE 2: Portfolio Gantt -->
+<div class="page">
+  <h2><span class="emoji">&#127760;</span> Portfolio Gantt — Forecasted vs Actuals</h2>
+  <p class="meta">Agent renders an inline Mermaid Gantt in production. Below is the same visual structure in redacted form.</p>
 
-<h2>Executive Summary</h2>
-<table>
-  <tr>
-    <th>Project</th>
-    <th>Status</th>
-    <th>Phase</th>
-    <th>Forecast window</th>
-    <th>Actual window</th>
-    <th>Variance</th>
-    <th>Tasks done / total</th>
-  </tr>
-  <tr>
-    <td>Project Alpha — Internal PM Tool</td>
-    <td>Delayed</td>
-    <td>Development / Deployed</td>
-    <td>Oct 2025 → Mar 2026</td>
-    <td>Oct 2025 → Mar 2026</td>
-    <td><span class="tag red">Go-live passed; status still In progress</span></td>
-    <td>49 / 49</td>
-  </tr>
-  <tr>
-    <td>Project Beta — CRM Dashboard</td>
-    <td>Final sign-off pending</td>
-    <td>Testing / Deployed</td>
-    <td>Oct 2025 → Mar 2026</td>
-    <td>Oct 2025 → Mar 2026</td>
-    <td><span class="tag yellow">Build complete; acceptance pending</span></td>
-    <td>54 / 63</td>
-  </tr>
-  <tr>
-    <td>Project Gamma — Community Platform</td>
-    <td>Overdue</td>
-    <td>Development</td>
-    <td>Feb 2026 → May 2026</td>
-    <td>Feb 2026 → open</td>
-    <td><span class="tag yellow">Bug fixes underway; new scope pending approval</span></td>
-    <td>164 / 180</td>
-  </tr>
-  <tr>
-    <td>Project Delta — Executive Dashboard</td>
-    <td>Delayed</td>
-    <td>Planning / Development</td>
-    <td>Feb 2026 → Apr 2026</td>
-    <td>Feb 2026 → Mar 2026</td>
-    <td><span class="tag green">High task completion; closeout unclear</span></td>
-    <td>29 / 30</td>
-  </tr>
-  <tr>
-    <td>Project Epsilon — QA Hub</td>
-    <td>On hold</td>
-    <td>Maintenance only</td>
-    <td>Feb 2026 → Mar 2026</td>
-    <td>Feb 2026 → Apr 2026</td>
-    <td><span class="tag red">Go-live passed; timeline needs rebaseline</span></td>
-    <td>33 / 37</td>
-  </tr>
-  <tr>
-    <td>Project Zeta — Stakeholder AI</td>
-    <td>On track</td>
-    <td>Development</td>
-    <td>Feb 2026 → Jul 2026</td>
-    <td>Feb 2026 → Apr 2026</td>
-    <td><span class="tag green">32 days to go-live</span></td>
-    <td>47 / 52</td>
-  </tr>
-  <tr>
-    <td>Project Eta — Document AI</td>
-    <td>At risk</td>
-    <td>Testing</td>
-    <td>Feb 2026 → Jun 2026</td>
-    <td>Feb 2026 → open</td>
-    <td><span class="tag yellow">Go-live in 4 days; 3 tasks open</span></td>
-    <td>31 / 34</td>
-  </tr>
-</table>
+  <div class="gantt-wrap">
+    <div class="gantt-title">Portfolio Roadmap — Forecasted vs Actuals (Jun 8, 2026)</div>
+    <div class="gantt-axis">
+      <span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span>
+    </div>
+    <div class="gantt-row"><div class="gantt-label">Alpha</div><div class="gantt-track"><div class="bar bar-forecast" style="left:8%;width:42%"></div><div class="bar bar-actual crit" style="left:8%;width:64%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Beta</div><div class="gantt-track"><div class="bar bar-forecast" style="left:8%;width:44%"></div><div class="bar bar-actual" style="left:8%;width:64%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Gamma</div><div class="gantt-track"><div class="bar bar-forecast" style="left:38%;width:28%"></div><div class="bar bar-actual crit" style="left:38%;width:34%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Delta</div><div class="gantt-track"><div class="bar bar-forecast" style="left:40%;width:18%"></div><div class="bar bar-actual crit" style="left:40%;width:32%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Epsilon</div><div class="gantt-track"><div class="bar bar-forecast" style="left:40%;width:14%"></div><div class="bar bar-actual crit" style="left:40%;width:24%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Zeta</div><div class="gantt-track"><div class="bar bar-forecast" style="left:38%;width:38%"></div><div class="bar bar-actual ok" style="left:38%;width:22%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Eta</div><div class="gantt-track"><div class="bar bar-forecast" style="left:42%;width:30%"></div><div class="bar bar-actual" style="left:42%;width:30%"></div><div class="today-line"></div></div></div>
+    <div class="gantt-legend">
+      <span><i class="swatch" style="background:#9ca3af"></i>Forecasted</span>
+      <span><i class="swatch" style="background:#2563eb"></i>Actual</span>
+      <span><i class="swatch" style="background:#f66"></i>Today marker</span>
+    </div>
+  </div>
 
-<h2>Portfolio Gantt — Forecasted vs Actuals</h2>
-<p>Automated Mermaid Gantt generated per project, comparing forecasted vs actual date ranges with today marker and status coloring (on track, at risk, overdue).</p>
-<ul>
-  <li>Seven parallel project sections with forecast and actual bars</li>
-  <li>Color coding aligned to portfolio health (critical / active / complete)</li>
-  <li>Rendered inline in the live Notion report for executive review</li>
-</ul>
+  <h2><span class="emoji">&#128230;</span> Project Deep Dives — Milestones &amp; Task Tie-Out</h2>
+  <p class="skeleton-note">Production reports include one deep-dive section per project. This sample shows the full template for <strong>Project Gamma</strong> only. Projects Alpha, Beta, Delta, Epsilon, Zeta, and Eta follow the same structure.</p>
+</div>
 
-<div class="page-break"></div>
+<!-- PAGE 3: Project Gamma Deep Dive -->
+<div class="page">
+  <h3><span class="emoji">&#129717;</span> 3. Project Gamma — Community Platform — Overdue</h3>
+  <p class="meta">Builder: [Redacted] · Start date: Feb 11, 2026 · Go-live: May 27, 2026 · Priority: High · Task completion: 91% (164/180)</p>
 
-<h2>Project Deep Dive — Project Gamma (Community Platform)</h2>
-<p><strong>Lead:</strong> [Redacted] · <strong>Start:</strong> Feb 11, 2026 · <strong>Go-live:</strong> May 27, 2026 · <strong>Task completion:</strong> 91% (164/180)</p>
+  <table>
+    <tr><th>Milestone</th><th>Forecasted</th><th>Actual</th><th>Variance</th><th>Status</th></tr>
+    <tr>
+      <td>Go-live (Projects DB)</td>
+      <td>May 27, 2026</td>
+      <td>—</td>
+      <td><span class="pill red">Past due</span></td>
+      <td>Status still In progress</td>
+    </tr>
+    <tr>
+      <td>Readiness tie-out</td>
+      <td>—</td>
+      <td>—</td>
+      <td><span class="pill yellow">In flight</span></td>
+      <td>Bug fixes underway; new requests pending executive approval</td>
+    </tr>
+  </table>
 
-<h3>Milestones</h3>
-<table>
-  <tr><th>Milestone</th><th>Forecasted</th><th>Actual</th><th>Status</th></tr>
-  <tr><td>Go-live</td><td>May 27, 2026</td><td>—</td><td>Past due; status still In progress</td></tr>
-  <tr><td>Readiness tie-out</td><td>—</td><td>—</td><td>Active bug fixes; approval-dependent scope pending executive sign-off</td></tr>
-</table>
+  <div class="gantt-wrap">
+    <div class="gantt-title">Project Gamma — Forecasted vs Actual timeline</div>
+    <div class="gantt-axis">
+      <span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+    </div>
+    <div class="gantt-row"><div class="gantt-label">Forecasted</div><div class="gantt-track"><div class="bar bar-forecast" style="left:5%;width:75%"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Actual</div><div class="gantt-track"><div class="bar bar-actual crit" style="left:5%;width:90%"></div><div class="today-line" style="left:88%"></div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Go-live</div><div class="gantt-track"><div style="position:absolute;left:72%;top:2px;width:2px;height:10px;background:#333"></div></div></div>
+  </div>
 
-<h3>Task analysis (sample)</h3>
-<ul>
-  <li>164 completed · 2 in progress · 5 pending · 4 under review · 5 archived</li>
-  <li>Open items grouped by theme: production bug fixes, go-live support, architecture review, approval-dependent new requests</li>
-  <li>Risk callout: separate launch-blocking fixes from scope awaiting stakeholder approval</li>
-</ul>
+  <h3><span class="emoji">&#128202;</span> Task Analysis: 164 completed · 2 in progress · 5 pending · 4 under review · 5 archived (180 total)</h3>
+  <ul>
+    <li><strong>Completion rate:</strong> 91%</li>
+    <li><strong>Overdue tasks:</strong> none in open-task set</li>
+    <li><strong>Upcoming this week:</strong> grouped by theme below</li>
+  </ul>
+  <p><strong>Open task detail (anonymized examples):</strong></p>
+  <ul>
+    <li><strong>Production bug fixes (in progress):</strong> API auth error on file upload · badge count mismatch under review</li>
+    <li><strong>Go-live support (in progress / pending):</strong> telephony warmup · deployment reset strategy for production cutover</li>
+    <li><strong>Architecture review (under review):</strong> permissions model · audit log design</li>
+    <li><strong>Approval-dependent scope (pending executive sign-off):</strong> catalog expansion · role mapping update</li>
+  </ul>
+  <p class="warn"><span class="emoji">&#9888;</span> <strong>Risks:</strong> Separate launch-blocking bug fixes from scope awaiting executive approval. Track approvals on a different line than active engineering work.</p>
+</div>
 
-<h2>Project Deep Dive — Project Eta (Document AI)</h2>
-<p><strong>Lead:</strong> [Redacted] · <strong>Start:</strong> Feb 16, 2026 · <strong>Go-live:</strong> Jun 12, 2026 · <strong>Task completion:</strong> 91% (31/34)</p>
-<ul>
-  <li>Beta UAT window in progress; go-live within one week</li>
-  <li>Remaining open tasks flagged for go/no-go review (performance, reporting, documentation)</li>
-</ul>
+<!-- PAGE 4: Risks, Actions, Data -->
+<div class="page">
+  <h2><span class="emoji">&#128308;</span> Top Portfolio Risks</h2>
+  <table>
+    <tr><th>Risk</th><th>Project</th><th>Impact</th><th>Severity</th></tr>
+    <tr>
+      <td>Go-live passed while status still In progress</td>
+      <td>Alpha, Gamma, Delta</td>
+      <td>Hard to interpret variance and true closure state</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <td>Approval-dependent scope mixed with active bug fixes</td>
+      <td>Gamma</td>
+      <td>Execution split across two workstreams</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <td>Go-live within 7 days with open gating tasks</td>
+      <td>Eta</td>
+      <td>Release risk if UAT items block go/no-go</td>
+      <td>Medium</td>
+    </tr>
+  </table>
 
-<h2>Top Portfolio Risks</h2>
-<table>
-  <tr><th>Risk</th><th>Project</th><th>Impact</th><th>Severity</th></tr>
-  <tr><td>Go-live passed while status still In progress</td><td>Alpha, Gamma, Delta</td><td>Reporting ambiguity; hard to interpret true closure</td><td>High</td></tr>
-  <tr><td>Approval-dependent scope mixed with active bug fixes</td><td>Gamma</td><td>Execution risk split across two workstreams</td><td>High</td></tr>
-  <tr><td>Go-live within 7 days with open gating tasks</td><td>Eta</td><td>Schedule risk if UAT items block release</td><td>Medium</td></tr>
-</table>
+  <h2><span class="emoji">&#9197;</span> This Week — Key Actions (Jun 8–14)</h2>
+  <table>
+    <tr><th>Project</th><th>Key action</th><th>Owner</th></tr>
+    <tr>
+      <td>Gamma</td>
+      <td>Close active bug-fix queue; track executive approvals separately for new requests</td>
+      <td>[Engineering lead], [Executive stakeholders]</td>
+    </tr>
+    <tr>
+      <td>Alpha</td>
+      <td>Confirm closeout semantics; align go-live with project status</td>
+      <td>[PM owner]</td>
+    </tr>
+    <tr>
+      <td>Eta</td>
+      <td>Go/no-go tie-out before release; confirm open tasks against UAT gates</td>
+      <td>[Tech lead]</td>
+    </tr>
+  </table>
 
-<h2>This Week — Key Actions</h2>
-<ul>
-  <li><strong>Alpha:</strong> Confirm closeout semantics; align go-live date with project status</li>
-  <li><strong>Gamma:</strong> Close active bug-fix queue; track executive approvals separately for new requests</li>
-  <li><strong>Eta:</strong> Go/no-go tie-out for upcoming release; confirm remaining tasks against UAT gates</li>
-</ul>
+  <h2><span class="emoji">&#128204;</span> Data Sources Used</h2>
+  <ul>
+    <li><strong>Projects DB</strong> — status, phase, start date, go-live, owner, linked tasks</li>
+    <li><strong>Open Tasks DB</strong> — counts by status (completed, in progress, pending, under review, archived)</li>
+    <li><strong>Meeting notes</strong> — PM alignment cadence (when matched in query window)</li>
+    <li><strong>Reference reports</strong> — format/structure only (not used as live data)</li>
+  </ul>
 
-<h2>Data Sources Used</h2>
-<ul>
-  <li>Projects database — status, phase, start date, go-live, owner, linked tasks</li>
-  <li>Open tasks database — counts by status (completed, in progress, pending, under review, archived)</li>
-  <li>Meeting notes — PM alignment cadence (when available in query window)</li>
-</ul>
+  <h2><span class="emoji">&#9888;</span> Data Quality Issues (sample)</h2>
+  <ul>
+    <li>Stale go-live vs status mismatch on multiple projects (go-live in the past, status still In progress)</li>
+    <li>Approval-dependent scope should be tracked separately from launch-blocking fixes (Project Gamma)</li>
+    <li>Meeting-note enrichment unavailable in partial run window</li>
+  </ul>
 
-<h2>Agent Configuration Notes</h2>
-<ul>
-  <li>Scheduled trigger: every Monday at 8:00 AM</li>
-  <li>Reference reports used for format/structure only — not as live data sources</li>
-  <li>Canonical databases: Projects, Tasks, Meeting notes, Portfolio status output (edit access)</li>
-</ul>
+  <h2><span class="emoji">&#128260;</span> Key Changes Since Last Report (sample)</h2>
+  <ul>
+    <li>Project Gamma: go-live date corrected in Projects DB — confirm whether rebaseline or data fix</li>
+    <li>Project Eta: task completion moved from 30/34 to 31/34</li>
+  </ul>
 
-<p class="footnote">Sample prepared for portfolio demonstration. Original client and project identifiers removed. Generated structure matches a production Notion custom agent workflow.</p>
+  <h2>How the agent produces this report</h2>
+  <table>
+    <tr><th>Step</th><th>What happens</th></tr>
+    <tr><td>1. Trigger</td><td>Scheduled every Monday at 8:00 AM (or manual run in Notion)</td></tr>
+    <tr><td>2. Data pull</td><td>Reads canonical Projects + Open Tasks databases; optional meeting-note enrichment</td></tr>
+    <tr><td>3. Format rules</td><td>Uses prior reports for layout/Gantt style only — not for metrics</td></tr>
+    <tr><td>4. Output</td><td>Writes executive summary, portfolio Gantt, per-project deep dives, risks, and action items to Portfolio Status Report page</td></tr>
+  </table>
+
+  <p class="footnote">Redacted structural sample for portfolio use. Anonymized names; metrics and section order reflect a production Notion custom agent workflow at Aosenuma.ai (co-op).</p>
+</div>
 
 </body>
 </html>
