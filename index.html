@@ -696,9 +696,29 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 }
 .project-visual {
   margin: 0 0 2rem;
-  max-width: min(720px, 100%);
+  width: 100%;
+  max-width: 100%;
 }
 .project-visual .photo-frame { aspect-ratio: 16/10; }
+.project-visual .photo-frame--screenshot {
+  aspect-ratio: 1024 / 575;
+  max-width: 100%;
+  background: #1a1a1a;
+  border-color: var(--rule);
+  box-shadow: 0 8px 28px rgba(26, 24, 20, 0.08);
+}
+.project-visual .photo-frame--screenshot img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: none;
+}
+.project-visual .photo-frame--screenshot::after { display: none; }
+.project-visual .photo-frame--screenshot:hover img {
+  filter: none;
+  transform: none;
+}
+.project-visual .photo-caption { margin-top: 0.65rem; }
 @media (max-width: 720px) { .project { grid-template-columns: 1fr; gap: 1.5rem; } }
 
 /* =========================================================
@@ -1314,8 +1334,8 @@ footer {
           <a class="project-link" href="samples/Portfolio_Actuals_vs_Forecast_June_2026_Redacted.pdf" target="_blank" rel="noopener">View redacted sample report (PDF) ↗</a>
         </div>
         <figure class="project-visual">
-          <div class="photo-frame">
-            <img src="images/portfolio-report-agent-setup-redacted.png" alt="Redacted Notion custom agent setup for portfolio reporting automation" width="720" height="450" loading="lazy">
+          <div class="photo-frame photo-frame--screenshot">
+            <img src="images/portfolio-report-agent-setup-redacted.png" alt="Redacted Notion custom agent setup for portfolio reporting automation" width="1024" height="575" loading="lazy">
           </div>
           <figcaption class="photo-caption">Agent setup (redacted) · weekly trigger + canonical Notion sources</figcaption>
         </figure>
