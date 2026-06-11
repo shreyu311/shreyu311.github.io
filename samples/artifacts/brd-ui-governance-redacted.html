@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BRD — UI/UX Governance (Redacted Sample)</title>
+<style>
+  @page { size: letter; margin: 0.65in 0.7in; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color: #1a1814; line-height: 1.4; margin: 0; }
+  h1 { font-size: 16pt; margin: 0 0 0.15rem; }
+  h2 { font-size: 12pt; margin: 1rem 0 0.4rem; border-bottom: 1px solid #bbb; padding-bottom: 0.15rem; }
+  .banner { background: #f5f1ea; border: 1px solid #ccc; padding: 0.55rem 0.7rem; font-size: 9pt; margin-bottom: 0.75rem; }
+  .meta { color: #555; font-size: 9.5pt; margin-bottom: 0.65rem; }
+  table { width: 100%; border-collapse: collapse; margin: 0.35rem 0 0.75rem; font-size: 9pt; }
+  th, td { border: 1px solid #bbb; padding: 0.28rem 0.35rem; vertical-align: top; }
+  th { background: #ececec; }
+  ul { margin: 0.25rem 0 0.6rem 1.15rem; }
+  .footnote { font-size: 8.5pt; color: #666; margin-top: 0.75rem; border-top: 1px solid #ddd; padding-top: 0.4rem; }
+</style>
+</head>
+<body>
+
+<div class="banner"><strong>Redacted sample.</strong> Business Requirements Document structure preserved. Client names, product names, and personnel removed.</div>
+
+<h1>Business Requirements Document</h1>
+<p class="meta"><strong>Initiative:</strong> UI/UX Guidelines &amp; Design System (design.md) · <strong>Author:</strong> [Redacted] · <strong>Version:</strong> 1.2 · <strong>Status:</strong> Approved · <strong>Date:</strong> Mar 2026</p>
+
+<h2>1. Executive Summary</h2>
+<p>Live AI products lack a shared UI baseline, causing inconsistent components, rework in review cycles, and conflicting design decisions across teams. This BRD defines requirements for a tokenized design system, 168-point compliance audit process, and 7 UI-only consistency prototypes used for validation and LLM-ready design context.</p>
+
+<h2>2. Business Objectives</h2>
+<ul>
+  <li>Establish a single source of truth for UI tokens, components, and accessibility rules across Notion, GitHub, and code.</li>
+  <li>Increase design compliance from 85% to 92% on live products within one audit cycle.</li>
+  <li>Reduce UI review rework by providing repeatable audit scorecards for leadership.</li>
+  <li>Enable LLM-assisted design workflows with structured, machine-readable UI specifications.</li>
+</ul>
+
+<h2>3. Scope</h2>
+<table>
+  <tr><th>In scope</th><th>Out of scope</th></tr>
+  <tr>
+    <td>
+      Token file (colors, spacing, typography)<br>
+      Component standards &amp; accessibility rules<br>
+      168-point audit checklist<br>
+      7 UI-only consistency prototypes<br>
+      Compliance scorecards for live products
+    </td>
+    <td>
+      Net-new product features<br>
+      Production deployment of prototypes<br>
+      Third-party design tool migration
+    </td>
+  </tr>
+</table>
+
+<h2>4. Stakeholders</h2>
+<table>
+  <tr><th>Role</th><th>Responsibility</th><th>RACI</th></tr>
+  <tr><td>Product Leadership</td><td>Approve design system adoption</td><td>A</td></tr>
+  <tr><td>PM / BA (Co-op)</td><td>Requirements, audits, scorecards</td><td>R</td></tr>
+  <tr><td>Engineering Leads</td><td>Implement tokens in code</td><td>R</td></tr>
+  <tr><td>Design Review</td><td>Validate checklist &amp; prototypes</td><td>C</td></tr>
+</table>
+
+<h2>5. Functional Requirements</h2>
+<table>
+  <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+  <tr><td>FR-01</td><td>Publish machine-readable token file synced to GitHub and Notion</td><td>Must</td></tr>
+  <tr><td>FR-02</td><td>168-point checklist covering color, typography, spacing, a11y, components</td><td>Must</td></tr>
+  <tr><td>FR-03</td><td>Per-product compliance scorecard with gap notes and remediation owner</td><td>Must</td></tr>
+  <tr><td>FR-04</td><td>7 UI-only prototypes for consistency stress-testing (not live launches)</td><td>Should</td></tr>
+  <tr><td>FR-05</td><td>Executive summary rollup for leadership review cadence</td><td>Must</td></tr>
+</table>
+
+<h2>6. Success Metrics</h2>
+<table>
+  <tr><th>Metric</th><th>Baseline</th><th>Target</th></tr>
+  <tr><td>Design compliance (live products)</td><td>85%</td><td>92%</td></tr>
+  <tr><td>Guideline adoption</td><td>—</td><td>~80%</td></tr>
+  <tr><td>Products audited with scorecards</td><td>0</td><td>5 live products</td></tr>
+</table>
+
+<h2>7. Assumptions &amp; Constraints</h2>
+<ul>
+  <li>Prototypes are for validation and LLM context only—not production releases.</li>
+  <li>Live portfolio may change (7 projects at co-op start; 2 halted; 5 active)—audits apply to active live products.</li>
+  <li>Documentation maintained in Notion with GitHub as reference implementation.</li>
+</ul>
+
+<p class="footnote">Redacted structural sample for portfolio use · Methodology preserved · Aosenuma.ai co-op context anonymized</p>
+</body>
+</html>

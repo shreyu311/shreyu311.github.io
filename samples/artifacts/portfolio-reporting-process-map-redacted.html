@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Process Map — Portfolio Reporting (Redacted Sample)</title>
+<style>
+  @page { size: letter; margin: 0.65in 0.7in; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color: #1a1814; line-height: 1.4; margin: 0; }
+  h1 { font-size: 16pt; margin: 0 0 0.15rem; }
+  h2 { font-size: 12pt; margin: 1rem 0 0.4rem; border-bottom: 1px solid #bbb; padding-bottom: 0.15rem; }
+  .banner { background: #f5f1ea; border: 1px solid #ccc; padding: 0.55rem 0.7rem; font-size: 9pt; margin-bottom: 0.75rem; }
+  .meta { color: #555; font-size: 9.5pt; margin-bottom: 0.65rem; }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    margin: 0.5rem 0 0.85rem;
+    font-size: 9pt;
+  }
+  .box {
+    border: 1px solid #888;
+    padding: 0.35rem 0.5rem;
+    background: #fafafa;
+    min-width: 5.5rem;
+    text-align: center;
+    border-radius: 3px;
+  }
+  .box-system { background: #e8f0fe; border-color: #2563eb; }
+  .box-manual { background: #fde8e8; border-color: #c44; }
+  .box-auto { background: #e8f5e9; border-color: #16a34a; }
+  .arrow { color: #666; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 0.35rem 0 0.75rem; font-size: 9pt; }
+  th, td { border: 1px solid #bbb; padding: 0.28rem 0.35rem; vertical-align: top; }
+  th { background: #ececec; }
+  .footnote { font-size: 8.5pt; color: #666; margin-top: 0.75rem; border-top: 1px solid #ddd; padding-top: 0.4rem; }
+</style>
+</head>
+<body>
+
+<div class="banner"><strong>Redacted sample.</strong> As-is → to-be process map for weekly portfolio reporting. Client names anonymized.</div>
+
+<h1>Portfolio Reporting Workflow</h1>
+<p class="meta"><strong>Process:</strong> Actuals vs Forecast · <strong>Author:</strong> [Redacted] · <strong>Version:</strong> 1.0 · <strong>Date:</strong> Mar 2026</p>
+
+<h2>As-Is (Before Automation)</h2>
+<div class="flow">
+  <span class="box box-manual">PM opens<br>last deck</span>
+  <span class="arrow">→</span>
+  <span class="box box-manual">Copy from<br>Projects DB</span>
+  <span class="arrow">→</span>
+  <span class="box box-manual">Copy from<br>Tasks DB</span>
+  <span class="arrow">→</span>
+  <span class="box box-manual">Reformat<br>Gantt</span>
+  <span class="arrow">→</span>
+  <span class="box box-manual">Email /<br>share deck</span>
+</div>
+<p><strong>Time:</strong> ~2.5 hours/week · <strong>Pain:</strong> conflicting numbers between decks and source DBs · <strong>Scope:</strong> 5 active projects (7 at start; 2 halted)</p>
+
+<h2>To-Be (After Automation)</h2>
+<div class="flow">
+  <span class="box box-auto">Mon 8 AM<br>trigger</span>
+  <span class="arrow">→</span>
+  <span class="box box-system">Agent reads<br>Projects DB</span>
+  <span class="arrow">→</span>
+  <span class="box box-system">Agent reads<br>Open Tasks</span>
+  <span class="arrow">→</span>
+  <span class="box box-system">Generate<br>report page</span>
+  <span class="arrow">→</span>
+  <span class="box box-manual">PM review<br>~20 min</span>
+  <span class="arrow">→</span>
+  <span class="box box-auto">Publish<br>canonical</span>
+</div>
+
+<h2>RACI — Weekly Reporting</h2>
+<table>
+  <tr><th>Activity</th><th>PM</th><th>Agent</th><th>Leadership</th></tr>
+  <tr><td>Schedule / trigger</td><td>I</td><td>R</td><td>—</td></tr>
+  <tr><td>Data pull from canonical DBs</td><td>—</td><td>R</td><td>—</td></tr>
+  <tr><td>Validate variance flags</td><td>R/A</td><td>C</td><td>I</td></tr>
+  <tr><td>Meeting-note enrichment</td><td>R</td><td>—</td><td>—</td></tr>
+  <tr><td>Publish weekly report</td><td>R</td><td>—</td><td>I</td></tr>
+  <tr><td>Act on portfolio risks</td><td>C</td><td>—</td><td>A</td></tr>
+</table>
+
+<h2>Data Sources</h2>
+<table>
+  <tr><th>Source</th><th>Used for</th><th>Rules</th></tr>
+  <tr><td>Projects DB</td><td>Status, dates, phase, owner</td><td>Canonical; always live</td></tr>
+  <tr><td>Open Tasks DB</td><td>Task counts by status</td><td>Canonical; always live</td></tr>
+  <tr><td>Prior reports</td><td>Layout / Gantt style only</td><td>Never used for metrics</td></tr>
+  <tr><td>Meeting notes</td><td>PM alignment enrichment</td><td>Optional; query-window matched</td></tr>
+</table>
+
+<p class="footnote">Redacted structural sample for portfolio use · Supports Project 2 case study · Aosenuma.ai co-op context anonymized</p>
+</body>
+</html>

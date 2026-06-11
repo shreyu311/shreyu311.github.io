@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Stories — Portfolio Reporting (Redacted Sample)</title>
+<style>
+  @page { size: letter; margin: 0.65in 0.7in; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color: #1a1814; line-height: 1.4; margin: 0; }
+  h1 { font-size: 16pt; margin: 0 0 0.15rem; }
+  h2 { font-size: 12pt; margin: 1rem 0 0.4rem; border-bottom: 1px solid #bbb; padding-bottom: 0.15rem; }
+  .banner { background: #f5f1ea; border: 1px solid #ccc; padding: 0.55rem 0.7rem; font-size: 9pt; margin-bottom: 0.75rem; }
+  .meta { color: #555; font-size: 9.5pt; margin-bottom: 0.65rem; }
+  table { width: 100%; border-collapse: collapse; margin: 0.35rem 0 0.75rem; font-size: 9pt; }
+  th, td { border: 1px solid #bbb; padding: 0.28rem 0.35rem; vertical-align: top; }
+  th { background: #ececec; }
+  .story { margin: 0.75rem 0; padding: 0.5rem 0.65rem; border: 1px solid #ddd; background: #fafafa; }
+  .story-id { font-weight: 700; color: #b8491c; font-size: 9pt; }
+  .footnote { font-size: 8.5pt; color: #666; margin-top: 0.75rem; border-top: 1px solid #ddd; padding-top: 0.4rem; }
+</style>
+</head>
+<body>
+
+<div class="banner"><strong>Redacted sample.</strong> User stories and acceptance criteria for portfolio reporting automation. Project names and personnel anonymized.</div>
+
+<h1>User Stories &amp; Acceptance Criteria</h1>
+<p class="meta"><strong>Epic:</strong> Portfolio Actuals vs Forecast Automation · <strong>Sprint:</strong> Reporting Ops · <strong>Author:</strong> [Redacted] · <strong>Date:</strong> Feb 2026</p>
+
+<h2>Epic Goal</h2>
+<p>As a <strong>portfolio PM</strong>, I need a weekly Actuals vs Forecast report generated from canonical databases so that leadership receives one accurate status view without manual copy-paste (~2.5 hrs → ~20 min review).</p>
+
+<div class="story">
+  <div class="story-id">US-01 · Weekly report trigger</div>
+  <p><strong>As a</strong> portfolio PM, <strong>I want</strong> the agent to run every Monday at 8:00 AM, <strong>so that</strong> the report is ready before the weekly cadence meeting.</p>
+  <p><strong>Acceptance criteria:</strong></p>
+  <ul>
+    <li>Scheduled trigger fires at 8:00 AM ET each Monday</li>
+    <li>Manual re-run available in Notion without changing schedule</li>
+    <li>Failure notification logged if data pull incomplete</li>
+  </ul>
+</div>
+
+<div class="story">
+  <div class="story-id">US-02 · Live data integrity</div>
+  <p><strong>As a</strong> PM, <strong>I want</strong> all metrics pulled from Projects DB and Open Tasks, <strong>so that</strong> no stale figures from prior decks appear in the report.</p>
+  <p><strong>Acceptance criteria:</strong></p>
+  <ul>
+    <li>Reference reports used for format/layout only—not live metrics</li>
+    <li>Each executive summary row traces to Projects DB record</li>
+    <li>Task counts match Open Tasks DB at generation time</li>
+  </ul>
+</div>
+
+<div class="story">
+  <div class="story-id">US-03 · Portfolio executive summary</div>
+  <p><strong>As</strong> leadership, <strong>I want</strong> a single-page portfolio summary for all active projects, <strong>so that</strong> I can spot variance without opening five separate decks.</p>
+  <p><strong>Acceptance criteria:</strong></p>
+  <ul>
+    <li>Covers 5 active live projects (7 at co-op start; 2 halted excluded from active roll-up)</li>
+    <li>Columns: status, phase, forecast dates, actual dates, variance flag, task completion</li>
+    <li>Halted projects marked separately—not counted as active</li>
+  </ul>
+</div>
+
+<div class="story">
+  <div class="story-id">US-04 · Gantt &amp; deep dive</div>
+  <p><strong>As a</strong> PM, <strong>I want</strong> a portfolio Gantt and one project deep dive per week, <strong>so that</strong> we rotate visibility across the portfolio.</p>
+  <p><strong>Acceptance criteria:</strong></p>
+  <ul>
+    <li>Portfolio-level Gantt with forecast vs actual bars</li>
+    <li>One full deep dive: milestones, task tie-out, risks, actions</li>
+    <li>Mermaid-compatible output in production Notion workflow</li>
+  </ul>
+</div>
+
+<div class="story">
+  <div class="story-id">US-05 · PM review workflow</div>
+  <p><strong>As a</strong> PM, <strong>I want</strong> to review and publish in ~20 minutes, <strong>so that</strong> reporting prep does not consume half my Monday.</p>
+  <p><strong>Acceptance criteria:</strong></p>
+  <ul>
+    <li>Draft generated before 8:15 AM</li>
+    <li>PM validates variance flags and adds meeting-note enrichment when available</li>
+    <li>Published report is the single canonical version for the week</li>
+  </ul>
+</div>
+
+<h2>Definition of Done (Epic)</h2>
+<table>
+  <tr><th>Criteria</th><th>Status</th></tr>
+  <tr><td>4 consecutive weekly runs validated against PM checklist</td><td>Met</td></tr>
+  <tr><td>Manual prep time reduced from ~2.5 hrs to ~20 min review</td><td>Met</td></tr>
+  <tr><td>Zero conflicting status figures between report and source DBs</td><td>Met</td></tr>
+</table>
+
+<p class="footnote">Redacted structural sample for portfolio use · Methodology preserved · Aosenuma.ai co-op context anonymized</p>
+</body>
+</html>

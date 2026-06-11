@@ -802,6 +802,74 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   font-size: var(--type-body-sm);
   margin: 0;
 }
+
+/* =========================================================
+   SELECTED ARTIFACTS
+   ========================================================= */
+.artifacts-intro {
+  font-size: var(--type-body);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-bottom: 2.25rem;
+}
+.artifacts-grid {
+  display: grid;
+  gap: 1rem;
+  max-width: 52rem;
+}
+.artifact-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem 1.5rem;
+  align-items: start;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+.artifact-card h4 {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 400;
+  margin-bottom: 0.35rem;
+}
+.artifact-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--leading-relaxed);
+  max-width: 48ch;
+}
+.artifact-card .artifact-tag {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.artifact-card .artifact-link {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.85rem;
+  white-space: nowrap;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.artifact-card .artifact-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+@media (max-width: 640px) {
+  .artifact-card { grid-template-columns: 1fr; }
+  .artifact-card .artifact-link { justify-self: start; }
+}
 .project-visual {
   margin: 0 0 2rem;
   width: 100%;
@@ -1303,6 +1371,7 @@ footer {
       <li><a href="#about">About</a></li>
       <li><a href="#how-i-work">How I Work</a></li>
       <li><a href="#work">Work</a></li>
+      <li><a href="#artifacts">Artifacts</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#beyond">Life</a></li>
@@ -1516,10 +1585,71 @@ footer {
     </article>
   </section>
 
+  <!-- =================== SELECTED ARTIFACTS =================== -->
+  <section id="artifacts">
+    <div class="section-head">
+      <div class="label">04 — Selected Artifacts</div>
+      <h2>Artifacts — Redacted work samples.</h2>
+    </div>
+
+    <div data-reveal>
+      <p class="artifacts-intro">
+        Redacted samples from co-op work. Client names and sensitive data removed; structure and methodology preserved. Each PDF mirrors document types I produced at Aosenuma.ai.
+      </p>
+
+      <div class="artifacts-grid">
+        <article class="artifact-card">
+          <div>
+            <span class="artifact-tag">Business Analysis</span>
+            <h4>Business Requirements Document</h4>
+            <p>UI/UX Guidelines initiative — objectives, scope, stakeholders, functional requirements, RACI, and success metrics (85% → 92% compliance).</p>
+          </div>
+          <a class="artifact-link" href="samples/artifacts/brd-ui-governance-redacted.pdf" target="_blank" rel="noopener">View PDF ↗</a>
+        </article>
+
+        <article class="artifact-card">
+          <div>
+            <span class="artifact-tag">Business Analysis</span>
+            <h4>User Stories &amp; Acceptance Criteria</h4>
+            <p>Portfolio reporting automation epic — weekly trigger, live data integrity, executive summary, Gantt/deep dive, and PM review workflow.</p>
+          </div>
+          <a class="artifact-link" href="samples/artifacts/user-stories-portfolio-reporting-redacted.pdf" target="_blank" rel="noopener">View PDF ↗</a>
+        </article>
+
+        <article class="artifact-card">
+          <div>
+            <span class="artifact-tag">Business Analysis</span>
+            <h4>Requirements Traceability Matrix</h4>
+            <p>Links BRD requirements to deliverables, test evidence, and success metrics — including gap log for remediation tracking.</p>
+          </div>
+          <a class="artifact-link" href="samples/artifacts/rtm-design-system-redacted.pdf" target="_blank" rel="noopener">View PDF ↗</a>
+        </article>
+
+        <article class="artifact-card">
+          <div>
+            <span class="artifact-tag">Process Improvement</span>
+            <h4>UI Compliance Scorecard</h4>
+            <p>168-point audit scorecard for one live product — category breakdown, critical gaps, remediation owners, and auditor recommendation.</p>
+          </div>
+          <a class="artifact-link" href="samples/artifacts/ui-compliance-scorecard-redacted.pdf" target="_blank" rel="noopener">View PDF ↗</a>
+        </article>
+
+        <article class="artifact-card">
+          <div>
+            <span class="artifact-tag">Process Improvement</span>
+            <h4>Portfolio Reporting Process Map</h4>
+            <p>As-is → to-be workflow for weekly Actuals vs Forecast reporting — RACI, data sources, and automation handoff (~2.5 hrs → ~20 min).</p>
+          </div>
+          <a class="artifact-link" href="samples/artifacts/portfolio-reporting-process-map-redacted.pdf" target="_blank" rel="noopener">View PDF ↗</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- =================== EXPERIENCE =================== -->
   <section id="experience">
     <div class="section-head">
-      <div class="label">04 — Experience</div>
+      <div class="label">05 — Experience</div>
       <h2>Experience — Where I've worked.</h2>
     </div>
 
@@ -1544,7 +1674,7 @@ footer {
   <!-- =================== EDUCATION & SKILLS =================== -->
   <section id="skills">
     <div class="section-head">
-      <div class="label">05 — Education &amp; Skills</div>
+      <div class="label">06 — Education &amp; Skills</div>
       <h2>Education &amp; Skills — Training and tools.</h2>
     </div>
 
@@ -1649,7 +1779,7 @@ footer {
   <!-- =================== BEYOND WORK =================== -->
   <section id="beyond">
     <div class="section-head">
-      <div class="label">06 — Beyond Work</div>
+      <div class="label">07 — Beyond Work</div>
       <h2>Leadership &amp; Activities — When I'm not at a desk.</h2>
     </div>
 
