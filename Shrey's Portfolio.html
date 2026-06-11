@@ -669,6 +669,13 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
   border-color: var(--accent);
   background: var(--accent-soft);
 }
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  margin-bottom: 1.75rem;
+}
+.project-actions .project-link { margin-bottom: 0; }
 .project-panel {
   background: var(--surface);
   border: 1px solid var(--rule);
@@ -689,7 +696,7 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
 }
 .project-visual {
   margin: 0 0 2rem;
-  max-width: 420px;
+  max-width: min(720px, 100%);
 }
 .project-visual .photo-frame { aspect-ratio: 16/10; }
 @media (max-width: 720px) { .project { grid-template-columns: 1fr; gap: 1.5rem; } }
@@ -1301,10 +1308,20 @@ footer {
         <h3>Portfolio Report Agent (Actuals vs Forecast Automation)</h3>
         <div class="role">Reporting Automation &amp; Data Integrity</div>
         <p class="summary">
-          Built a Notion custom agent automating weekly Portfolio Actuals vs Forecast reports - pulling live data from canonical project databases to generate executive-ready status reports across a 7-project portfolio.
+          PMs were rebuilding the same Actuals vs Forecast deck every Monday. I configured a Notion custom agent with a weekly trigger, read access to canonical project databases, and rules that use past reports for formatting only - not live metrics.
         </p>
+        <div class="project-actions">
+          <a class="project-link" href="samples/Portfolio_Actuals_vs_Forecast_June_2026.pdf" target="_blank" rel="noopener">View sample report (PDF) ↗</a>
+        </div>
+        <figure class="project-visual">
+          <div class="photo-frame">
+            <img src="images/portfolio-report-agent-setup.png" alt="Notion custom agent setup for Portfolio Report Agent with weekly trigger and database access" width="720" height="450" loading="lazy">
+          </div>
+          <figcaption class="photo-caption">Agent setup · weekly Monday trigger + canonical Notion sources</figcaption>
+        </figure>
         <ul class="highlights">
-          <li><span>Eliminated hours of weekly manual data gathering and formatting.</span></li>
+          <li><span>Runs every Monday at 8 AM across 7 projects - executive summary, forecast vs actual variance, per-project Gantt charts, and top portfolio risks.</span></li>
+          <li><span>Sample output (Jun 8, 2026): 9-page report pulled from Projects DB and Open Tasks, with reference pages locked to format-only use.</span></li>
         </ul>
         <div class="tags">
           <span>Notion Custom Agents</span>
