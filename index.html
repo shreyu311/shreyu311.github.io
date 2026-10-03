@@ -399,7 +399,7 @@ nav a:hover { color: var(--accent); }
 }
 .hero-proof li {
   display: grid;
-  grid-template-columns: 3.5rem 1fr;
+  grid-template-columns: 5rem 1fr;
   gap: 0.65rem 0.85rem;
   align-items: baseline;
   padding: 0.55rem 0;
@@ -407,7 +407,8 @@ nav a:hover { color: var(--accent); }
 .hero-proof li + li:not(.hero-proof-section) {
   border-top: 1px solid rgba(26, 24, 20, 0.06);
 }
-.hero-proof-section {
+.hero-proof li.hero-proof-section {
+  display: block;
   grid-template-columns: 1fr;
   padding: 0.85rem 0 0.35rem;
   font-family: var(--font-label);
@@ -417,10 +418,11 @@ nav a:hover { color: var(--accent); }
   color: var(--accent);
   font-weight: 500;
 }
-.hero-proof-section:first-child {
+.hero-proof li.hero-proof-section:first-child {
   padding-top: 0;
 }
 .hero-proof .n {
+  white-space: nowrap;
   font-family: var(--font-display);
   font-size: var(--type-h3);
   font-weight: 400;
@@ -978,9 +980,13 @@ section { padding: var(--space-section) 0; border-top: 1px solid var(--rule); }
    ========================================================= */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: 1fr;
   gap: 1.5rem;
 }
+@media (min-width: 640px) {
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.skill-block ul + h4 { margin-top: 1.75rem; }
 .skill-block {
   background: var(--surface);
   border: 1px solid var(--rule);
@@ -1395,7 +1401,7 @@ footer {
         </p>
         <ul class="hero-proof">
           <li class="hero-proof-section">Co-op · Aosenuma.ai</li>
-          <li><span class="n">85→92%</span><span class="t">Live-product UI/UX compliance</span></li>
+          <li><span class="n">92%</span><span class="t">Live-product UI/UX compliance <em>(up from 85%)</em></span></li>
           <li><span class="n">5</span><span class="t">Live projects on weekly portfolio cadence</span></li>
           <li><span class="n">~87%</span><span class="t">Less weekly reporting prep</span></li>
           <li class="hero-proof-section">Education</li>
@@ -1586,12 +1592,16 @@ footer {
         <h3>Capstone Project · Ardelyx IT Transformation Case</h3>
         <div class="role">Benefits Realization · IT Portfolio Governance · Northeastern University</div>
         <p class="summary">
-          IT-transformation investments often lack a clear way to prove value after go-live. For my M.S. capstone, I am building a value-realization approach that ties each investment to measurable benefits and accountable owners.
+          IT-transformation investments often lack a clear way to prove value after go-live. For my M.S. capstone, I developed a value-realization approach that ties each investment to measurable benefits and accountable owners.
         </p>
-        <ul class="highlights">
-          <li><span>Developed a value-realization framework that translates 10 case situations into benefit hypotheses, clear owners, and six-month post-implementation reviews.</span></li>
-          <li><span>Built a lightweight benefits-management model linking project intake, RACI ownership, and portfolio feedback to improve IT investment decisions without new tools.</span></li>
-        </ul>
+        <div class="project-panel">
+          <div class="usage-label">Case study</div>
+          <ul class="usage">
+            <li><strong>Framework:</strong> Translated 10 case situations into benefit hypotheses, clear owners, and six-month post-implementation reviews.</li>
+            <li><strong>Model:</strong> Built a lightweight benefits-management model linking project intake, RACI ownership, and portfolio feedback.</li>
+            <li><strong>Outcome:</strong> Improves IT investment decisions without requiring new tools.</li>
+          </ul>
+        </div>
         <div class="tags">
           <span>Benefits Management</span>
           <span>RACI</span>
@@ -1773,7 +1783,7 @@ footer {
           <li>KPIs</li>
           <li>OKRs</li>
         </ul>
-        <h4 style="margin-top:1.5rem">Certifications</h4>
+        <h4>Certifications</h4>
         <ul class="skill-points">
           <li>Business Analysis Foundations</li>
           <li>Scrum Fundamentals</li>
@@ -1809,11 +1819,11 @@ footer {
 
     <div class="coursework" data-reveal>
       <h3 class="coursework-head">Relevant Coursework</h3>
-      <p class="coursework-intro">Selected courses from both degrees</p>
+      <p class="coursework-intro">Northeastern University · Mumbai University</p>
 
       <div class="coursework-tracks">
         <div class="coursework-track">
-          <h4>M.S. Project Management · Northeastern</h4>
+          <h4>M.S. Project Management</h4>
           <ul class="course-list">
             <li><span class="course-title">Foundations of Project Management</span></li>
             <li><span class="course-title">Foundations of Project Business Analysis</span></li>
@@ -1825,7 +1835,7 @@ footer {
         </div>
 
         <div class="coursework-track">
-          <h4>B.S. Information Technology · Mumbai University</h4>
+          <h4>B.S. Information Technology</h4>
           <ul class="course-list">
             <li><span class="course-title">Database Management Systems</span></li>
             <li><span class="course-title">UI/UX Design</span></li>
@@ -1857,7 +1867,7 @@ footer {
         </figure>
         <div>
           <h3>Sprinter, Track &amp; Field</h3>
-          <div class="life-meta">Northeastern Club Running (NUCR) · Northeastern University Athletics · Sep 2024 — Present</div>
+          <div class="life-meta">Northeastern Club Running (NUCR) · Sep 2024 — Present</div>
           <ul>
             <li>Compete in sprint events for NUCR, balancing 12+ weekly training hours with a full graduate course load—ranked Top 20 in NIRCA.</li>
             <li>Represented India in national-level sprinting meets prior to Northeastern.</li>
