@@ -8,6 +8,7 @@
 <meta name="author" content="Shreyas Shirke">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://shreyu311.github.io/">
+<script>document.documentElement.classList.add("js");</script>
 
 <script type="application/ld+json">
 {
@@ -1353,12 +1354,20 @@ footer {
 .hero .actions { animation-delay: 0.5s; }
 .hero-visual { animation-delay: 0.25s; }
 
-[data-reveal] {
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-[data-reveal].in { opacity: 1; transform: translateY(0); }
+.js [data-reveal].in { opacity: 1; transform: translateY(0); }
+
+/* Keyboard focus: visible outline for tab navigation only */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 </style>
 </head>
 <body>
