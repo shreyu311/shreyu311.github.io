@@ -8,7 +8,6 @@ Personal portfolio for **Shreyas Shirke**, Business Analyst · Project Operation
 ## What's on the site
 
 - **Selected work:** UI/UX Guidelines & Design System, Portfolio Report Agent (Actuals vs Forecast automation), and an IT-transformation capstone
-- **Artifacts:** redacted business-analysis samples (BRD, user stories, traceability matrix, checklist, scorecard, process map)
 - **Experience, education & skills:** kept in sync with the résumé PDF
 
 ## Structure
@@ -19,7 +18,6 @@ index.html          Single-page site (HTML, inline CSS and JS)
 favicon.svg         Site icon
 images/             Photos and the link-preview card (og-card.png)
 resume/             Current résumé PDF (one file only)
-samples/            Redacted work samples (PDF)
 robots.txt          Crawler rules
 sitemap.xml         Pages for search engines
 ```
