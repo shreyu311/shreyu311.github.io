@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AthleteLoad prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,600..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* Tokens from the Shrey brand book, prototype v0.1 (Oct 2026). Dark = Night shift, light = Daylight. */
+:root{
+  --font-display:"Big Shoulders","Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-text:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --afterglow:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%);
+
+  /* Daylight: Mist, white, Midnight Plum, Night Navy, Electric Blue */
+  --canvas:#F3EFF7; --glow:none; --surface:#FFFFFF; --surface-2:#F9F7FB; --track:#F3EFF7;
+  --ink:#1E0D15; --heading:#142134; --muted:#665A60; --line:#E2DEE0; --line-strong:#837A7E;
+  --accent:#2348C2; --focus:#2348C2; --icon:#142134;
+  --primary:#E719DA; --on-primary:#0C1014;
+  --sel-bg:#2348C2; --sel-ink:#FFFFFF; --sel-border:#2348C2;
+  --review:#E92996; --review-bg:#FDEAF4; --review-ic:#E92996;
+  --watch:#D29F23; --watch-bg:#EEDBAB; --watch-ic:#1E0D15;
+  --gap:#142134; --gap-bg:#E8E9EB; --gap-ic:#142134;
+  --info:#2348C2; --info-bg:#E9EDF9; --info-ic:#2348C2;
+  --ok:#008C85; --ok-bg:#E6F4F3; --ok-ic:#008C85;
+  --draft-ink:#1E0D15; --draft-bg:#F4E7C8; --draft-border:#D29F23;
+  --c-bar:#2348C2; --c-bar-edge:#2348C2; --c-l1:#142134; --c-l2:#9617C1; --c-pt:#2348C2;
+  --c-band:#E9EDF9; --c-band-edge:#2348C2; --c-nc:#E92996;
+  --progress:#2348C2; --banner-edge:#E2DEE0;
+  --wm-fill:linear-gradient(90deg,#142134,#142134); --wm-dot:#E719DA; --wm-glow:none;
+  --fdot:#E719DA; --fdot-glow:none;
+  color-scheme: light;
+  /* Heart-rate zones run cool to hot along the palette; every segment is labeled and outlined */
+  --z1:#008C85; --z2:#36B9D5; --z3:#2348C2; --z4:#9617C1; --z5:#E719DA;
+  --z1t:#0C1014; --z2t:#0C1014; --z3t:#FFFFFF; --z4t:#FFFFFF; --z5t:#0C1014;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    /* Night shift: Screen Black, Mist, neon in small doses */
+    --canvas:#0C1014; --surface:#0F161F; --surface-2:#121C2A; --track:#121C2A;
+    --glow:radial-gradient(900px 640px at 0% 0%, rgba(150,23,193,.17), transparent 62%), radial-gradient(900px 700px at 100% 100%, rgba(35,72,194,.16), transparent 62%);
+    --ink:#F3EFF7; --heading:#F3EFF7; --muted:#A4A3AA; --line:#2C2F34; --line-strong:#74747A;
+    --accent:#36B9D5; --focus:#36B9D5; --icon:#36B9D5;
+    --primary:#E719DA; --on-primary:#0C1014;
+    --sel-bg:#2348C2; --sel-ink:#F3EFF7; --sel-border:#36B9D5;
+    --review:#E92996; --review-bg:#2E1930; --review-ic:#E92996;
+    --watch:#D29F23; --watch-bg:#2A2920; --watch-ic:#D29F23;
+    --gap:#A4A3AA; --gap-bg:#1A2029; --gap-ic:#A4A3AA;
+    --info:#36B9D5; --info-bg:#142D38; --info-ic:#36B9D5;
+    --ok:#008C85; --ok-bg:#0D272D; --ok-ic:#00A79F;
+    --draft-ink:#D29F23; --draft-bg:#282416; --draft-border:#D29F23;
+    --c-bar:#2348C2; --c-bar-edge:#36B9D5; --c-l1:#F3EFF7; --c-l2:#E719DA; --c-pt:#36B9D5;
+    --c-band:#142248; --c-band-edge:#74747A; --c-nc:#E92996;
+    --progress:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%);
+    --banner-edge:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%);
+    --wm-fill:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%); --wm-dot:#36B9D5; --wm-glow:0 0 14px rgba(54,185,213,.85);
+    --fdot:#36B9D5; --fdot-glow:0 0 10px rgba(54,185,213,.9);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+    /* Night shift: Screen Black, Mist, neon in small doses */
+    --canvas:#0C1014; --surface:#0F161F; --surface-2:#121C2A; --track:#121C2A;
+    --glow:radial-gradient(900px 640px at 0% 0%, rgba(150,23,193,.17), transparent 62%), radial-gradient(900px 700px at 100% 100%, rgba(35,72,194,.16), transparent 62%);
+    --ink:#F3EFF7; --heading:#F3EFF7; --muted:#A4A3AA; --line:#2C2F34; --line-strong:#74747A;
+    --accent:#36B9D5; --focus:#36B9D5; --icon:#36B9D5;
+    --primary:#E719DA; --on-primary:#0C1014;
+    --sel-bg:#2348C2; --sel-ink:#F3EFF7; --sel-border:#36B9D5;
+    --review:#E92996; --review-bg:#2E1930; --review-ic:#E92996;
+    --watch:#D29F23; --watch-bg:#2A2920; --watch-ic:#D29F23;
+    --gap:#A4A3AA; --gap-bg:#1A2029; --gap-ic:#A4A3AA;
+    --info:#36B9D5; --info-bg:#142D38; --info-ic:#36B9D5;
+    --ok:#008C85; --ok-bg:#0D272D; --ok-ic:#00A79F;
+    --draft-ink:#D29F23; --draft-bg:#282416; --draft-border:#D29F23;
+    --c-bar:#2348C2; --c-bar-edge:#36B9D5; --c-l1:#F3EFF7; --c-l2:#E719DA; --c-pt:#36B9D5;
+    --c-band:#142248; --c-band-edge:#74747A; --c-nc:#E92996;
+    --progress:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%);
+    --banner-edge:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%);
+    --wm-fill:linear-gradient(90deg,#E719DA 0%,#9617C1 36%,#2348C2 68%,#36B9D5 100%); --wm-dot:#36B9D5; --wm-glow:0 0 14px rgba(54,185,213,.85);
+    --fdot:#36B9D5; --fdot-glow:0 0 10px rgba(54,185,213,.9);
+    color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top, 0px) + 72px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--glow), var(--canvas);background-attachment:fixed;color:var(--ink);
+  font-family:var(--font-text);font-size:1.0625rem;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--canvas)}
+h1,h2,h3{margin:0;color:var(--heading)}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.75rem, 1.7rem + 3.6vw, 4rem);line-height:.9;letter-spacing:.003em}
+h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);line-height:1}
+h3{font-size:1.3125rem;line-height:1.25;font-weight:700}
+p{margin:.4rem 0}
+a{color:var(--accent);text-underline-offset:3px}
+img,svg{max-width:100%}
+.tnum,td,th{font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:8px;top:-60px;background:var(--surface);color:var(--ink);padding:.6rem 1rem;border:2px solid var(--focus);border-radius:999px;z-index:20}
+.skip:focus{top:calc(env(safe-area-inset-top, 0px) + 8px)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+.ic{width:16px;height:16px;flex:none;vertical-align:-3px}
+
+/* Top bar with the Afterglow banner edge (dark only) */
+.topbar{position:sticky;top:env(safe-area-inset-top, 0px);z-index:9;background:var(--canvas)}
+.topbar::after{content:"";display:block;height:2px;background:var(--banner-edge)}
+.topbar-in{display:flex;align-items:center;gap:.5rem 1rem;flex-wrap:wrap;padding-top:.5rem;padding-bottom:.5rem}
+.brand{display:flex;align-items:center;gap:.45rem;font-family:var(--font-display);font-weight:800;font-size:1.75rem;line-height:1;color:var(--heading)}
+.brand svg{width:26px;height:26px;color:var(--icon)}
+.simbadge{display:inline-flex;align-items:center;gap:.35rem;padding:.12rem .65rem;border:1.5px dashed var(--draft-border);color:var(--draft-ink);background:var(--draft-bg);border-radius:999px;font-weight:700;font-size:.8125rem;line-height:1.5}
+.topbar .note{color:var(--muted);font-size:.875rem;margin:0;display:none}
+@media (min-width:760px){.topbar .note{display:block}}
+.ctrl-note{color:var(--muted);font-size:.875rem;margin:0;flex-basis:100%}
+@media (min-width:760px){.ctrl-note{display:none}}
+
+/* Controls */
+.ctrl{border-bottom:1px solid var(--line)}
+.ctrl-in{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.75rem 1.25rem;padding-top:.75rem;padding-bottom:.85rem}
+.fi{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.fi label,.seg legend{font-size:.875rem;color:var(--muted);font-weight:600}
+select,input[type=text],input[type=search],input[type=number],input[type=date],input[type=time],textarea{
+  font:inherit;font-size:1rem;color:var(--ink);background:var(--surface);border:1.5px solid var(--line-strong);border-radius:10px;min-height:44px;padding:.45rem .65rem;max-width:100%}
+textarea{min-height:88px;resize:vertical;width:100%;line-height:1.5}
+select{padding-right:2rem}
+.seg{border:0;padding:0;margin:0;min-width:0}
+.seg legend{padding:0;margin-bottom:.2rem}
+.seg-row{display:inline-flex;border:1.5px solid var(--line-strong);border-radius:999px;overflow:hidden}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg label{display:inline-flex;align-items:center;justify-content:center;min-height:41px;padding:0 1rem;cursor:pointer;font-weight:600;font-size:.9375rem;color:var(--ink);background:transparent}
+.seg input:checked+label{background:var(--sel-bg);color:var(--sel-ink)}
+.seg input:checked+label::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:.45rem}
+.seg input:focus-visible+label{outline:3px solid var(--focus);outline-offset:-3px}
+
+/* Buttons: pills, Signal Magenta primary */
+.btn{font:inherit;font-size:1rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px;padding:.45rem 1.15rem;border-radius:999px;border:1.5px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;line-height:1.2}
+.btn:hover{background:var(--surface-2)}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn-primary:hover{background:var(--primary);filter:brightness(1.1)}
+.btn-quiet{border-color:transparent;background:transparent;text-decoration:underline;text-underline-offset:3px;padding-left:.35rem;padding-right:.35rem}
+.btn[aria-disabled="true"]{opacity:.78;cursor:progress}
+.linkbtn{font:inherit;background:none;border:0;padding:.3rem 0;min-height:32px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-weight:700;text-align:left}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+/* The finish dot doubles as the loading indicator */
+.fdot{width:10px;height:10px;border-radius:50%;background:var(--fdot);box-shadow:var(--fdot-glow);flex:none;display:inline-block;animation:fd 1.1s ease-in-out infinite}
+.btn-primary .fdot{background:var(--on-primary);box-shadow:none}
+@keyframes fd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+/* Tabs */
+.tabs{border-bottom:1px solid var(--line)}
+[role=tablist]{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:thin}
+[role=tab]{font:inherit;font-size:1rem;font-weight:600;flex:none;min-height:48px;padding:0 .95rem;border:0;background:none;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+[role=tab][aria-selected=true]{color:var(--ink);font-weight:700;border-bottom-color:var(--primary)}
+[role=tab]:hover{color:var(--ink)}
+[role=tab]:focus-visible{outline-offset:-3px}
+
+/* Chapter-style context header: thick rule, display name, thin rule */
+main{padding-bottom:48px}
+.ctx{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:.5rem 1.5rem;margin-top:22px;padding:16px 0 14px;border-top:3px solid var(--heading);border-bottom:1px solid var(--line-strong)}
+.ctx .meta{color:var(--muted);margin:.45rem 0 0}
+.asof{color:var(--muted);font-size:.875rem;margin:0}
+#panel{outline:none}
+#panel:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.sec{margin-top:32px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem 1rem}
+.lede{color:var(--muted);max-width:70ch;margin-top:.5rem}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:12px}
+.block>h3{margin-bottom:.25rem}
+.small{font-size:.875rem;line-height:1.5}
+.muted{color:var(--muted)}
+
+/* Chips: ink text, status-colored icon and outline, tinted fill */
+.chip{display:inline-flex;align-items:center;gap:.35rem;padding:.08rem .6rem;border-radius:999px;font-size:.8125rem;font-weight:700;line-height:1.5;border:1.5px solid var(--line-strong);color:var(--ink);max-width:100%}
+.chip-review{background:var(--review-bg);border-color:var(--review)} .chip-review .ic{color:var(--review-ic)}
+.chip-watch{background:var(--watch-bg);border-color:var(--watch)} .chip-watch .ic{color:var(--watch-ic)}
+.chip-gap{background:var(--gap-bg);border-color:var(--gap);border-style:dashed} .chip-gap .ic{color:var(--gap-ic)}
+.chip-info{background:var(--info-bg);border-color:var(--info)} .chip-info .ic{color:var(--info-ic)}
+.chip-ok{background:var(--ok-bg);border-color:var(--ok)} .chip-ok .ic{color:var(--ok-ic)}
+.chip-plain{background:transparent;color:var(--muted)} .chip-plain .ic{color:var(--icon)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+
+/* Alerts */
+.alerts{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr))}
+.alert{background:var(--surface);border:1px solid var(--line);border-left-width:5px;border-radius:12px;padding:12px 14px}
+.alert h3{font-size:1.0625rem}
+.alert-review{border-left-color:var(--review)}
+.alert-watch{border-left-color:var(--watch)}
+.alert-gap{border-left-color:var(--gap);border-left-style:dashed}
+.alert-info{border-left-color:var(--info)}
+.alert-head{display:flex;flex-wrap:wrap;gap:.4rem .6rem;align-items:center}
+.alert p{max-width:75ch}
+.alert .basis{color:var(--muted);font-size:.875rem}
+.calm{display:flex;gap:.6rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.calm .ic{color:var(--ok-ic);margin-top:5px}
+
+/* Tiles: scoreboard figures in the display face */
+.tiles{display:grid;gap:12px;margin-top:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.tile-h{font-size:1rem;color:var(--muted);font-weight:700}
+.metric{display:flex;align-items:baseline;gap:.35rem;flex-wrap:wrap;margin:.1rem 0 .2rem}
+.metric .num{font-family:var(--font-display);font-size:3rem;font-weight:700;line-height:.9;color:var(--heading)}
+.metric .unit{color:var(--muted);font-weight:600;font-size:.9375rem}
+.tile .sub{color:var(--muted);font-size:.875rem;line-height:1.5;margin:.15rem 0}
+.prov{margin-top:auto;padding-top:.55rem;border-top:1px solid var(--line);font-size:.8125rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.3rem .6rem;align-items:center}
+.tile-missing{color:var(--gap);font-weight:700;font-family:var(--font-text);font-size:1rem}
+.tile-missing .ic{color:var(--gap-ic)}
+@media (min-width:760px){.tile.wide{grid-column:span 2}}
+.rnum{font-family:var(--font-display);font-weight:700;font-size:1.75rem;line-height:1;color:var(--heading)}
+
+/* Charts */
+.chart{width:100%;margin-top:8px;min-height:40px}
+.chart svg{display:block;overflow:visible}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .axis{stroke:var(--line-strong);stroke-width:1}
+.chart .ax{fill:var(--muted);font-size:12px;font-family:var(--font-text)}
+.chart .axb{fill:var(--ink);font-size:13px;font-weight:700;font-family:var(--font-text)}
+.chart .bar{fill:var(--c-bar);stroke:var(--c-bar-edge);stroke-width:1}
+.chart .l1{fill:none;stroke:var(--c-l1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart .l2{fill:none;stroke:var(--c-l2);stroke-width:2.25;stroke-dasharray:7 4;stroke-linejoin:round}
+.chart .band{fill:var(--c-band)}
+.chart .band-edge{stroke:var(--c-band-edge);stroke-width:1.5;stroke-dasharray:4 3}
+.chart .pt{fill:var(--c-pt);stroke:var(--surface);stroke-width:1.5}
+.chart .miss{fill:none;stroke:var(--gap);stroke-width:1.5}
+.chart .nc{fill:var(--surface);stroke:var(--c-nc);stroke-width:1.75}
+.chart .trace{fill:none;stroke:var(--c-l1);stroke-width:1.75;stroke-linejoin:round}
+.chart .fit{stroke:var(--c-l2);stroke-width:2;stroke-dasharray:7 4}
+.chart .zseg{stroke:var(--line-strong);stroke-width:1}
+.chart .marker{fill:var(--ink)}
+.legend{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-size:.875rem;color:var(--muted)}
+.legend li{display:inline-flex;align-items:center;gap:.4rem}
+.lg{display:inline-block;width:22px;height:12px;flex:none}
+.lg-bar{background:var(--c-bar);border:1px solid var(--c-bar-edge);width:12px}
+.lg-l1{height:0;border-top:3px solid var(--c-l1)}
+.lg-l2{height:0;border-top:3px dashed var(--c-l2)}
+.lg-band{background:var(--c-band);border-top:2px dashed var(--c-band-edge);border-bottom:2px dashed var(--c-band-edge)}
+.lg-pt{width:10px;height:10px;border-radius:50%;background:var(--c-pt)}
+.lg-miss{width:10px;height:10px;border:1.5px solid var(--gap)}
+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700;color:var(--accent);min-height:32px;display:flex;align-items:center}
+.tablewrap{overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:.9375rem;line-height:1.5}
+th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:.8125rem;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+
+/* Formula */
+.formula{border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:12px;padding:12px 16px;background:var(--surface);margin-top:12px}
+.formula code{font-family:inherit;font-weight:700;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:.05rem .4rem;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.formula ul{margin:.4rem 0 0;padding-left:1.1rem}
+.formula li{margin:.3rem 0;max-width:78ch;line-height:1.7}
+
+/* Progress bars: Afterglow on dark, Electric Blue on light. The span is the filled part. */
+.hbar{height:12px;background:var(--progress);border:1px solid var(--line-strong);border-radius:999px;overflow:hidden;min-width:60px}
+.hbar>span{display:block;height:100%;box-shadow:0 0 0 9999px var(--track)}
+
+/* Readiness */
+.rmini{list-style:none;padding:0;margin:.5rem 0 0;display:grid;gap:.4rem .9rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr))}
+.rmini li{font-size:.8125rem;line-height:1.4;display:grid;grid-template-columns:1fr auto;gap:.2rem .5rem;align-items:center}
+.rmini .hbar{grid-column:1 / -1}
+.ready-top{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center}
+.ready-num{font-family:var(--font-display);font-size:4.5rem;font-weight:700;line-height:.85;color:var(--heading);margin:0}
+
+/* Workouts */
+.filters{display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;margin-top:14px}
+.filters .fi{flex:1 1 160px}
+.filters .fi.q{flex:2 1 220px}
+.filters input,.filters select{width:100%}
+.wbtn{font:inherit;font-weight:700;background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:left;min-height:24px}
+.notlogged{color:var(--muted);font-style:italic}
+.rtable td .lab{display:none}
+@media (max-width:760px){
+  .rtable thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .rtable,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
+  .rtable tr{border-bottom:1px solid var(--line);padding:.5rem 0}
+  .rtable tr:last-child{border-bottom:0}
+  .rtable td{border:0;padding:.25rem .75rem;display:grid;grid-template-columns:minmax(96px,38%) 1fr;gap:.5rem}
+  .rtable td .lab{display:block;color:var(--muted);font-size:.8125rem;font-weight:700}
+  .rtable td.r{text-align:left}
+  .tablewrap.rt{border-left:0;border-right:0;border-radius:0}
+}
+
+/* Forms */
+.form{display:grid;gap:14px;margin-top:12px}
+.fgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+.field{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.field label,.field .lbl{font-weight:700;font-size:.9375rem}
+.field .hint{color:var(--muted);font-size:.8125rem;line-height:1.45;margin:0}
+.field input,.field select{width:100%}
+.req{color:var(--muted);font-weight:400;font-size:.8125rem}
+.ferr{display:flex;gap:.35rem;align-items:flex-start;color:var(--ink);font-weight:700;font-size:.875rem;line-height:1.45;margin:0}
+.ferr .ic{margin-top:2px;color:var(--review-ic)}
+[aria-invalid=true]{border-color:var(--review)!important;border-width:2px!important}
+.errsum{border:2px solid var(--review);background:var(--review-bg);color:var(--ink);border-radius:12px;padding:12px 14px}
+.errsum h3{display:flex;gap:.4rem;align-items:center;font-size:1.0625rem}
+.errsum h3 .ic{color:var(--review-ic)}
+.errsum ul{margin:.4rem 0 0;padding-left:1.2rem}
+.errsum a{color:var(--accent);font-weight:700}
+.likert{border:0;padding:0;margin:0;min-width:0}
+.likert legend{font-weight:700;padding:0;margin-bottom:.35rem}
+.likert .opts{display:flex;gap:6px}
+.likert input{position:absolute;opacity:0;width:1px;height:1px}
+.likert label{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:48px;min-height:52px;flex:1 1 0;padding:.3rem .2rem;border:1.5px solid var(--line-strong);border-radius:12px;cursor:pointer;background:var(--surface);text-align:center}
+.likert label b{font-family:var(--font-display);font-size:1.375rem;line-height:1}
+.likert label small{font-size:.75rem;color:var(--muted);line-height:1.2;margin-top:2px}
+.likert input:checked+label{background:var(--sel-bg);border-color:var(--sel-border);border-width:2px;color:var(--sel-ink)}
+.likert input:checked+label small{color:var(--sel-ink)}
+.likert input:checked+label b::after{content:" \2713";font-family:var(--font-text);font-size:.9rem}
+.likert input:focus-visible+label{outline:3px solid var(--focus);outline-offset:2px}
+.likert.invalid .opts label{border-color:var(--review);border-width:2px}
+.ci-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+
+/* Connections */
+.conns{display:grid;gap:12px;margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr))}
+.conn{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.conn h3{font-family:var(--font-display);font-size:1.625rem;line-height:1}
+.conn-head{display:flex;justify-content:space-between;gap:.5rem;align-items:flex-start;flex-wrap:wrap}
+.conn .path{font-weight:700;margin:.2rem 0 0;line-height:1.4}
+.conn .path .ic{color:var(--watch-ic)}
+.conn .note{color:var(--muted);font-size:.875rem;line-height:1.5}
+.conn .meta{font-size:.875rem;line-height:1.5}
+.conn .acts{margin-top:auto;padding-top:.5rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.conn .msg{font-size:.875rem;line-height:1.5;display:flex;gap:.4rem;align-items:flex-start;font-weight:600}
+.conn .msg .ic{margin-top:2px}
+.msg-ok .ic{color:var(--ok-ic)} .msg-review .ic{color:var(--review-ic)}
+.confirm{border:1.5px dashed var(--line-strong);border-radius:12px;padding:.6rem .75rem;width:100%}
+.toggle{display:flex;gap:.5rem;align-items:center;min-height:44px;cursor:pointer}
+.toggle input{width:20px;height:20px;accent-color:var(--primary)}
+
+/* States */
+.empty{background:var(--surface);border:1.5px dashed var(--line-strong);border-radius:12px;padding:28px 20px;margin-top:16px;max-width:720px}
+.empty p{color:var(--muted);max-width:60ch}
+.errstate{background:var(--surface);border:2px solid var(--review);border-radius:12px;padding:18px;margin-top:16px;max-width:720px}
+.errstate .head{display:flex;gap:.5rem;align-items:center}
+.errstate .head .ic{color:var(--review-ic);width:20px;height:20px}
+/* Preview notes reuse the brand book's "to fill in" box */
+.preview{display:flex;gap:.5rem;align-items:flex-start;margin-top:16px;padding:.65rem .85rem;border:1.5px dashed var(--draft-border);color:var(--ink);background:var(--draft-bg);border-radius:12px;font-size:.9375rem;line-height:1.5}
+.preview .ic{color:var(--draft-ink);margin-top:3px}
+.preview strong{color:var(--draft-ink)}
+.sk{background:var(--surface-2);border-radius:12px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(127,140,160,.16),transparent);transform:translateX(-100%);animation:shim 1.4s infinite}
+@keyframes shim{to{transform:translateX(100%)}}
+.loadmsg{display:flex;gap:.6rem;align-items:center;margin-top:16px;font-weight:700}
+
+/* Dialog */
+dialog{border:1px solid var(--line-strong);border-radius:16px;padding:0;background:var(--surface);color:var(--ink);width:min(820px,calc(100% - 20px));max-height:calc(100% - 24px)}
+dialog::backdrop{background:rgba(12,16,20,.7)}
+.dlg-head{position:sticky;top:0;background:var(--surface);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:14px 16px;border-bottom:1px solid var(--line);z-index:1}
+.dlg-body{padding:12px 16px 20px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:10px 16px;margin:12px 0}
+.dl div{min-width:0}
+.dl dt{color:var(--muted);font-size:.8125rem;font-weight:700}
+.dl dd{margin:0;font-weight:600}
+.mergebox{border:1px solid var(--line);border-left:4px dashed var(--gap);border-radius:12px;padding:10px 12px;margin-top:12px;background:var(--surface-2)}
+.mergebox h3{font-size:1.0625rem}
+.mergebox .ic{color:var(--icon)}
+
+/* Toast */
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:30;max-width:min(560px,calc(100% - 24px));width:max-content}
+#toast .t{display:flex;gap:.5rem;align-items:flex-start;background:var(--ink);color:var(--surface);padding:.7rem 1.1rem;border-radius:999px;font-weight:700;font-size:.9375rem;line-height:1.45;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+#toast .t .ic{margin-top:2px}
+
+/* Footer credit with the Shrey wordmark (gradient on dark only) */
+footer{border-top:1px solid var(--line-strong);margin-top:40px;padding:20px 0 28px;color:var(--muted);font-size:.875rem;line-height:1.5}
+footer p{max-width:90ch}
+.credit{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 2rem;margin-bottom:12px}
+.wordmark{font-family:var(--font-display);font-weight:800;font-size:3rem;line-height:1;margin:0;padding:.5rem 0;display:inline-flex;align-items:baseline;gap:.06em;white-space:nowrap}
+.wm-text{background:var(--wm-fill);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.wm-dot{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:var(--wm-dot);box-shadow:var(--wm-glow)}
+.credit p{margin:.15rem 0;color:var(--ink)}
+.credit .muted{color:var(--muted)}
+
+@media (max-width:480px){
+  .topbar-in{gap:.4rem .6rem}
+  .brand{font-size:1.5rem}
+  .metric .num{font-size:2.6rem}
+  .block{padding:12px}
+  .likert label{min-width:44px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#panel">Skip to content</a>
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-6M10 20V9M16 20v-8M21 20H3"/><path d="M3 7.5l4.5-3 4 2.5 4.5-4 5 3"/></svg>
+      <span>AthleteLoad</span>
+    </div>
+    <span class="simbadge" id="simbadge"></span>
+    <p class="note">Prototype. Every athlete, device, and number here is fictional.</p>
+  </div>
+</header>
+
+<div class="ctrl">
+  <div class="wrap ctrl-in">
+    <div class="fi">
+      <label for="athleteSel">Athlete</label>
+      <select id="athleteSel"></select>
+    </div>
+    <fieldset class="seg">
+      <legend>View as</legend>
+      <div class="seg-row">
+        <input type="radio" name="role" id="role-ath" value="athlete"><label for="role-ath">Athlete</label>
+        <input type="radio" name="role" id="role-coach" value="coach"><label for="role-coach">Coach</label>
+      </div>
+    </fieldset>
+    <div class="fi">
+      <label for="stateSel">Preview state</label>
+      <select id="stateSel">
+        <option value="live">Live data</option>
+        <option value="loading">Loading</option>
+        <option value="empty">Empty</option>
+        <option value="error">Error</option>
+        <option value="stale">Stale data</option>
+        <option value="missing">Missing data</option>
+      </select>
+    </div>
+    <button class="btn btn-quiet" type="button" data-action="reset">Reset prototype</button>
+    <p class="ctrl-note">Prototype. Every athlete, device, and number here is fictional.</p>
+  </div>
+</div>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap"><div role="tablist" aria-label="Dashboard sections" id="tablist"></div></div>
+</nav>
+
+<main id="main" class="wrap">
+  <div id="ctx"></div>
+  <section id="panel" role="tabpanel" tabindex="0"></section>
+  <footer>
+    <div class="credit">
+      <p class="wordmark"><span class="wm-text">Shrey</span><span class="wm-dot" aria-hidden="true"></span></p>
+      <div>
+        <p><strong>A product prototype by Shreyas Shirke.</strong></p>
+        <p class="muted">Project manager and business analyst, Boston.</p>
+        <p><a href="https://shreyu311.github.io">shreyu311.github.io</a></p>
+      </div>
+    </div>
+    <p>AthleteLoad is a front-end prototype with no backend. Data is generated in the browser and any changes you make stay in this browser only.</p>
+    <p>Readiness and the alert rules are prototype logic for discussion. They are not clinically validated and they do not diagnose anything. Integration notes on the Connections tab were checked against provider documentation on 15 Oct 2026; confirm them again before building.</p>
+  </footer>
+</main>
+
+<div id="live" class="vh" aria-live="polite"></div>
+<div id="toast" aria-live="polite"></div>
+<dialog id="wdlg" aria-labelledby="wdlg-title"></dialog>
+
+<script>
+'use strict';
+/* ---------- Time and helpers ---------- */
+const SIM_NOW = new Date(2026, 9, 15, 8, 30, 0).getTime();
+const TODAY = new Date(2026, 9, 15);
+const N = 56;               // days of history; index N-1 is today
+const Y = N - 2;            // yesterday, the last complete day
+const DAYMS = 86400000;
+const T0 = Date.now();
+const nowSim = () => SIM_NOW + (Date.now() - T0);
+const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const valid = a => a.filter(x => x != null && !isNaN(x));
+const mean = a => { const v = valid(a); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : null; };
+const sdev = a => { const v = valid(a); if (v.length < 2) return null; const m = mean(v); return Math.sqrt(v.reduce((s,x)=>s+(x-m)**2,0)/(v.length-1)); };
+const sum = a => valid(a).reduce((s,x)=>s+x,0);
+const range = (a,b) => { const o=[]; for (let i=a;i<b;i++) o.push(i); return o; };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtN = n => n == null ? '' : Math.round(n).toLocaleString('en-US');
+const pad2 = n => String(n).padStart(2,'0');
+function dayDate(i){ const d = new Date(TODAY); d.setDate(d.getDate() - (N-1-i)); return d; }
+function dayIndexOfDate(d){ const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); return N-1-Math.round((TODAY - x)/DAYMS); }
+const fmtDay = d => `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]}`;
+const fmtShort = d => `${d.getDate()} ${MO[d.getMonth()]}`;
+const fmtTime = d => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+function fmtDur(min){ if (min == null) return ''; const h = Math.floor(min/60), m = Math.round(min%60); return h ? (m ? `${h} h ${m} min` : `${h} h`) : `${m} min`; }
+function fmtHM(min){ if (min == null) return ''; const h = Math.floor(min/60), m = Math.round(min%60); return `${h} h ${pad2(m)} min`; }
+function rel(ms){
+  const s = Math.max(0, (nowSim() - ms)/1000);
+  if (s < 90) return 'just now';
+  const m = s/60; if (m < 60) return `${Math.round(m)} min ago`;
+  const h = m/60; if (h < 24) return `${Math.round(h)} h ago`;
+  const d = h/24; if (d < 2) return 'yesterday';
+  return `${Math.floor(d)} days ago`;
+}
+const ageH = ms => (nowSim() - ms)/3600000;
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function gauss(r){ let u=0,v=0; while(!u) u=r(); while(!v) v=r(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+let UID = 0; const uid = () => 'u' + (++UID);
+
+/* ---------- Icons (shape differs per status, so color is never the only cue) ---------- */
+const svgI = p => `<svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICON = {
+  review: svgI('<path d="M5.3 1.5h5.4l3.8 3.8v5.4l-3.8 3.8H5.3l-3.8-3.8V5.3z" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 4.6v4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.3" r="1" fill="currentColor"/>'),
+  watch: svgI('<path d="M8 1.8l6.6 12H1.4z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M8 6.1v3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.7" r=".95" fill="currentColor"/>'),
+  gap: svgI('<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-dasharray="2.6 2"/><path d="M5 8h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'),
+  info: svgI('<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="4.9" r="1" fill="currentColor"/>'),
+  ok: svgI('<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M5 8.2l2 2 4-4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'),
+  clock: svgI('<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 4.5V8l2.4 1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'),
+  merge: svgI('<rect x="1.8" y="2.8" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><rect x="6.2" y="5.2" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/>'),
+  slash: svgI('<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3.6 12.4l8.8-8.8" stroke="currentColor" stroke-width="1.75"/>'),
+  flask: svgI('<path d="M6 1.8h4M6.7 2v4.2L2.9 12.6c-.5.9.1 1.9 1.1 1.9h8c1 0 1.6-1 1.1-1.9L9.3 6.2V2" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M4.4 10h7.2" stroke="currentColor" stroke-width="1.75"/>'),
+  plug: svgI('<path d="M5.5 1.5v3.5M10.5 1.5v3.5M3.5 5h9v2.5a4.5 4.5 0 0 1-9 0zM8 12v2.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>')
+};
+function chip(kind, text, icon){ return `<span class="chip chip-${kind}">${ICON[icon || kind] || ''}<span>${text}</span></span>`; }
+
+/* ---------- Providers (integration notes checked 15 Oct 2026) ---------- */
+const PROVIDERS = [
+  { id:'whoop', name:'WHOOP', path:'Open developer API with OAuth 2.0', flag:false,
+    note:"Free developer access. The developer needs a WHOOP membership, and an app needs WHOOP's approval before launch. The API has no continuous heart-rate samples, so WHOOP workouts arrive with zone totals but no heart-rate trace.",
+    uses:'Recovery, HRV, sleep, workouts' },
+  { id:'polar', name:'Polar', path:'Self-serve OAuth 2.0 through Polar AccessLink', flag:false,
+    note:'Free. Register a client with a Polar Flow account. Read-only, and data arrives after the athlete links their account and syncs their device.',
+    uses:'Workouts with heart-rate traces' },
+  { id:'oura', name:'Oura', path:'OAuth 2.0 only; approval needed past 10 users', flag:false,
+    note:'Personal access tokens were retired in December 2025. An app is capped at 10 users until Oura approves it, and Gen3 or newer rings need an active Oura Membership for API access.',
+    uses:'Sleep, HRV, resting heart rate' },
+  { id:'fitbit', name:'Fitbit via Google Health API', path:'Fitbit legacy API turns off 30 Oct 2026', flag:true,
+    note:"Integrations must move to the Google Health API and Google OAuth. Its scopes are restricted and need a privacy and security review. Fitbit tokens don't carry over, so every athlete has to reconnect.",
+    uses:'Sleep, HRV, resting heart rate' },
+  { id:'garmin', name:'Garmin', path:'Business approval required', flag:true,
+    note:'Garmin Connect Developer Program access is free for approved business developers only. Developers reported in 2026 that Garmin had paused reviews of new access requests.',
+    uses:'Workouts with heart-rate traces' },
+  { id:'coros', name:'COROS', path:'Partner API by application', flag:false,
+    note:"Partner access needs a registered company and an established platform. COROS also offers a self-serve, single-user OAuth route through its MCP server.",
+    uses:'Workouts with heart-rate traces' },
+  { id:'suunto', name:'Suunto', path:'Partner approval through Suunto API Zone', flag:false,
+    note:'Companies and organizations only, with no personal-use access. OAuth 2.0 becomes available after the partner application and API agreement are approved.',
+    uses:'Workouts with heart-rate traces' },
+  { id:'apple', name:'Apple Health', path:'Needs an iOS app', flag:true,
+    note:"HealthKit has no cloud API. Data stays on the iPhone, so an AthleteLoad iOS app would ask for permission per data type and upload it. Apple Watch reports HRV as SDNN, which isn't comparable with RMSSD from other devices.",
+    uses:'Workouts, HRV (SDNN), resting heart rate, sleep' },
+  { id:'samsung', name:'Samsung Health', path:'Needs an Android app', flag:true,
+    note:'No cloud API. An Android app reads data with the Samsung Health Data SDK, and Samsung must approve the partnership before the app is distributed.',
+    uses:'Workouts, sleep, heart rate' },
+  { id:'manual', name:'Manual entry', path:'Built in', flag:false,
+    note:'Athletes and coaches type sessions and RPE. Manual entries fill gaps and add RPE to synced sessions.',
+    uses:'Workouts, RPE, notes' }
+];
+const P = Object.fromEntries(PROVIDERS.map(p => [p.id, p]));
+const pname = id => (P[id] ? P[id].name.replace(' via Google Health API','') : id);
+
+/* ---------- Athletes ---------- */
+const TPL = {
+  priya: {0:[['Running','Long run',100,5]],1:[['Running','Easy run',35,3]],2:[['Running','Track intervals',60,7]],3:[['Running','Easy run',50,3]],4:[['Running','Tempo run',65,6]],5:[],6:[['Running','Easy run',45,3],['Strength','Strength circuit',30,5]]},
+  jonas: {0:[['Cycling','Endurance ride',150,5]],1:[],2:[['Cycling','Threshold intervals',90,7]],3:[['Cycling','Zone 2 ride',75,4]],4:[['Cycling','Tempo ride',120,6]],5:[['Cycling','Recovery spin',60,2]],6:[['Cycling','Group ride',180,6]]},
+  malik: {0:[],1:[['Soccer','Recovery session',40,3]],2:[['Soccer','Team training',90,6]],3:[['Soccer','Team training',75,5],['Strength','Gym session',45,6]],4:[['Soccer','Team training',90,7]],5:[['Soccer','Pre-match session',60,4]],6:[['Soccer','Match',95,8]]},
+  ines:  {0:[['Rowing','Steady erg',60,3]],1:[['Rowing','Erg intervals',60,6]],2:[['Rowing','Water session',80,5]],3:[['Rowing','Steady erg',50,4],['Strength','Strength session',45,6]],4:[['Rowing','Race-pace pieces',75,7]],5:[],6:[['Rowing','Long water session',90,6]]}
+};
+const ATHLETES = [
+  { id:'priya', name:'Priya Raman', first:'Priya', sport:'Running', phase:'Marathon build, peak week before the taper', seed:11, hrMax:192,
+    wsrc:'garmin', dsrc:'oura', rsrc:'oura', metric:'RMSSD',
+    factor:d=>d<=7?1.42:d<=14?0.98:d<=21?0.93:d<=28?0.88:0.85,
+    rpeMiss:d=>d===3?1:0, dup:t=>/Long run|Tempo/.test(t),
+    start:(wd,k,t)=>t==='Strength circuit'?[17,30]:[6,20],
+    rec:(d,r)=>({hrv:d<=3?59.5+1.6*gauss(r):64+4.2*gauss(r), rhr:d<=3?49+0.7*gauss(r):47+1.2*gauss(r), sleep:d===0?408:446+24*gauss(r)}),
+    ci:(d,r,wd)=> (d===0 || r()<0.1) ? null : {sleepQ:4,energy:d<=3?3:4,soreness:3,mood:4,stress:4,hydration:4,recovery:d<=3?3:4},
+    notes:{2:'Calf a little tight after the track session.'} },
+  { id:'jonas', name:'Jonas Lindqvist', first:'Jonas', sport:'Cycling', phase:'Road season, threshold block', seed:23, hrMax:186,
+    wsrc:'coros', dsrc:'whoop', rsrc:'whoop', metric:'RMSSD',
+    factor:d=>d<=7?1.1:d<=14?1.08:d<=21?1.0:d<=28?0.97:0.95,
+    rpeMiss:()=>0, dup:t=>/Threshold|Tempo|Group/.test(t),
+    start:(wd)=> (wd===0||wd===6)?[8,30]:[17,40],
+    rec:(d,r)=>({hrv:d<=5?66-(5-d)*1.6+1.2*gauss(r):78+4.2*gauss(r), rhr:d<=5?50+0.7*gauss(r):45+1.1*gauss(r), sleep:d<=2?372+12*gauss(r):432+22*gauss(r)}),
+    ci:(d,r)=> d<=5 ? {sleepQ:2,energy:2,soreness:2,mood:3,stress:3,hydration:4,recovery:2} : (r()<0.08?null:{sleepQ:4,energy:4,soreness:4,mood:4,stress:4,hydration:4,recovery:4}),
+    notes:{0:'Legs heavy on the stairs. Slept badly two nights running.', 3:'Felt flat in the threshold set.'} },
+  { id:'malik', name:'Malik Okoro', first:'Malik', sport:'Soccer', phase:'In season, one match a week', seed:37, hrMax:198,
+    wsrc:'apple', dsrc:'manual', rsrc:'apple', metric:'SDNN',
+    factor:d=>d<=7?0.99:1.0,
+    rpeMiss:()=>0, dup:t=>/Team training/.test(t),
+    start:(wd,k,t)=> t==='Match'?[15,0]: t==='Gym session'?[14,30]:[10,0],
+    rec:(d,r)=> d===9 ? {hrv:null,rhr:null,sleep:null} : d===0 ? {hrv:53, rhr:52, sleep:468} : ({hrv:52+5*gauss(r), rhr:53+1.3*gauss(r), sleep:462+24*gauss(r)}),
+    ci:(d,r,wd)=> (d!==0 && r()<0.05) ? null : {sleepQ:4,energy:4,soreness:wd===0?3:4,mood:4,stress:4,hydration:4,recovery:4},
+    notes:{4:'Felt sharp in the match.'} },
+  { id:'ines', name:'Ines Novak', first:'Ines', sport:'Rowing', phase:'Winter base, erg focus', seed:41, hrMax:194,
+    wsrc:'polar', dsrc:null, rsrc:'fitbit', metric:'RMSSD',
+    factor:()=>1.0,
+    rpeMiss:d=>d<=21?0.45:0.15, dup:()=>false,
+    start:(wd,k,t)=> t==='Strength session'?[16,0]:[5,50],
+    rec:(d,r)=> d<=9 ? {hrv:null,rhr:null,sleep:null} : ({hrv:71+4.8*gauss(r), rhr:50+1.3*gauss(r), sleep:452+24*gauss(r)}),
+    ci:(d,r)=> d<=5 ? null : (r()<0.5?null:{sleepQ:4,energy:4,soreness:3,mood:4,stress:4,hydration:3,recovery:4}),
+    notes:{8:'Erg felt fine. Forgot to log RPE again.'} }
+];
+const A = Object.fromEntries(ATHLETES.map(a => [a.id, a]));
+const CI_ITEMS = [
+  ['sleepQ','Sleep quality','Very poor','Very good'],
+  ['energy','Energy','Exhausted','Full of energy'],
+  ['soreness','Soreness','Very sore','Not sore'],
+  ['mood','Mood','Very low','Very good'],
+  ['stress','Stress','Very stressed','Relaxed'],
+  ['hydration','Hydration','Very poor','Well hydrated'],
+  ['recovery','Recovery','Not recovered','Fully recovered']
+];
+const ZONES = [[0,0.6,'Z1','Below 60%'],[0.6,0.7,'Z2','60–70%'],[0.7,0.8,'Z3','70–80%'],[0.8,0.9,'Z4','80–90%'],[0.9,1.01,'Z5','90–100%']];
+const zoneOf = (bpm, max) => { const p = bpm/max; return p < .6 ? 0 : p < .7 ? 1 : p < .8 ? 2 : p < .9 ? 3 : 4; };
+const RPE_LABELS = {0:'Rest',1:'Very, very easy',2:'Easy',3:'Moderate',4:'Somewhat hard',5:'Hard',7:'Very hard',10:'Maximal'};
+
+/* ---------- Data generation (deterministic) ---------- */
+function genTrace(r, dur, rpe, title, sport, hrMax){
+  const f = 0.5 + 0.05*rpe, n = Math.max(2, Math.round(dur)), pts = [];
+  const intervals = /interval|pieces|Track/i.test(title), match = /Match/.test(title), strength = sport === 'Strength';
+  for (let m=0; m<n; m++){
+    const p = m/n; let t = f;
+    if (p < 0.12) t = 0.56 + (f-0.56)*(p/0.12);
+    else if (p > 0.92) t = f - (f-0.6)*((p-0.92)/0.08);
+    else if (intervals){ const c = (m - Math.round(n*0.12)) % 7; t = c < 4 ? f+0.06 : f-0.1; }
+    else if (match){ t = Math.abs(p-0.5) < 0.08 ? 0.6 : f + 0.06*Math.sin(m/2.3) + 0.03*gauss(r); }
+    else if (strength){ t = f - 0.05 + 0.08*Math.sin(m/1.7); }
+    const drift = (p > 0.12 && p < 0.92) ? Math.min(0.03, 0.0003*m) : 0;
+    pts.push(Math.round(hrMax*clamp(t + drift + 0.012*gauss(r), 0.45, 1.0)));
+  }
+  return pts;
+}
+const GEN = {};
+function gen(a){
+  if (GEN[a.id]) return GEN[a.id];
+  const r = mulberry32(a.seed);
+  const sessions = [], hrv = Array(N).fill(null), rhr = Array(N).fill(null), sleep = Array(N).fill(null), checkins = {};
+  for (let i=0; i<N; i++){
+    const d = N-1-i, date = dayDate(i), wd = date.getDay();
+    const rc = a.rec(d, r);
+    hrv[i] = rc.hrv == null ? null : Math.round(rc.hrv);
+    rhr[i] = rc.rhr == null ? null : Math.round(rc.rhr);
+    sleep[i] = rc.sleep == null ? null : Math.round(rc.sleep);
+    const c = a.ci(d, r, wd);
+    if (c){
+      const o = {};
+      CI_ITEMS.forEach(([k]) => { o[k] = clamp(Math.round(c[k] + 0.5*gauss(r)), 1, 5); });
+      o.notes = a.notes[d] || '';
+      o.time = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 7, 5 + Math.floor(r()*20)).getTime();
+      checkins[i] = o;
+    }
+    if (d < 1) continue;                       // nothing recorded yet this morning
+    if (a.id === 'ines' && d <= 2) continue;   // Polar has not synced these days
+    (TPL[a.id][wd] || []).forEach((t, k) => {
+      const [sport, title, dur0, rpe0] = t;
+      const dur = Math.max(15, Math.round(dur0 * a.factor(d) * (1 + 0.07*gauss(r))));
+      let rpeI = clamp(rpe0 + (r() < 0.2 ? (r() < 0.5 ? -1 : 1) : 0), 1, 10);
+      if (a.id === 'priya' && d <= 7 && title === 'Tempo run') rpeI = Math.min(10, rpeI + 1);
+      const rpe = r() < a.rpeMiss(d) ? null : rpeI;
+      const [hh, mm] = a.start(wd, k, title);
+      const start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hh, mm + Math.floor(r()*12));
+      const trace = genTrace(r, dur, rpeI, title, sport, a.hrMax);
+      const zones = [0,0,0,0,0]; trace.forEach(b => zones[zoneOf(b, a.hrMax)]++);
+      const hrAvg = Math.round(mean(trace)), hrMax = Math.max(...trace);
+      let dist = null;
+      if (sport === 'Running') dist = dur/60*(9 + 0.6*rpeI);
+      else if (sport === 'Cycling') dist = dur/60*(24 + 1.6*rpeI);
+      else if (sport === 'Rowing') dist = dur/60*(12 + 0.4*rpeI);
+      const kcal = Math.round(dur*(4.5 + 0.9*rpeI)*(sport === 'Cycling' ? 0.85 : 1));
+      const sources = [a.wsrc];
+      let mergeInfo = null;
+      if (a.dsrc && a.dup(title)){
+        sources.push(a.dsrc);
+        const odur = Math.round(dur*(1 + (r() < 0.5 ? -1 : 1)*(0.02 + 0.04*r())));
+        mergeInfo = { other:a.dsrc, otherDur:odur, offset:2 + Math.floor(r()*4),
+          reason: a.dsrc === 'manual'
+            ? `Kept ${pname(a.wsrc)} for heart rate and timing. RPE comes from the coach's manual entry.`
+            : `Kept ${pname(a.wsrc)} as the primary record because it has the full heart-rate trace.` };
+      }
+      sessions.push({ id:`${a.id}-${i}-${k}`, day:i, start:start.getTime(), sport, title, dur, rpe,
+        dist: dist == null ? null : Math.round(dist*10)/10, hrAvg, hrMax, kcal, sources, primary:a.wsrc,
+        trace, zones, mergeInfo, notes:'' });
+    });
+  }
+  return (GEN[a.id] = { sessions, hrv, rhr, sleep, checkins });
+}
+
+/* ---------- State ---------- */
+const STORE_KEY = 'athleteload-prototype-v1';
+function defaultConn(){
+  const t = m => SIM_NOW - m*60000;
+  const base = () => Object.fromEntries(PROVIDERS.map(p => [p.id, {status: p.id === 'manual' ? 'builtin' : 'disconnected', lastSync:null}]));
+  const c = { priya:base(), jonas:base(), malik:base(), ines:base() };
+  Object.assign(c.priya.garmin, {status:'connected', lastSync:t(95)});
+  Object.assign(c.priya.oura,   {status:'connected', lastSync:t(250)});
+  Object.assign(c.jonas.coros,  {status:'connected', lastSync:t(70)});
+  Object.assign(c.jonas.whoop,  {status:'connected', lastSync:t(125)});
+  Object.assign(c.malik.apple,  {status:'connected', lastSync:t(35)});
+  Object.assign(c.ines.polar,   {status:'connected', lastSync:new Date(2026,9,12,19,40).getTime()});
+  Object.assign(c.ines.fitbit,  {status:'expired', lastSync:new Date(2026,9,5,21,5).getTime(), expiredAt:new Date(2026,9,6,9,0).getTime()});
+  return c;
+}
+function defaults(){
+  return { role:'athlete', aid:'priya', tab:'overview', mode:'live', added:{}, merges:{}, rpeEdits:{}, checkins:{},
+    notes:{
+      priya:{text:'Peak week before the taper. Keep Saturday easy and confirm the long run stays under 2 h 15.', saved:null},
+      jonas:{text:'HRV and resting HR have been moving the wrong way for most of a week. Ask about sleep and illness before Saturday.', saved:null},
+      malik:{text:'Steady. Watch minutes played after Saturday.', saved:null},
+      ines:{text:'Ask Ines to reconnect Fitbit (it now goes through Google Health) and to log RPE after erg sessions.', saved:null}
+    },
+    conn: defaultConn(), failNext:false };
+}
+let S = defaults();
+try { const raw = localStorage.getItem(STORE_KEY); if (raw){ const p = JSON.parse(raw); S = Object.assign(defaults(), p, {mode:'live', failNext:false}); } } catch(e){ /* storage unavailable: keep defaults */ }
+function save(){
+  try { const {mode, failNext, ...keep} = S; localStorage.setItem(STORE_KEY, JSON.stringify(keep)); } catch(e){ /* ignore */ }
+}
+let VER = 0; const CACHE = {};
+const UI = { wf:{q:'', sport:'all', source:'all', status:'all', limit:25}, pendingDisc:null, connMsg:{}, busy:{}, editCi:false, addOpen:false };
+
+/* ---------- Derived data ---------- */
+function connState(aId, p){
+  let c = Object.assign({status:'disconnected', lastSync:null}, (S.conn[aId] || {})[p]);
+  if (S.mode === 'empty' && p !== 'manual') c = {status:'disconnected', lastSync:null};
+  if (S.mode === 'stale' && c.status === 'connected') c.lastSync = SIM_NOW - (3*DAYMS + 2*3600000);
+  return c;
+}
+function sessionsFor(aId){
+  const g = gen(A[aId]);
+  const out = g.sessions.map(s => {
+    const o = Object.assign({}, s, {sources:[...s.sources]});
+    if (S.rpeEdits[s.id] != null){ o.rpe = S.rpeEdits[s.id]; o.rpeFrom = 'manual'; }
+    const mg = S.merges[s.id];
+    if (mg){ if (!o.sources.includes('manual')) o.sources.push('manual'); o.manualMerge = mg;
+      if (o.rpe == null && mg.rpe != null){ o.rpe = mg.rpe; o.rpeFrom = 'manual'; } }
+    if (S.mode === 'missing' && o.day >= N-6) o.rpe = null;
+    return o;
+  });
+  (S.added[aId] || []).forEach(s => { const o = Object.assign({}, s); if (S.rpeEdits[s.id] != null) o.rpe = S.rpeEdits[s.id]; if (S.mode === 'missing' && o.day >= N-6) o.rpe = null; out.push(o); });
+  out.sort((x, y) => y.start - x.start);
+  return out;
+}
+function checkinsFor(aId){
+  const m = Object.assign({}, gen(A[aId]).checkins, S.checkins[aId] || {});
+  if (S.mode === 'missing') for (let i=N-4; i<N; i++) delete m[i];
+  return m;
+}
+function compute(aId){
+  const key = `${aId}|${S.mode}|${VER}`;
+  if (CACHE[key]) return CACHE[key];
+  const a = A[aId], g = gen(a), sessions = sessionsFor(aId);
+  const load = Array(N).fill(0), unc = Array(N).fill(0), nS = Array(N).fill(0);
+  sessions.forEach(s => { if (s.day < 0 || s.day >= N) return; nS[s.day]++; if (s.rpe == null) unc[s.day]++; else load[s.day] += s.dur*s.rpe; });
+  const roll = (arr, i, k) => { const st = Math.max(0, i-k+1); let t = 0; for (let j=st; j<=i; j++) t += arr[j]; return t/(i-st+1); };
+  const avg7 = load.map((_, i) => roll(load, i, 7)), avg28 = load.map((_, i) => roll(load, i, 28));
+  const acute = avg7[Y], chronic = avg28[Y], acwr = chronic > 0 ? acute/chronic : null;
+  const win = (arr, a0, b0) => arr.slice(a0, b0+1);
+  const week7 = sum(win(load, Y-6, Y)), prev7 = sum(win(load, Y-13, Y-7));
+  const unc7 = sum(win(unc, Y-6, Y)), sess7 = sum(win(nS, Y-6, Y)), unc14 = sum(win(unc, Y-13, Y)), sess14 = sum(win(nS, Y-13, Y));
+  let hrv = g.hrv.slice(), rhr = g.rhr.slice(), sleep = g.sleep.slice();
+  if (S.mode === 'missing') for (let i=N-4; i<N; i++){ hrv[i] = null; rhr[i] = null; sleep[i] = null; }
+  const bw = [N-29, N-2];
+  const band = arr => { const w = win(arr, bw[0], bw[1]); const v = valid(w); const m = mean(v), s = sdev(v);
+    return v.length >= 14 ? {mean:m, sd:s, lo:m - s, hi:m + s, n:v.length} : {mean:m, sd:s, lo:null, hi:null, n:v.length}; };
+  const base = { hrv:band(hrv), rhr:band(rhr), sleep:band(sleep) };
+  const T = N-1;
+  const run = (arr, test) => { let n = 0; for (let i=T; i>=0; i--){ if (arr[i] == null || !test(arr[i])) break; n++; } return n; };
+  const hrvBelow = base.hrv.lo != null ? run(hrv, v => v < base.hrv.lo) : 0;
+  const rhrAbove = base.rhr.hi != null ? run(rhr, v => v > base.rhr.hi) : 0;
+  let recMissing = 0; for (let i=T; i>=0; i--){ if (hrv[i] == null && sleep[i] == null) recMissing++; else break; }
+  const sleep3 = valid(win(sleep, T-2, T)).length === 3 ? mean(win(sleep, T-2, T)) : null;
+  const cis = checkinsFor(aId);
+  const ciAvg = c => c ? mean(CI_ITEMS.map(([k]) => c[k])) : null;
+  const ciToday = cis[T] || null;
+  let lastCi = null; for (let i=T; i>=0; i--) if (cis[i]){ lastCi = i; break; }
+  const last3 = Object.keys(cis).map(Number).sort((x,y)=>y-x).slice(0,3).filter(i => i >= T-5).map(i => cis[i]);
+  const eAvg = mean(last3.map(c => c.energy)), rAvg = mean(last3.map(c => c.recovery));
+  const wellLow = last3.length >= 2 && (eAvg + rAvg)/2 <= 2.5;
+  const wsrcC = connState(aId, a.wsrc), rsrcC = connState(aId, a.rsrc);
+  const wStale = wsrcC.status === 'connected' && wsrcC.lastSync && ageH(wsrcC.lastSync) > 36;
+  const lowConf = unc7 >= 2 || wStale || wsrcC.status !== 'connected';
+
+  /* Readiness: prototype composite, not clinically validated */
+  const z = (v, b) => (v == null || b.mean == null || !b.sd) ? null : (v - b.mean)/b.sd;
+  const zH = z(hrv[T], base.hrv), zR = z(rhr[T], base.rhr);
+  const inputs = [
+    { key:'hrv', short:'HRV', label:`HRV (${a.metric}) vs own baseline`, weight:30,
+      value: hrv[T] == null ? null : `${hrv[T]} ms`, ref: base.hrv.lo != null ? `${Math.round(base.hrv.lo)}–${Math.round(base.hrv.hi)} ms` : 'Baseline not set',
+      sub: zH == null ? null : clamp(Math.round(70 + 20*zH), 0, 100), rule:'70 + 20 × z-score' },
+    { key:'rhr', short:'Resting HR', label:'Resting HR vs own baseline', weight:15,
+      value: rhr[T] == null ? null : `${rhr[T]} bpm`, ref: base.rhr.lo != null ? `${Math.round(base.rhr.lo)}–${Math.round(base.rhr.hi)} bpm` : 'Baseline not set',
+      sub: zR == null ? null : clamp(Math.round(70 - 20*zR), 0, 100), rule:'70 − 20 × z-score' },
+    { key:'sleep', short:'Sleep', label:"Last night's sleep", weight:20,
+      value: sleep[T] == null ? null : fmtHM(sleep[T]), ref:'8 h scores 100, 4 h scores 0',
+      sub: sleep[T] == null ? null : clamp(Math.round((sleep[T]/60 - 4)/4*100), 0, 100), rule:'Linear from 4 h to 8 h' },
+    { key:'load', short:'Load ratio', label:'Load ratio (acute:chronic)', weight:20,
+      value: acwr == null ? null : acwr.toFixed(2), ref:'0.80–1.30 scores 100',
+      sub: acwr == null ? null : (acwr >= 0.8 && acwr <= 1.3 ? 100 : clamp(Math.round(100 - 200*(acwr < 0.8 ? 0.8-acwr : acwr-1.3)), 0, 100)), rule:'Minus 20 points per 0.1 outside range' },
+    { key:'well', short:'Check-in', label:"Today's check-in", weight:15,
+      value: ciToday ? `${ciAvg(ciToday).toFixed(1)} of 5` : null, ref:'5 scores 100, 1 scores 0',
+      sub: ciToday ? Math.round((ciAvg(ciToday) - 1)/4*100) : null, rule:'Average of 7 items, rescaled' }
+  ];
+  const avail = inputs.filter(x => x.sub != null), wsum = sum(avail.map(x => x.weight));
+  inputs.forEach(x => { x.eff = x.sub == null ? 0 : x.weight/(wsum || 1)*100; x.contrib = x.sub == null ? null : x.sub*x.weight/(wsum || 1); });
+  const score = wsum >= 60 ? Math.round(sum(avail.map(x => x.sub*x.weight))/wsum) : null;
+  const rlabel = score == null ? 'Not enough data' : score >= 75 ? 'High' : score >= 55 ? 'Moderate' : 'Low';
+  const rkind = score == null ? 'gap' : score >= 75 ? 'ok' : score >= 55 ? 'info' : 'watch';
+
+  /* Alerts: indicators for review, never diagnoses */
+  const al = [];
+  if (rsrcC.status === 'expired'){
+    const since = rsrcC.lastSync ? fmtDay(new Date(rsrcC.lastSync)) : 'the last sync';
+    al.push({sev:'gap', title:`${pname(a.rsrc)} authorization expired`, flag:`${pname(a.rsrc)} authorization expired`,
+      body:`No HRV, resting heart rate, or sleep since ${since}. ${a.first} needs to reconnect${a.rsrc === 'fitbit' ? ' through the Google Health API, because the old Fitbit token can\'t be reused' : ''}.`,
+      basis:'Connection status', tab:'connections', cta:'Open connections'});
+  } else if (rsrcC.status === 'disconnected' && S.mode !== 'empty'){
+    al.push({sev:'gap', title:`${pname(a.rsrc)} is disconnected`, flag:`${pname(a.rsrc)} disconnected`, body:'HRV, resting heart rate, and sleep will stop updating until it is reconnected.', basis:'Connection status', tab:'connections', cta:'Open connections'});
+  }
+  if (wStale){
+    al.push({sev:'gap', title:`${pname(a.wsrc)} hasn't synced since ${fmtDay(new Date(wsrcC.lastSync))}`, flag:`${pname(a.wsrc)} sync stale`,
+      body:'Sessions after that may be missing, so recent load and the load ratio could be undercounted.', basis:`Last successful sync ${rel(wsrcC.lastSync)}`, tab:'connections', cta:'Open connections'});
+  }
+  if (acwr != null){
+    if (acwr >= 1.5) al.push({sev:'review', title:`${acwr.toFixed(2)} load ratio, well above range`, body:`Well above the 0.8–1.3 range. The last 7 days averaged ${fmtN(acute)} AU a day against ${fmtN(chronic)} AU over 28 days.`, basis:'Session-RPE load, 7-day vs 28-day average', tab:'load', cta:'Open load'});
+    else if (acwr > 1.3) al.push({sev:'watch', title:`${acwr.toFixed(2)} load ratio, above range`, body:`Above the 0.8–1.3 range. The last 7 days averaged ${fmtN(acute)} AU a day against ${fmtN(chronic)} AU over 28 days.`, basis:'Session-RPE load, 7-day vs 28-day average', tab:'load', cta:'Open load'});
+    else if (acwr < 0.8 && !lowConf) al.push({sev:'info', title:`${acwr.toFixed(2)} load ratio, below range`, body:'Below 0.8, which usually means a lighter week than the recent norm.', basis:'Session-RPE load', tab:'load', cta:'Open load'});
+  }
+  if (hrvBelow >= 3) al.push({sev:'review', title:`${hrvBelow} days of HRV below usual range`, body:`Last night ${hrv[T]} ms ${a.metric} against a usual range of ${Math.round(base.hrv.lo)}–${Math.round(base.hrv.hi)} ms. Worth asking about sleep, stress, illness, or travel.`, basis:`${a.metric} from ${pname(a.rsrc)}, 28-day baseline`, tab:'recovery', cta:'Open recovery'});
+  else if (hrvBelow >= 1) al.push({sev:'watch', title:'HRV below usual range last night', body:`${hrv[T]} ms ${a.metric} against a usual range of ${Math.round(base.hrv.lo)}–${Math.round(base.hrv.hi)} ms. One low night is common; watch for a trend.`, basis:`${a.metric} from ${pname(a.rsrc)}, 28-day baseline`, tab:'recovery', cta:'Open recovery'});
+  if (rhrAbove >= 3) al.push({sev:'watch', title:`${rhrAbove} days of resting HR above usual range`, body:`Last night ${rhr[T]} bpm against a usual range of ${Math.round(base.rhr.lo)}–${Math.round(base.rhr.hi)} bpm.`, basis:`${pname(a.rsrc)}, 28-day baseline`, tab:'recovery', cta:'Open recovery'});
+  if (sleep3 != null && sleep3 < 390) al.push({sev:'watch', title:`${fmtHM(sleep3)} average sleep over the last 3 nights`, body:'Short sleep can lower HRV and raise resting heart rate on its own.', basis:`Sleep from ${pname(a.rsrc)}`, tab:'recovery', cta:'Open recovery'});
+  if (recMissing >= 2 && rsrcC.status === 'connected') al.push({sev:'gap', title:`${recMissing} nights without overnight data`, flag:`No overnight data (${recMissing} nights)`, body:'The device may not have been worn overnight, or the data has not synced.', basis:`${pname(a.rsrc)} connection is active`, tab:'recovery', cta:'Open recovery'});
+  if (unc14 > 0) al.push({sev:'gap', title:`${unc14} of ${sess14} sessions in the last 14 days ${unc14 === 1 ? 'has' : 'have'} no RPE`, flag:`RPE missing (${unc14})`, body:"They are listed in Workouts but left out of load, not counted as zero. Adding RPE updates the load ratio.", basis:'Workout log', tab:'workouts', cta:'Open workouts'});
+  if (!ciToday){
+    const daysSince = lastCi == null ? null : T - lastCi;
+    if (daysSince == null || daysSince >= 3) al.push({sev:'gap', title: daysSince == null ? 'No check-ins yet' : `${daysSince} days since the last check-in`, flag: daysSince == null ? 'No check-ins' : `No check-in (${daysSince} days)`, body:'Readiness runs without the wellness input until a new check-in arrives.', basis:'Wellness check-ins', tab:'wellness', cta:'Open wellness'});
+    else al.push({sev:'info', title:'No check-in yet today', body:"Readiness is using 4 of 5 inputs. A 30-second check-in adds the wellness input.", basis:'Wellness check-ins', tab:'wellness', cta:"Do today's check-in"});
+  }
+  if (wellLow) al.push({sev:'watch', title:'Recent check-ins show low energy and recovery', body:`Energy averaged ${eAvg.toFixed(1)} and recovery ${rAvg.toFixed(1)} of 5 across the last ${last3.length} check-ins, where 5 is best.`, basis:'Wellness check-ins', tab:'wellness', cta:'Open wellness'});
+  const ord = {review:0, watch:1, gap:2, info:3};
+  al.sort((x, y) => ord[x.sev] - ord[y.sev]);
+
+  return (CACHE[key] = { a, sessions, load, unc, nS, avg7, avg28, acute, chronic, acwr, week7, prev7, unc7, sess7, unc14, sess14,
+    hrv, rhr, sleep, base, hrvBelow, rhrAbove, recMissing, sleep3, cis, ciAvg, ciToday, lastCi,
+    readiness:{score, label:rlabel, kind:rkind, inputs, wsum, n:avail.length}, alerts:al, lowConf, wsrcC, rsrcC, wStale });
+}
+
+/* ---------- Small render helpers ---------- */
+function freshChip(aId, p){
+  if (!p) return '';
+  const c = connState(aId, p);
+  if (c.status === 'builtin') return `<span>Entered in AthleteLoad</span>`;
+  if (c.status === 'expired') return chip('review', 'Authorization expired');
+  if (c.status === 'disconnected') return chip('gap', 'Not connected');
+  if (!c.lastSync) return chip('gap', 'Never synced');
+  if (ageH(c.lastSync) > 36) return chip('watch', `Stale: synced ${rel(c.lastSync)}`, 'clock');
+  return `<span class="chip chip-plain">${ICON.clock}<span>Synced ${rel(c.lastSync)}</span></span>`;
+}
+function srcList(ids){ return ids.map(pname).join(' + '); }
+function previewNote(){
+  if (S.mode === 'live') return '';
+  const names = {loading:'Loading', empty:'Empty', error:'Error', stale:'Stale data', missing:'Missing data'};
+  return `<div class="preview" role="note">${ICON.info}<p style="margin:0"><strong>Preview: ${names[S.mode]} state.</strong> Set Preview state to Live data to return.</p></div>`;
+}
+function emptyState(title, body, actions){
+  return `<div class="empty"><h2>${title}</h2><p>${body}</p>${actions ? `<div class="row" style="margin-top:12px">${actions}</div>` : ''}</div>`;
+}
+function dataTable(caption, heads, rows){
+  return `<details><summary>Show data as a table</summary><div class="tablewrap"><table><caption class="vh">${esc(caption)}</caption><thead><tr>${heads.map((h,i)=>`<th scope="col"${i?' class="r"':''}>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td${i?' class="r"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
+}
+const nd = (t='No data') => `<span class="notlogged">${t}</span>`;
+
+/* ---------- Charts (SVG drawn at real pixel width) ---------- */
+function niceMax(v){ if (!v || v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const n = v/p; const st = [1,1.2,1.5,2,2.5,3,4,5,6,8,10].find(x => n <= x); return st*p; }
+function frame(w, h, title, desc, inner){ const id = uid(); return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${id}t ${id}d"><title id="${id}t">${esc(title)}</title><desc id="${id}d">${esc(desc)}</desc>${inner}</svg>`; }
+function xLabels(idxs, x, yPos, w){
+  const every = w < 420 ? 14 : 7; let g = '';
+  for (let k=idxs.length-1; k>=0; k-=every){ const i = idxs[k]; const lab = i === N-1 ? 'Today' : fmtShort(dayDate(i));
+    const lab2 = i === N-2 ? 'Yesterday' : lab;
+    g += `<text x="${Math.min(x(k), w - 6 - lab2.length*3.4).toFixed(1)}" y="${yPos}" class="ax" text-anchor="middle">${lab2}</text>`; }
+  return g;
+}
+function pathFrom(pts){ let d = '', pen = false; pts.forEach(p => { if (!p){ pen = false; return; } d += (pen ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1); pen = true; }); return d; }
+const CHARTS = {};
+CHARTS.load = (w) => {
+  const C = compute(S.aid), idx = range(N-29, N-1), h = 260, m = {l:46, r:10, t:22, b:30};
+  const iw = w - m.l - m.r, ih = h - m.t - m.b, bw = iw/idx.length;
+  const ymax = niceMax(Math.max(1, ...idx.map(i => Math.max(C.load[i], C.avg7[i], C.avg28[i])))*1.05);
+  const y = v => m.t + ih - (v/ymax)*ih, cx = k => m.l + k*bw + bw/2;
+  let g = `<text x="${m.l}" y="12" class="ax">AU per day</text>`;
+  [0, ymax/2, ymax].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(t)}" y2="${y(t)}" class="grid"/><text x="${m.l-6}" y="${y(t)+4}" class="ax" text-anchor="end">${fmtN(t)}</text>`; });
+  idx.forEach((i, k) => {
+    const v = C.load[i];
+    if (v > 0) g += `<rect x="${(cx(k)-bw*0.31).toFixed(1)}" y="${y(v).toFixed(1)}" width="${(bw*0.62).toFixed(1)}" height="${(y(0)-y(v)).toFixed(1)}" class="bar"/>`;
+    if (C.unc[i] > 0){ const yy = v > 0 ? y(v) - 8 : y(0) - 7; const rr = Math.min(5, bw*0.38);
+      g += `<circle cx="${cx(k)}" cy="${yy}" r="${rr}" class="nc"/><line x1="${cx(k)-rr*0.7}" y1="${yy+rr*0.7}" x2="${cx(k)+rr*0.7}" y2="${yy-rr*0.7}" stroke="var(--c-nc)" stroke-width="1.75"/>`; }
+  });
+  g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(0)}" y2="${y(0)}" class="axis"/>`;
+  g += `<path d="${pathFrom(idx.map((i,k)=>[cx(k), y(C.avg28[i])]))}" class="l2"/>`;
+  g += `<path d="${pathFrom(idx.map((i,k)=>[cx(k), y(C.avg7[i])]))}" class="l1"/>`;
+  g += xLabels(idx, cx, h-8, w);
+  return frame(w, h, `Daily training load, last 28 complete days, ${C.a.name}`, `Bars show daily session-RPE load. Solid line is the 7-day average, dashed line the 28-day average. Latest complete day: 7-day average ${fmtN(C.acute)} AU, 28-day average ${fmtN(C.chronic)} AU.`, g);
+};
+function trendChart(w, opts){
+  const {series, band, unit, title, desc, yPad, ylab} = opts;
+  const idx = range(N-28, N), h = 230, m = {l:42, r:10, t:22, b:30};
+  const iw = w - m.l - m.r, ih = h - m.t - m.b, bw = iw/idx.length;
+  const vals = valid(idx.map(i => series[i]));
+  let lo = Math.min(...vals, band && band.lo != null ? band.lo : Infinity), hi = Math.max(...vals, band && band.hi != null ? band.hi : -Infinity);
+  if (!isFinite(lo)){ lo = 0; hi = 100; }
+  lo = Math.floor((lo - yPad)/5)*5; hi = Math.ceil((hi + yPad)/5)*5;
+  const y = v => m.t + ih - ((v - lo)/(hi - lo))*ih, cx = k => m.l + k*bw + bw/2;
+  let g = `<text x="${m.l}" y="12" class="ax">${ylab}</text>`;
+  [lo, (lo+hi)/2, hi].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(t)}" y2="${y(t)}" class="grid"/><text x="${m.l-6}" y="${y(t)+4}" class="ax" text-anchor="end">${Math.round(t)}</text>`; });
+  if (band && band.lo != null){
+    g += `<rect x="${m.l}" width="${iw}" y="${y(band.hi)}" height="${y(band.lo)-y(band.hi)}" class="band"/>`;
+    g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(band.hi)}" y2="${y(band.hi)}" class="band-edge"/><line x1="${m.l}" x2="${w-m.r}" y1="${y(band.lo)}" y2="${y(band.lo)}" class="band-edge"/>`;
+  }
+  const r7 = idx.map(i => { const w7 = series.slice(Math.max(0,i-6), i+1); return valid(w7).length >= 4 ? mean(w7) : null; });
+  g += `<path d="${pathFrom(r7.map((v,k)=> v == null ? null : [cx(k), y(v)]))}" class="l1"/>`;
+  idx.forEach((i, k) => {
+    const v = series[i];
+    if (v == null) g += `<rect x="${cx(k)-4}" y="${h-m.b-9}" width="8" height="8" class="miss"/>`;
+    else g += `<circle cx="${cx(k)}" cy="${y(v)}" r="3.4" class="pt"/>`;
+  });
+  g += xLabels(idx, cx, h-8, w);
+  return frame(w, h, title, desc, g);
+}
+CHARTS.hrv = (w) => { const C = compute(S.aid), b = C.base.hrv;
+  return trendChart(w, {series:C.hrv, band:b, unit:'ms', ylab:`ms ${C.a.metric}`, yPad:4,
+    title:`Overnight HRV (${C.a.metric}), last 28 days, ${C.a.name}`,
+    desc: b.lo != null ? `Points are nightly values, the solid line is the 7-day average, the shaded band is the usual range ${Math.round(b.lo)} to ${Math.round(b.hi)} ms. ${C.hrv[N-1] == null ? 'No reading last night.' : 'Last night ' + C.hrv[N-1] + ' ms.'}` : 'Not enough nights to set a baseline.'}); };
+CHARTS.rhr = (w) => { const C = compute(S.aid), b = C.base.rhr;
+  return trendChart(w, {series:C.rhr, band:b, unit:'bpm', ylab:'bpm', yPad:2,
+    title:`Resting heart rate, last 28 days, ${C.a.name}`,
+    desc: b.lo != null ? `Usual range ${Math.round(b.lo)} to ${Math.round(b.hi)} bpm. ${C.rhr[N-1] == null ? 'No reading last night.' : 'Last night ' + C.rhr[N-1] + ' bpm.'}` : 'Not enough nights to set a baseline.'}); };
+CHARTS.sleep = (w) => {
+  const C = compute(S.aid), idx = range(N-28, N), h = 210, m = {l:34, r:10, t:22, b:30};
+  const iw = w - m.l - m.r, ih = h - m.t - m.b, bw = iw/idx.length, ymax = 10;
+  const y = v => m.t + ih - (v/ymax)*ih, cx = k => m.l + k*bw + bw/2;
+  let g = `<text x="${m.l}" y="12" class="ax">Hours</text>`;
+  [0, 5, 10].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(t)}" y2="${y(t)}" class="grid"/><text x="${m.l-6}" y="${y(t)+4}" class="ax" text-anchor="end">${t}</text>`; });
+  idx.forEach((i, k) => { const v = C.sleep[i];
+    if (v == null) g += `<rect x="${cx(k)-4}" y="${h-m.b-9}" width="8" height="8" class="miss"/>`;
+    else g += `<rect x="${(cx(k)-bw*0.31).toFixed(1)}" y="${y(v/60)}" width="${(bw*0.62).toFixed(1)}" height="${y(0)-y(v/60)}" class="bar"/>`; });
+  if (C.base.sleep.mean != null) g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(C.base.sleep.mean/60)}" y2="${y(C.base.sleep.mean/60)}" class="l2"/>`;
+  g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(0)}" y2="${y(0)}" class="axis"/>` + xLabels(idx, cx, h-8, w);
+  return frame(w, h, `Sleep duration, last 28 nights, ${C.a.name}`, `Bars show hours asleep. Dashed line is the 28-day average${C.base.sleep.mean != null ? ' of ' + fmtHM(C.base.sleep.mean) : ''}.`, g);
+};
+function scatterPairs(C){
+  const pts = []; let excluded = 0;
+  for (let i=N-29; i<=N-2; i++){ const v = C.hrv[i+1]; if (v == null || C.unc[i] > 0){ excluded++; continue; } pts.push([C.load[i], v, i]); }
+  const n = pts.length; let r = null, fit = null;
+  if (n >= 8){ const mx = mean(pts.map(p=>p[0])), my = mean(pts.map(p=>p[1]));
+    let sxy = 0, sxx = 0, syy = 0; pts.forEach(([x,yy]) => { sxy += (x-mx)*(yy-my); sxx += (x-mx)**2; syy += (yy-my)**2; });
+    if (sxx > 0 && syy > 0){ r = sxy/Math.sqrt(sxx*syy); const b = sxy/sxx; fit = [b, my - b*mx]; } }
+  return {pts, n, r, fit, excluded};
+}
+CHARTS.scatter = (w) => {
+  const C = compute(S.aid), sp = scatterPairs(C), h = 250, m = {l:46, r:12, t:22, b:40};
+  const iw = w - m.l - m.r, ih = h - m.t - m.b;
+  if (!sp.n) return frame(w, 80, 'Load vs next-day HRV', 'Not enough paired days.', `<text x="0" y="40" class="ax">Not enough paired days to plot.</text>`);
+  const xmax = niceMax(Math.max(...sp.pts.map(p=>p[0]))*1.05);
+  const ys = sp.pts.map(p=>p[1]); const lo = Math.floor((Math.min(...ys)-4)/5)*5, hi = Math.ceil((Math.max(...ys)+4)/5)*5;
+  const x = v => m.l + (v/xmax)*iw, y = v => m.t + ih - ((v-lo)/(hi-lo))*ih;
+  let g = `<text x="${m.l}" y="12" class="ax">Next-day HRV, ms</text>`;
+  [lo, (lo+hi)/2, hi].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(t)}" y2="${y(t)}" class="grid"/><text x="${m.l-6}" y="${y(t)+4}" class="ax" text-anchor="end">${Math.round(t)}</text>`; });
+  [0, xmax/2, xmax].forEach((t,k) => { g += `<text x="${x(t)}" y="${h-m.b+16}" class="ax" text-anchor="${k===0?'start':k===2?'end':'middle'}">${fmtN(t)}</text>`; });
+  g += `<text x="${w-m.r}" y="${h-4}" class="ax" text-anchor="end">Day's load, AU</text>`;
+  g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y(lo)}" y2="${y(lo)}" class="axis"/>`;
+  if (sp.fit){ const [b, c0] = sp.fit; const ya = clamp(c0, lo, hi), yb = clamp(b*xmax + c0, lo, hi);
+    g += `<line x1="${x(0)}" y1="${y(ya)}" x2="${x(xmax)}" y2="${y(yb)}" class="fit"/>`; }
+  sp.pts.forEach(p => { g += `<circle cx="${x(p[0])}" cy="${y(p[1])}" r="4" class="pt"/>`; });
+  return frame(w, h, `Daily load vs next-day HRV, ${C.a.name}`, `${sp.n} day pairs. ${sp.r == null ? 'Too few pairs for a correlation.' : 'Correlation r = ' + sp.r.toFixed(2) + '.'} Association only, not causation.`, g);
+};
+CHARTS.wellness = (w) => {
+  const C = compute(S.aid), idx = range(N-28, N), h = 290, m = {l:46, r:10, t:22, b:30}, gapY = 26;
+  const iw = w - m.l - m.r, ih1 = 92, ih2 = h - m.t - m.b - ih1 - gapY, bw = iw/idx.length, cx = k => m.l + k*bw + bw/2;
+  const lmax = niceMax(Math.max(1, ...idx.map(i => C.load[i])));
+  const y1 = v => m.t + ih1 - (v/lmax)*ih1, top2 = m.t + ih1 + gapY, y2 = v => top2 + ih2 - ((v-1)/4)*ih2;
+  let g = `<text x="${m.l}" y="12" class="ax">Load, AU</text>`;
+  [0, lmax].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y1(t)}" y2="${y1(t)}" class="grid"/><text x="${m.l-6}" y="${y1(t)+4}" class="ax" text-anchor="end">${fmtN(t)}</text>`; });
+  idx.forEach((i,k) => { const v = C.load[i]; if (v > 0) g += `<rect x="${(cx(k)-bw*0.31).toFixed(1)}" y="${y1(v)}" width="${(bw*0.62).toFixed(1)}" height="${y1(0)-y1(v)}" class="bar"/>`; });
+  g += `<text x="0" y="${top2-8}" class="ax">Check-in average, 1 to 5 (5 is best)</text>`;
+  [1,3,5].forEach(t => { g += `<line x1="${m.l}" x2="${w-m.r}" y1="${y2(t)}" y2="${y2(t)}" class="grid"/><text x="${m.l-6}" y="${y2(t)+4}" class="ax" text-anchor="end">${t}</text>`; });
+  const wv = idx.map(i => C.cis[i] ? C.ciAvg(C.cis[i]) : null);
+  g += `<path d="${pathFrom(wv.map((v,k)=> v == null ? null : [cx(k), y2(v)]))}" class="l1"/>`;
+  wv.forEach((v,k) => { if (v == null) g += `<rect x="${cx(k)-4}" y="${h-m.b-9}" width="8" height="8" class="miss"/>`; else g += `<circle cx="${cx(k)}" cy="${y2(v)}" r="3.4" class="pt"/>`; });
+  g += xLabels(idx, cx, h-8, w);
+  return frame(w, h, `Wellness check-ins next to daily load, last 28 days, ${C.a.name}`, `Top panel shows daily load bars. Bottom panel shows the daily check-in average from 1 to 5. Hollow squares mark days without a check-in.`, g);
+};
+CHARTS.zones = (w) => {
+  const C = compute(S.aid), zs = zoneTotals(C), h = 150, m = {l:0, r:0, t:8};
+  const rows = [['Last 7 days', zs.last7], ['Weekly average, 4 weeks before', zs.prior.map(v => v/4)]];
+  const tot = Math.max(1, ...rows.map(r => sum(r[1])));
+  const bh = 30; let g = ''; let yy = m.t;
+  rows.forEach(([lab, arr]) => {
+    const s = sum(arr);
+    g += `<text x="0" y="${yy+12}" class="axb">${lab}: ${fmtDur(s)}</text>`; yy += 20;
+    let x0 = 0;
+    arr.forEach((v, z) => { const ww = (v/tot)*w; if (ww <= 0) return;
+      g += `<rect x="${x0.toFixed(1)}" y="${yy}" width="${ww.toFixed(1)}" height="${bh}" fill="var(--z${z+1})" class="zseg"/>`;
+      if (ww > 52) g += `<text x="${(x0+ww/2).toFixed(1)}" y="${yy+19}" text-anchor="middle" style="fill:var(--z${z+1}t);font-size:12px;font-weight:700">Z${z+1} ${Math.round(v)}m</text>`;
+      else if (ww > 22) g += `<text x="${(x0+ww/2).toFixed(1)}" y="${yy+19}" text-anchor="middle" style="fill:var(--z${z+1}t);font-size:11px;font-weight:700">Z${z+1}</text>`;
+      x0 += ww; });
+    yy += bh + 18;
+  });
+  return frame(w, h, `Time in heart-rate zones, ${C.a.name}`, `Last 7 days: ${zs.last7.map((v,z)=>`Z${z+1} ${Math.round(v)} min`).join(', ')}. Sessions without a heart-rate trace are excluded.`, g);
+};
+CHARTS.trace = (w, ds) => {
+  const s = findSession(ds.id); if (!s || !s.trace) return '';
+  const a = A[S.aid], h = 230, m = {l:42, r:34, t:22, b:30}, iw = w - m.l - m.r, ih = h - m.t - m.b;
+  const lo = Math.round(a.hrMax*0.45), hi = a.hrMax, n = s.trace.length;
+  const x = k => m.l + (k/(n-1))*iw, y = v => m.t + ih - ((v-lo)/(hi-lo))*ih;
+  let g = `<text x="${m.l}" y="12" class="ax">bpm</text>`;
+  ZONES.forEach(([a0,b0,lab], z) => { const yA = y(Math.max(lo, a0 === 0 ? lo : a.hrMax*a0)), yB = y(Math.min(hi, a.hrMax*b0));
+    g += `<rect x="${m.l}" y="${yB}" width="${iw}" height="${yA-yB}" fill="var(--z${z+1})" opacity=".26"/>`;
+    g += `<text x="${w-m.r+4}" y="${(yA+yB)/2+4}" class="ax">${lab}</text>`; });
+  [lo, Math.round((lo+hi)/2), hi].forEach(t => { g += `<text x="${m.l-6}" y="${y(t)+4}" class="ax" text-anchor="end">${t}</text>`; });
+  g += `<path d="${pathFrom(s.trace.map((v,k)=>[x(k), y(v)]))}" class="trace"/>`;
+  const step = n > 120 ? 30 : n > 50 ? 15 : 10;
+  for (let t=0; t<n; t+=step) g += `<text x="${x(t)}" y="${h-8}" class="ax" text-anchor="${t===0?'start':'middle'}">${t} min</text>`;
+  return frame(w, h, `Heart-rate trace, ${s.title}`, `Per-minute heart rate over ${n} minutes, average ${s.hrAvg} bpm, max ${s.hrMax} bpm, drawn over zone bands Z1 to Z5.`, g);
+};
+CHARTS.acwr = (w) => {
+  const C = compute(S.aid); if (C.acwr == null) return '';
+  const h = 46, lo = 0.4, hi = 2.0, x = v => 6 + ((clamp(v,lo,hi)-lo)/(hi-lo))*(w-12);
+  let g = `<rect x="${x(0.8)}" y="18" width="${x(1.3)-x(0.8)}" height="10" fill="var(--ok-bg)" stroke="var(--ok)" stroke-width="1"/>`;
+  g += `<line x1="${x(lo)}" x2="${x(hi)}" y1="23" y2="23" class="axis"/>`;
+  [0.8, 1.3, 1.5].forEach(t => { g += `<line x1="${x(t)}" x2="${x(t)}" y1="16" y2="30" stroke="var(--line-strong)"/><text x="${x(t)}" y="44" class="ax" text-anchor="middle">${t.toFixed(1)}</text>`; });
+  g += `<path d="M${x(C.acwr)-6},4 L${x(C.acwr)+6},4 L${x(C.acwr)},14 Z" class="marker"/>`;
+  return frame(w, h, 'Load ratio scale', `Ratio ${C.acwr.toFixed(2)} on a scale from 0.4 to 2.0. The 0.8 to 1.3 range is marked.`, g);
+};
+function zoneTotals(C){
+  const last7 = [0,0,0,0,0], prior = [0,0,0,0,0]; let excl7 = 0;
+  C.sessions.forEach(s => { const tgt = (s.day >= Y-6 && s.day <= Y) ? last7 : (s.day >= Y-34 && s.day <= Y-7) ? prior : null; if (!tgt) return;
+    if (!s.zones){ if (tgt === last7) excl7++; return; } s.zones.forEach((v,z) => tgt[z] += v); });
+  return {last7, prior, excl7};
+}
+function drawCharts(root){
+  (root || document).querySelectorAll('[data-chart]').forEach(el => {
+    const fn = CHARTS[el.dataset.chart]; if (!fn) return;
+    const w = Math.max(240, Math.floor(el.clientWidth || 600));
+    el.innerHTML = fn(w, el.dataset); el.dataset.w = w;
+  });
+}
+
+/* ---------- Panels ---------- */
+const R = {};
+R.overview = (a, C) => {
+  if (!C) return emptyState(`No training data for ${a.first} yet`, 'Connect a device or add a workout to start. Load, recovery, and readiness appear once a few days of data arrive.',
+    `<button class="btn btn-primary" data-action="goto" data-tab="connections">Connect a device</button><button class="btn" data-action="goto" data-tab="workouts" data-open="add">Add a workout</button>`);
+  let h = `<div class="sec"><h2 id="h-alerts">Indicators for review</h2><p class="lede">Patterns worth a look, most important first. They flag things to talk about; they are not diagnoses.</p>`;
+  if (!C.alerts.length) h += `<div class="calm">${ICON.ok}<p style="margin:0"><strong>Nothing to review today.</strong> Load, HRV, resting heart rate, sleep, and check-ins are all within ${a.first}'s usual ranges, and every source is up to date.</p></div>`;
+  else {
+    const lab = {review:'Review', watch:'Watch', gap:'Data gap', info:'Note'};
+    h += `<ul class="alerts">` + C.alerts.map(x => `<li class="alert alert-${x.sev}"><div class="alert-head">${chip(x.sev, lab[x.sev])}<h3>${esc(x.title)}</h3></div><p>${esc(x.body)}</p><p class="basis">Based on: ${esc(x.basis)}</p><button class="linkbtn" data-action="goto" data-tab="${x.tab}">${esc(x.cta)}</button></li>`).join('') + `</ul>`;
+  }
+  h += `</div><div class="sec"><h2>Today at a glance</h2><div class="tiles">`;
+  const rd = C.readiness, T = N-1;
+  const rsrcs = [a.rsrc, a.wsrc].filter(Boolean);
+  h += `<article class="tile wide" aria-labelledby="t-ready"><h3 id="t-ready" class="tile-h">Readiness</h3>
+    <p class="metric">${rd.score == null ? `<span class="tile-missing">${ICON.gap} Not enough data</span>` : `<span class="num">${rd.score}</span><span class="unit">of 100</span>`}</p>
+    <div class="chips">${chip(rd.kind, rd.label)}${chip('plain','Not clinically validated','info')}</div>
+    <p class="sub">${rd.score == null ? `Only ${rd.n} of 5 inputs have data (${Math.round(rd.wsum)}% of the weight). A score needs at least 60%.` : (rd.n === 5 ? 'Uses all 5 inputs.' : `Uses ${rd.n} of 5 inputs. Missing inputs are left out and the other weights are rescaled.`)}</p>
+    <ul class="rmini" aria-label="Readiness inputs">${rd.inputs.map(x => `<li><span>${x.short} <span class="muted">(${x.weight}%)</span></span><span class="tnum">${x.sub == null ? '<span class="notlogged">No data</span>' : x.sub}</span><div class="hbar" aria-hidden="true"><span style="width:${x.sub || 0}%"></span></div></li>`).join('')}</ul>
+    <button class="linkbtn" data-action="goto" data-tab="recovery" data-focus="#readiness">See inputs and weights</button>
+    <p class="prov">${freshChip(a.id, a.rsrc)}<span>From ${srcList(rsrcs)} and check-in</span></p></article>`;
+  const acwrTxt = C.acwr == null ? 'No load yet' : C.acwr > 1.5 ? 'Well above 0.8–1.3' : C.acwr > 1.3 ? 'Above 0.8–1.3' : C.acwr < 0.8 ? 'Below 0.8–1.3' : 'Within 0.8–1.3';
+  const acwrKind = C.acwr == null ? 'gap' : C.acwr > 1.5 ? 'review' : C.acwr > 1.3 ? 'watch' : C.acwr < 0.8 ? 'info' : 'ok';
+  h += `<article class="tile" aria-labelledby="t-acwr"><h3 id="t-acwr" class="tile-h">Acute:chronic load ratio</h3>
+    <p class="metric">${C.acwr == null ? `<span class="tile-missing">${ICON.gap} No load data</span>` : `<span class="num">${C.acwr.toFixed(2)}</span>`}</p>
+    <div class="chips">${chip(acwrKind, acwrTxt)}${C.lowConf ? chip('gap','Low confidence') : ''}</div>
+    <div class="chart" data-chart="acwr"></div>
+    <p class="sub">${C.lowConf ? 'Missing RPE or a stale sync may be pulling recent load down.' : '7-day average divided by 28-day average.'}</p>
+    <p class="prov">${freshChip(a.id, a.wsrc)}<span>Session-RPE, ${pname(a.wsrc)}</span></p></article>`;
+  const chg = C.prev7 > 0 ? Math.round((C.week7 - C.prev7)/C.prev7*100) : null;
+  h += `<article class="tile" aria-labelledby="t-7d"><h3 id="t-7d" class="tile-h">7-day load</h3>
+    <p class="metric"><span class="num">${fmtN(C.week7)}</span><span class="unit">AU</span></p>
+    <p class="sub">${chg == null ? 'No previous week to compare.' : `${chg >= 0 ? 'Up' : 'Down'} ${Math.abs(chg)}% on the 7 days before (${fmtN(C.prev7)} AU).`}</p>
+    ${C.unc7 ? `<div class="chips">${chip('gap', `${C.unc7} session${C.unc7 > 1 ? 's' : ''} not counted`, 'slash')}</div>` : ''}
+    <p class="sub">${C.sess7} sessions, last 7 complete days.</p>
+    <p class="prov">${freshChip(a.id, a.wsrc)}<span>From ${pname(a.wsrc)}${a.dsrc ? ' + ' + pname(a.dsrc) : ''}</span></p></article>`;
+  h += recTile(a, C, 'hrv', `HRV (${a.metric})`, 'ms', C.hrv[T], C.base.hrv, true);
+  h += recTile(a, C, 'rhr', 'Resting heart rate', 'bpm', C.rhr[T], C.base.rhr, false);
+  const sl = C.sleep[T], rc = C.rsrcC;
+  h += `<article class="tile" aria-labelledby="t-sleep"><h3 id="t-sleep" class="tile-h">Last night's sleep</h3>`;
+  if (rc.status === 'disconnected') h += `<p class="metric"><span class="tile-missing">${ICON.gap} No source connected</span></p><p class="sub">Connect ${pname(a.rsrc)} to see sleep.</p>`;
+  else if (sl == null) h += `<p class="metric"><span class="tile-missing">${ICON.gap} No data for last night</span></p><p class="sub">${rc.status === 'expired' ? `${pname(a.rsrc)} authorization expired, so nothing has synced.` : 'The device may not have been worn, or the night has not synced yet.'}</p>${rc.status === 'expired' ? `<button class="linkbtn" data-action="goto" data-tab="connections">Fix the connection</button>` : ''}`;
+  else { const d = C.base.sleep.mean != null ? sl - C.base.sleep.mean : null;
+    h += `<p class="metric"><span class="num">${Math.floor(sl/60)}</span><span class="unit">h</span><span class="num">${pad2(sl%60)}</span><span class="unit">min</span></p>
+      <p class="sub">${d == null ? '' : `${Math.abs(Math.round(d))} min ${d >= 0 ? 'more' : 'less'} than the 28-day average of ${fmtHM(C.base.sleep.mean)}.`}</p>`; }
+  h += `<p class="prov">${freshChip(a.id, a.rsrc)}<span>From ${pname(a.rsrc)}</span></p></article>`;
+  h += `</div></div>`;
+  return h;
+};
+function recTile(a, C, key, label, unit, v, b, isHrv){
+  const rc = C.rsrcC, id = 't-' + key;
+  let h = `<article class="tile" aria-labelledby="${id}"><h3 id="${id}" class="tile-h">${label}</h3>`;
+  if (rc.status === 'disconnected') h += `<p class="metric"><span class="tile-missing">${ICON.gap} No source connected</span></p><p class="sub">Connect ${pname(a.rsrc)} to see this.</p>`;
+  else if (v == null) h += `<p class="metric"><span class="tile-missing">${ICON.gap} No data for last night</span></p><p class="sub">${rc.status === 'expired' ? `${pname(a.rsrc)} authorization expired, so nothing has synced.` : 'No overnight reading was recorded.'}</p>${b.lo != null ? `<p class="sub">Usual range ${Math.round(b.lo)}–${Math.round(b.hi)} ${unit}, from earlier nights.</p>` : ''}${rc.status === 'expired' ? `<button class="linkbtn" data-action="goto" data-tab="connections">Fix the connection</button>` : ''}`;
+  else {
+    let st = chip('plain', 'Baseline not set', 'gap');
+    if (b.lo != null){ const below = v < b.lo, above = v > b.hi;
+      st = below ? chip(isHrv ? 'watch' : 'ok', 'Below usual range', isHrv ? 'watch' : 'ok') : above ? chip(isHrv ? 'ok' : 'watch', 'Above usual range', isHrv ? 'ok' : 'watch') : chip('plain', 'Within usual range', 'ok'); }
+    const diff = b.mean != null ? v - b.mean : null;
+    h += `<p class="metric"><span class="num">${v}</span><span class="unit">${unit}${isHrv ? ' ' + a.metric : ''}</span></p><div class="chips">${st}</div>
+      <p class="sub">${b.lo != null ? `Usual range ${Math.round(b.lo)}–${Math.round(b.hi)} ${unit} (28-day mean ± 1 SD). ${diff >= 0 ? '+' : '−'}${Math.abs(Math.round(diff))} ${unit} vs mean.` : 'Needs 14 nights to set a baseline.'}</p>
+      ${isHrv && a.metric === 'SDNN' ? `<p class="sub">Apple Watch reports SDNN. Compare it only with ${a.first}'s own baseline, not with RMSSD from other athletes.</p>` : ''}`;
+  }
+  h += `<p class="prov">${freshChip(a.id, a.rsrc)}<span>From ${pname(a.rsrc)}</span></p></article>`;
+  return h;
+}
+
+R.load = (a, C) => {
+  if (!C) return emptyState('No sessions in the last 28 days', 'Load is calculated from each session\'s duration and RPE. Add a workout or connect a device to see it here.',
+    `<button class="btn btn-primary" data-action="goto" data-tab="workouts" data-open="add">Add a workout</button>`);
+  const latest = C.sessions.find(s => s.rpe != null && s.day <= Y);
+  const idx = range(N-29, N-1);
+  let h = `<div class="sec"><h2>Daily training load</h2><p class="lede">Last 7 complete days: ${fmtN(C.week7)} AU. The 7-day average is ${fmtN(C.acute)} AU a day and the 28-day average is ${fmtN(C.chronic)}, a ratio of ${C.acwr == null ? 'n/a' : C.acwr.toFixed(2)}.</p>
+    <div class="block"><div class="chart" data-chart="load"></div>
+    <ul class="legend"><li><span class="lg lg-bar"></span>Daily load (bars)</li><li><span class="lg lg-l1"></span>7-day average (solid)</li><li><span class="lg lg-l2"></span>28-day average (dashed)</li><li><span style="color:var(--c-nc)">${ICON.slash}</span>Day with sessions not counted (no RPE)</li></ul>
+    ${dataTable('Daily load', ['Day','Load (AU)','Not counted','7-day avg','28-day avg'], idx.slice().reverse().map(i => [fmtDay(dayDate(i)), C.nS[i] ? fmtN(C.load[i]) : 'Rest day', C.unc[i] ? `${C.unc[i]} session${C.unc[i]>1?'s':''}` : 'None', fmtN(C.avg7[i]), fmtN(C.avg28[i])]))}
+    </div>
+    <div class="formula" aria-labelledby="h-formula"><h3 id="h-formula">How load is calculated</h3><ul>
+      <li><code>Session load = duration (minutes) × session RPE (0–10)</code>, in arbitrary units (AU). This is the session-RPE method (Foster et al., 2001).${latest ? ` Example: ${esc(latest.title)} on ${fmtShort(dayDate(latest.day))}, ${latest.dur} min × RPE ${latest.rpe} = ${fmtN(latest.dur*latest.rpe)} AU.` : ''}</li>
+      <li><code>7-day average = load over the last 7 complete days ÷ 7</code>. <code>28-day average = load over the last 28 complete days ÷ 28</code>. Today is left out until the day ends.</li>
+      <li><code>Acute:chronic ratio = 7-day average ÷ 28-day average</code>. The 28-day window includes the latest 7 days.</li>
+      <li>Sessions without RPE are not counted. They stay visible in Workouts and are never treated as zero.</li>
+      <li>The ratio is a monitoring rule of thumb. Research has questioned how well it predicts injury, so treat it as one input to a conversation.</li>
+    </ul></div></div>`;
+  // weekly totals
+  const weeks = []; const T = N-1;
+  for (let i=T; i>=0; i--){ const wd = (dayDate(i).getDay()+6)%7; const st = i - wd; if (!weeks.find(w => w.st === st)) weeks.push({st}); if (weeks.length > 6) break; }
+  const wk = weeks.slice(0,6).map(w => { const days = range(Math.max(0,w.st), Math.min(T, w.st+6)+1);
+    return {w, days, load:sum(days.map(i=>C.load[i])), sess:sum(days.map(i=>C.nS[i])), unc:sum(days.map(i=>C.unc[i])), cur:days.includes(T), partial:w.st<0}; });
+  const wmax = Math.max(1, ...wk.map(x => x.load));
+  h += `<div class="sec"><h2>Weekly totals</h2><p class="lede">Monday to Sunday. The current week is still in progress.</p><div class="tablewrap rt"><table class="rtable"><caption class="vh">Weekly load totals</caption><thead><tr><th scope="col">Week</th><th scope="col" class="r">Load</th><th scope="col">Relative</th><th scope="col" class="r">Sessions</th><th scope="col" class="r">Not counted</th><th scope="col" class="r">Change</th></tr></thead><tbody>` +
+    wk.map((x, k) => { const prev = wk[k+1]; const ch = prev && prev.load > 0 && !x.cur ? Math.round((x.load-prev.load)/prev.load*100) : null;
+      const label = `${fmtShort(dayDate(Math.max(0,x.w.st)))}${x.cur ? ' (this week, so far)' : x.partial ? ' (partial)' : ''}`;
+      return `<tr><td><span class="lab">Week</span>${label}</td><td class="r"><span class="lab">Load</span>${fmtN(x.load)} AU</td><td><span class="lab">Relative</span><div class="hbar" aria-hidden="true"><span style="width:${(x.load/wmax*100).toFixed(1)}%"></span></div></td><td class="r"><span class="lab">Sessions</span>${x.sess}</td><td class="r"><span class="lab">Not counted</span>${x.unc ? `${x.unc}` : 'None'}</td><td class="r"><span class="lab">Change</span>${ch == null ? (x.cur ? 'In progress' : 'No prior week') : (ch >= 0 ? '+' : '−') + Math.abs(ch) + '%'}</td></tr>`; }).join('') +
+    `</tbody></table></div></div>`;
+  const zs = zoneTotals(C);
+  h += `<div class="sec"><h2>Time in heart-rate zones</h2><p class="lede">Zones use ${a.first}'s max heart rate of ${a.hrMax} bpm.${zs.excl7 ? ` ${zs.excl7} session${zs.excl7>1?'s':''} in the last 7 days had no heart-rate trace and ${zs.excl7>1?'are':'is'} left out.` : ''}</p>
+    <div class="block"><div class="chart" data-chart="zones"></div>
+    <div class="tablewrap"><table><caption class="vh">Heart-rate zone definitions and minutes</caption><thead><tr><th scope="col">Zone</th><th scope="col">% of max HR</th><th scope="col">bpm</th><th scope="col" class="r">Last 7 days</th><th scope="col" class="r">Weekly avg, prior 4 weeks</th></tr></thead><tbody>${ZONES.map(([a0,b0,lab,pct],z)=>`<tr><td><span class="lg" style="display:inline-block;width:12px;height:12px;background:var(--z${z+1});border:1px solid var(--line-strong);vertical-align:-1px;margin-right:6px" aria-hidden="true"></span>${lab}</td><td>${pct}</td><td>${z===0 ? `Under ${Math.round(a.hrMax*0.6)}` : `${Math.round(a.hrMax*a0)}–${z===4 ? a.hrMax : Math.round(a.hrMax*b0)-1}`}</td><td class="r">${fmtDur(zs.last7[z]) || '0 min'}</td><td class="r">${fmtDur(zs.prior[z]/4) || '0 min'}</td></tr>`).join('')}</tbody></table></div></div></div>`;
+  return h;
+};
+
+R.recovery = (a, C) => {
+  if (!C) return emptyState('No overnight data yet', 'Connect a device that records HRV, resting heart rate, or sleep. A baseline needs at least 14 nights.',
+    `<button class="btn btn-primary" data-action="goto" data-tab="connections">Connect a device</button>`);
+  const rd = C.readiness;
+  let h = `<div class="sec"><h2 id="readiness" tabindex="-1">Readiness</h2><p class="lede">A prototype composite that shows its working. It is not clinically validated and is meant to start a conversation, not to make decisions.</p>
+    <div class="block"><div class="ready-top">${rd.score == null ? `<p class="tile-missing" style="font-size:1.125rem">${ICON.gap} Not enough data for a score</p>` : `<p class="ready-num" aria-label="Readiness ${rd.score} of 100">${rd.score}<span class="muted" style="font-family:var(--font-text);font-size:1rem;font-weight:600"> of 100</span></p>`}
+    <div class="chips">${chip(rd.kind, rd.label)}${chip('plain','Not clinically validated','info')}</div></div>
+    <p class="small muted">Readiness = sum of (sub-score × weight) ÷ sum of weights for inputs that have data. A score needs at least 60% of the weight. Bands: 75 and above is high, 55 to 74 moderate, below 55 low.</p>
+    <div class="tablewrap rt"><table class="rtable"><caption class="vh">Readiness inputs and weights</caption><thead><tr><th scope="col">Input</th><th scope="col">Today</th><th scope="col">Reference</th><th scope="col" class="r">Sub-score</th><th scope="col" class="r">Weight</th><th scope="col" class="r">Contribution</th></tr></thead><tbody>` +
+    rd.inputs.map(x => `<tr><td><span class="lab">Input</span><span><strong>${x.label}</strong><br><span class="small muted">${x.rule}</span></span></td><td><span class="lab">Today</span>${x.value == null ? nd() : x.value}</td><td><span class="lab">Reference</span>${x.ref}</td><td class="r"><span class="lab">Sub-score</span>${x.sub == null ? nd('Not used') : `<span>${x.sub}<div class="hbar" aria-hidden="true" style="margin-top:4px"><span style="width:${x.sub}%"></span></div></span>`}</td><td class="r"><span class="lab">Weight</span>${x.weight}%${x.sub != null && rd.wsum < 100 ? `<br><span class="small muted">rescaled to ${Math.round(x.eff)}%</span>` : ''}</td><td class="r"><span class="lab">Contribution</span>${x.contrib == null ? nd('None') : x.contrib.toFixed(1)}</td></tr>`).join('') +
+    `</tbody></table></div></div></div>`;
+  if (a.metric === 'SDNN') h += `<div class="preview" role="note">${ICON.info}<p style="margin:0">${a.first}'s HRV comes from Apple Watch as <strong>SDNN</strong>. Other athletes here use RMSSD. The two aren't interchangeable, so ${a.first} is only compared with ${a.first}'s own baseline.</p></div>`;
+  h += `<div class="sec"><h2>Heart-rate variability</h2><p class="lede">${C.rsrcC.status === 'expired' ? `${pname(a.rsrc)} authorization expired, so recent nights are missing.` : `Overnight ${a.metric} from ${pname(a.rsrc)}.`} The band is the 28-day mean ± 1 standard deviation.</p>
+    <div class="block"><div class="chart" data-chart="hrv"></div><ul class="legend"><li><span class="lg lg-pt"></span>Nightly value</li><li><span class="lg lg-l1"></span>7-day average</li><li><span class="lg lg-band"></span>Usual range</li><li><span class="lg lg-miss"></span>No reading</li></ul>
+    ${dataTable('Nightly HRV', ['Night',`HRV (ms ${a.metric})`,'Versus usual range'], range(N-28,N).reverse().map(i => [fmtDay(dayDate(i)), C.hrv[i] == null ? 'No reading' : C.hrv[i], C.hrv[i] == null || C.base.hrv.lo == null ? '' : C.hrv[i] < C.base.hrv.lo ? 'Below' : C.hrv[i] > C.base.hrv.hi ? 'Above' : 'Within']))}</div></div>`;
+  h += `<div class="sec"><h2>Resting heart rate</h2><div class="block"><div class="chart" data-chart="rhr"></div><ul class="legend"><li><span class="lg lg-pt"></span>Nightly value</li><li><span class="lg lg-l1"></span>7-day average</li><li><span class="lg lg-band"></span>Usual range</li><li><span class="lg lg-miss"></span>No reading</li></ul>
+    ${dataTable('Resting heart rate', ['Night','bpm'], range(N-28,N).reverse().map(i => [fmtDay(dayDate(i)), C.rhr[i] == null ? 'No reading' : C.rhr[i]]))}</div></div>`;
+  h += `<div class="sec"><h2>Sleep</h2><div class="block"><div class="chart" data-chart="sleep"></div><ul class="legend"><li><span class="lg lg-bar"></span>Hours asleep</li><li><span class="lg lg-l2"></span>28-day average</li><li><span class="lg lg-miss"></span>No data</li></ul>
+    ${dataTable('Sleep', ['Night','Asleep'], range(N-28,N).reverse().map(i => [fmtDay(dayDate(i)), C.sleep[i] == null ? 'No data' : fmtHM(C.sleep[i])]))}</div></div>`;
+  const sp = scatterPairs(C);
+  h += `<div class="sec"><h2>Load vs next-day HRV</h2><div class="chips" style="margin-top:6px">${chip('info','Association, not causation')}</div>
+    <p class="lede">Each point is one day's load against the next night's HRV. ${sp.r == null ? 'There are too few paired days for a correlation.' : `Correlation r = ${sp.r.toFixed(2)} across ${sp.n} day pairs, which is ${Math.abs(sp.r) < 0.2 ? 'weak' : Math.abs(sp.r) < 0.5 ? 'moderate' : 'strong'}.`} Sleep, stress, illness, travel, and heat move HRV too, so this shows a pattern, not a cause.${sp.excluded ? ` ${sp.excluded} days were left out because HRV was missing or load had uncounted sessions.` : ''}</p>
+    <div class="block"><div class="chart" data-chart="scatter"></div><ul class="legend"><li><span class="lg lg-pt"></span>Day pair</li>${sp.fit ? '<li><span class="lg lg-l2"></span>Straight-line fit</li>' : ''}</ul></div></div>`;
+  return h;
+};
+
+/* Workouts */
+function findSession(id){ return compute(S.aid).sessions.find(s => s.id === id); }
+function filteredSessions(C){
+  const f = UI.wf, q = f.q.trim().toLowerCase();
+  return C.sessions.filter(s => {
+    if (f.sport !== 'all' && s.sport !== f.sport) return false;
+    if (f.source !== 'all' && !s.sources.includes(f.source)) return false;
+    if (f.status === 'counted' && s.rpe == null) return false;
+    if (f.status === 'notcounted' && s.rpe != null) return false;
+    if (f.status === 'merged' && s.sources.length < 2) return false;
+    if (q){ const hay = [s.title, s.sport, srcList(s.sources), s.notes, fmtDay(new Date(s.start))].join(' ').toLowerCase(); if (!hay.includes(q)) return false; }
+    return true;
+  });
+}
+function workoutRows(C){
+  const list = filteredSessions(C), shown = list.slice(0, UI.wf.limit);
+  const cnt = `Showing ${shown.length} of ${list.length} workout${list.length === 1 ? '' : 's'}${list.length !== C.sessions.length ? ` (${C.sessions.length} in total)` : ''}.`;
+  if (!list.length) return {cnt, html: `<div class="empty" style="margin-top:8px"><h3>No workouts match</h3><p>Try a different search or clear the filters.</p><button class="btn" data-action="clear-filters">Clear filters</button></div>`};
+  const rows = shown.map(s => { const d = new Date(s.start), merged = s.sources.length > 1;
+    return `<tr><td><span class="lab">Date</span><span>${fmtDay(d)}<br><span class="small muted">${fmtTime(d)}</span></span></td>
+      <td><span class="lab">Workout</span><span><button class="wbtn" data-action="open-workout" data-id="${s.id}">${esc(s.title)}</button><br><span class="small muted">${s.sport}</span></span></td>
+      <td class="r"><span class="lab">Duration</span>${fmtDur(s.dur)}</td>
+      <td class="r"><span class="lab">Distance</span>${s.dist == null ? nd('Not recorded') : s.dist.toFixed(1) + ' km'}</td>
+      <td class="r"><span class="lab">Avg / max HR</span>${s.hrAvg == null ? nd('Not recorded') : `${s.hrAvg} / ${s.hrMax == null ? '?' : s.hrMax} bpm`}</td>
+      <td class="r"><span class="lab">Load</span>${s.rpe == null ? chip('gap','Not counted','slash') : fmtN(s.dur*s.rpe) + ' AU'}</td>
+      <td class="r"><span class="lab">Calories</span>${s.kcal == null ? nd('Not recorded') : fmtN(s.kcal)}</td>
+      <td class="r"><span class="lab">RPE</span>${s.rpe == null ? nd('Not logged') : s.rpe}</td>
+      <td><span class="lab">Source</span><span>${srcList(s.sources)}${merged ? `<br>${chip('gap','Merged duplicate','merge')}` : ''}</span></td></tr>`; }).join('');
+  return {cnt, html: `<div class="tablewrap rt"><table class="rtable"><caption class="vh">Workout log</caption><thead><tr><th scope="col">Date</th><th scope="col">Workout</th><th scope="col" class="r">Duration</th><th scope="col" class="r">Distance</th><th scope="col" class="r">Avg / max HR</th><th scope="col" class="r">Load</th><th scope="col" class="r">Calories</th><th scope="col" class="r">RPE</th><th scope="col">Source</th></tr></thead><tbody>${rows}</tbody></table></div>${list.length > shown.length ? `<div class="row" style="margin-top:10px"><button class="btn" data-action="more">Show ${Math.min(25, list.length - shown.length)} more</button></div>` : ''}`};
+}
+function updateWorkouts(){
+  const C = compute(S.aid), r = workoutRows(C);
+  const c = document.getElementById('wcount'), res = document.getElementById('wresults');
+  if (c) c.textContent = r.cnt; if (res) res.innerHTML = r.html;
+}
+R.workouts = (a, C) => {
+  const sports = C ? [...new Set(C.sessions.map(s => s.sport))].sort() : [];
+  const srcs = C ? [...new Set(C.sessions.flatMap(s => s.sources))] : [];
+  let h = `<div class="sec"><div class="sec-head"><h2 id="h-workouts" tabindex="-1">Workouts</h2><button class="btn btn-primary" type="button" data-action="toggle-add" aria-expanded="${UI.addOpen}" aria-controls="addwrap">${UI.addOpen ? 'Close form' : 'Add workout'}</button></div>
+    <p class="lede">Every session from every source, with duplicates merged. Sessions without RPE are listed as not counted rather than zero.</p>
+    <div id="addwrap" ${UI.addOpen ? '' : 'hidden'}>${addForm(a)}</div>`;
+  if (!C) return h + emptyState('No workouts yet', 'Add a session by hand or connect a device, and it will show up here.', '') + '</div>';
+  h += `<div class="filters" role="search" aria-label="Filter workouts">
+      <div class="fi q"><label for="wq">Search</label><input id="wq" type="search" value="${esc(UI.wf.q)}" placeholder="Title, sport, or source" autocomplete="off"></div>
+      <div class="fi"><label for="wsport">Sport</label><select id="wsport"><option value="all">All sports</option>${sports.map(s=>`<option ${UI.wf.sport===s?'selected':''}>${s}</option>`).join('')}</select></div>
+      <div class="fi"><label for="wsrc">Source</label><select id="wsrc"><option value="all">All sources</option>${srcs.map(s=>`<option value="${s}" ${UI.wf.source===s?'selected':''}>${pname(s)}</option>`).join('')}</select></div>
+      <div class="fi"><label for="wstat">Status</label><select id="wstat">${[['all','All workouts'],['counted','Counted in load'],['notcounted','Not counted (no RPE)'],['merged','Merged duplicates']].map(([v,l])=>`<option value="${v}" ${UI.wf.status===v?'selected':''}>${l}</option>`).join('')}</select></div>
+    </div>`;
+  const r = workoutRows(C);
+  h += `<p id="wcount" class="small muted" aria-live="polite" style="margin-top:12px">${r.cnt}</p><div id="wresults">${r.html}</div></div>`;
+  return h;
+};
+function addForm(a){
+  const today = `${TODAY.getFullYear()}-${pad2(TODAY.getMonth()+1)}-${pad2(TODAY.getDate())}`, d0 = dayDate(0), min = `${d0.getFullYear()}-${pad2(d0.getMonth()+1)}-${pad2(d0.getDate())}`;
+  const f = (id, label, input, hint, req) => `<div class="field"><label for="${id}">${label}${req ? '' : ' <span class="req">(optional)</span>'}</label>${hint ? `<p class="hint" id="${id}-hint">${hint}</p>` : ''}${input}<p class="ferr" id="${id}-err" hidden></p></div>`;
+  return `<form id="addform" class="block form" novalidate aria-labelledby="h-add"><h3 id="h-add">Add a workout for ${a.first}</h3>
+    <div id="add-sum"></div>
+    <div class="fgrid">
+      ${f('f-date','Date',`<input id="f-date" name="date" type="date" value="${today}" min="${min}" max="${today}" aria-describedby="f-date-err" required>`,'',true)}
+      ${f('f-time','Start time',`<input id="f-time" name="time" type="time" value="07:00" aria-describedby="f-time-err">`,'',false)}
+      ${f('f-sport','Sport',`<select id="f-sport" name="sport" aria-describedby="f-sport-err" required><option value="">Choose a sport</option>${['Running','Cycling','Rowing','Soccer','Strength','Other'].map(s=>`<option ${s===a.sport?'selected':''}>${s}</option>`).join('')}</select>`,'',true)}
+      ${f('f-title','Title',`<input id="f-title" name="title" type="text" maxlength="60" placeholder="Easy run" aria-describedby="f-title-err">`,'',false)}
+      ${f('f-dur','Duration (minutes)',`<input id="f-dur" name="dur" type="number" inputmode="numeric" min="1" max="600" step="1" aria-describedby="f-dur-hint f-dur-err" required>`,'Whole minutes, 1 to 600.',true)}
+      ${f('f-rpe','Session RPE',`<select id="f-rpe" name="rpe" aria-describedby="f-rpe-hint f-rpe-err"><option value="">Not logged</option>${range(0,11).map(v=>`<option value="${v}">${v}${RPE_LABELS[v] ? ', ' + RPE_LABELS[v] : ''}</option>`).join('')}</select>`,'How hard the whole session felt, 0 to 10. Without RPE the session is not counted in load.',false)}
+      ${f('f-dist','Distance (km)',`<input id="f-dist" name="dist" type="number" inputmode="decimal" min="0" max="400" step="0.01" aria-describedby="f-dist-err">`,'',false)}
+      ${f('f-hravg','Average HR (bpm)',`<input id="f-hravg" name="hravg" type="number" inputmode="numeric" min="30" max="230" step="1" aria-describedby="f-hravg-err">`,'',false)}
+      ${f('f-hrmax','Max HR (bpm)',`<input id="f-hrmax" name="hrmax" type="number" inputmode="numeric" min="30" max="240" step="1" aria-describedby="f-hrmax-err">`,'',false)}
+      ${f('f-kcal','Calories',`<input id="f-kcal" name="kcal" type="number" inputmode="numeric" min="0" max="10000" step="1" aria-describedby="f-kcal-err">`,'',false)}
+    </div>
+    <div class="field"><label for="f-notes">Notes <span class="req">(optional)</span></label><textarea id="f-notes" name="notes" maxlength="500" aria-describedby="f-notes-err"></textarea><p class="ferr" id="f-notes-err" hidden></p></div>
+    <div class="row"><button class="btn btn-primary" type="submit">Add workout</button><button class="btn" type="button" data-action="toggle-add">Cancel</button></div>
+  </form>`;
+}
+function validateWorkout(v){
+  const e = {}, num = x => x === '' ? null : Number(x), isInt = x => Number.isInteger(x);
+  if (!v.date) e['f-date'] = 'Enter the date of the session.';
+  else { const [yy, mm, dd] = v.date.split('-').map(Number); const di = dayIndexOfDate(new Date(yy, mm-1, dd));
+    if (isNaN(di)) e['f-date'] = 'Enter a valid date.'; else if (di > N-1) e['f-date'] = "The date can't be in the future."; else if (di < 0) e['f-date'] = `Pick a date from ${fmtShort(dayDate(0))} onward.`; }
+  if (!v.sport) e['f-sport'] = 'Choose a sport.';
+  const dur = num(v.dur); if (dur == null) e['f-dur'] = 'Enter the duration in minutes.'; else if (!isInt(dur) || dur < 1 || dur > 600) e['f-dur'] = 'Enter whole minutes between 1 and 600.';
+  const dist = num(v.dist); if (dist != null && (isNaN(dist) || dist < 0 || dist > 400)) e['f-dist'] = 'Enter a distance from 0 to 400 km, or leave it blank.';
+  const ha = num(v.hravg), hm = num(v.hrmax);
+  if (ha != null && (!isInt(ha) || ha < 30 || ha > 230)) e['f-hravg'] = 'Enter a whole number from 30 to 230, or leave it blank.';
+  if (hm != null && (!isInt(hm) || hm < 30 || hm > 240)) e['f-hrmax'] = 'Enter a whole number from 30 to 240, or leave it blank.';
+  else if (hm != null && ha != null && !e['f-hravg'] && hm < ha) e['f-hrmax'] = 'Max HR must be at least the average HR.';
+  const kc = num(v.kcal); if (kc != null && (!isInt(kc) || kc < 0 || kc > 10000)) e['f-kcal'] = 'Enter a whole number from 0 to 10,000, or leave it blank.';
+  if ((v.notes || '').length > 500) e['f-notes'] = 'Keep notes to 500 characters.';
+  return e;
+}
+const FIELD_NAMES = {'f-date':'Date','f-sport':'Sport','f-dur':'Duration','f-dist':'Distance','f-hravg':'Average HR','f-hrmax':'Max HR','f-kcal':'Calories','f-notes':'Notes','f-time':'Start time','f-rpe':'RPE'};
+function showErrors(form, errs, sumId, verb){
+  form.querySelectorAll('.ferr').forEach(p => { p.hidden = true; p.innerHTML = ''; });
+  form.querySelectorAll('[aria-invalid]').forEach(x => x.removeAttribute('aria-invalid'));
+  form.querySelectorAll('.likert').forEach(x => x.classList.remove('invalid'));
+  const ids = Object.keys(errs), sumEl = document.getElementById(sumId);
+  ids.forEach(id => { const el = document.getElementById(id), p = document.getElementById(id + '-err');
+    if (p){ p.innerHTML = ICON.review + `<span>${esc(errs[id])}</span>`; p.hidden = false; }
+    if (el){ if (el.tagName === 'FIELDSET') el.classList.add('invalid'); else el.setAttribute('aria-invalid', 'true'); } });
+  if (!ids.length){ sumEl.innerHTML = ''; return; }
+  sumEl.innerHTML = `<div class="errsum" role="alert" tabindex="-1"><h3>${ICON.review}Fix ${ids.length} field${ids.length > 1 ? 's' : ''} to ${verb}</h3><ul>${ids.map(id => `<li><a href="#${id}" data-focus-field="${id}">${FIELD_NAMES[id] || id}: ${esc(errs[id])}</a></li>`).join('')}</ul></div>`;
+  sumEl.firstChild.focus();
+}
+function submitWorkout(form){
+  const fd = new FormData(form), v = Object.fromEntries(fd.entries());
+  const errs = validateWorkout(v);
+  showErrors(form, errs, 'add-sum', 'add this workout');
+  if (Object.keys(errs).length) return;
+  const [yy, mm, dd] = v.date.split('-').map(Number), [th, tm] = (v.time || '07:00').split(':').map(Number);
+  const start = new Date(yy, mm-1, dd, th || 7, tm || 0).getTime(), day = dayIndexOfDate(new Date(yy, mm-1, dd));
+  const dur = Number(v.dur), rpe = v.rpe === '' ? null : Number(v.rpe);
+  const C = compute(S.aid);
+  const dupe = C.sessions.find(s => s.day === day && s.sport === v.sport && !s.user && !s.sources.includes('manual') && Math.abs(s.dur - dur)/s.dur <= 0.15);
+  let msg;
+  if (dupe){
+    S.merges[dupe.id] = {rpe, dur, notes:v.notes || '', at:nowSim()};
+    msg = `Merged with the ${pname(dupe.primary)} record from ${fmtDay(new Date(dupe.start))}. Load is counted once${rpe != null && dupe.rpe == null ? ', using your RPE' : ''}.`;
+  } else {
+    (S.added[S.aid] = S.added[S.aid] || []).push({ id:'m' + Date.now(), user:true, day, start, sport:v.sport, title:v.title || v.sport, dur, rpe,
+      dist: v.dist === '' ? null : Math.round(Number(v.dist)*10)/10, hrAvg: v.hravg === '' ? null : Number(v.hravg), hrMax: v.hrmax === '' ? null : Number(v.hrmax),
+      kcal: v.kcal === '' ? null : Number(v.kcal), sources:['manual'], primary:'manual', trace:null, zones:null, mergeInfo:null, notes:v.notes || '' });
+    msg = rpe == null ? 'Workout added. It has no RPE, so it is listed but not counted in load.' : `Workout added: ${fmtN(dur*rpe)} AU counted in load.`;
+  }
+  VER++; save(); UI.addOpen = false; UI.wf = {q:'', sport:'all', source:'all', status:'all', limit:25};
+  render('#h-workouts'); toast(msg, 'ok');
+}
+
+/* Workout detail dialog */
+let lastOpener = null;
+function openWorkout(id, opener){
+  const s = findSession(id); if (!s) return;
+  lastOpener = opener || lastOpener;
+  const a = A[S.aid], d = new Date(s.start), dlg = document.getElementById('wdlg');
+  const zoneTotal = s.zones ? sum(s.zones) : 0;
+  let body = `<div class="dlg-head"><div><h2 id="wdlg-title">${esc(s.title)}</h2><p class="muted" style="margin:.15rem 0 0">${fmtDay(d)}, ${fmtTime(d)}. ${a.name}</p></div><button class="btn" type="button" data-action="close-dlg">Close</button></div><div class="dlg-body">
+    <div class="chips">${s.sources.length > 1 ? chip('gap','Merged duplicate','merge') : ''}${s.rpe == null ? chip('gap','Not counted in load','slash') : chip('ok','Counted in load')}${s.user ? chip('plain','Manual entry','info') : ''}</div>
+    <dl class="dl">
+      <div><dt>Sport</dt><dd>${s.sport}</dd></div><div><dt>Duration</dt><dd>${fmtDur(s.dur)}</dd></div>
+      <div><dt>Distance</dt><dd>${s.dist == null ? nd('Not recorded') : s.dist.toFixed(1) + ' km'}</dd></div>
+      <div><dt>Average HR</dt><dd>${s.hrAvg == null ? nd('Not recorded') : s.hrAvg + ' bpm'}</dd></div>
+      <div><dt>Max HR</dt><dd>${s.hrMax == null ? nd('Not recorded') : s.hrMax + ' bpm'}</dd></div>
+      <div><dt>Calories</dt><dd>${s.kcal == null ? nd('Not recorded') : fmtN(s.kcal)}</dd></div>
+      <div><dt>RPE</dt><dd>${s.rpe == null ? nd('Not logged') : s.rpe + (s.rpeFrom === 'manual' && !s.user ? ' (manual)' : '')}</dd></div>
+      <div><dt>Load</dt><dd>${s.rpe == null ? 'Not counted' : `${s.dur} × ${s.rpe} = ${fmtN(s.dur*s.rpe)} AU`}</dd></div>
+      <div><dt>Source</dt><dd>${srcList(s.sources)}</dd></div>
+    </dl>`;
+  if (s.rpe == null) body += `<div class="block" style="background:var(--surface-2)"><h3>Add RPE to count this session</h3><p class="small muted">Sessions without RPE stay out of load rather than counting as zero.</p>
+    <div class="row" style="align-items:flex-end"><div class="field"><label for="dlg-rpe">Session RPE</label><select id="dlg-rpe">${range(0,11).map(v=>`<option value="${v}" ${v===5?'selected':''}>${v}${RPE_LABELS[v] ? ', ' + RPE_LABELS[v] : ''}</option>`).join('')}</select></div><button class="btn btn-primary" type="button" data-action="save-rpe" data-id="${s.id}">Save RPE</button></div></div>`;
+  if (s.mergeInfo || s.manualMerge){
+    const mi = s.mergeInfo;
+    body += `<div class="mergebox"><h3 style="display:flex;gap:.4rem;align-items:center">${ICON.merge} Why this is one session</h3>`;
+    if (mi) body += `<p class="small">${pname(s.primary)} and ${pname(mi.other)} both reported this session. The start times were ${mi.offset} minutes apart and the durations were ${s.dur} and ${mi.otherDur} minutes, so AthleteLoad treats them as the same workout. ${esc(mi.reason)} Load is counted once.</p>`;
+    if (s.manualMerge) body += `<p class="small">A manual entry for ${s.manualMerge.dur} minutes${s.manualMerge.rpe != null ? ` with RPE ${s.manualMerge.rpe}` : ''} matched this session and was merged into it instead of being added twice.</p>`;
+    body += `</div>`;
+  }
+  body += `<h3 style="margin-top:16px">Heart rate</h3>`;
+  if (s.trace){
+    body += `<div class="chart" data-chart="trace" data-id="${s.id}"></div>
+      <div class="tablewrap"><table><caption class="vh">Time in zones for this session</caption><thead><tr><th scope="col">Zone</th><th scope="col">bpm</th><th scope="col" class="r">Minutes</th><th scope="col" class="r">Share</th></tr></thead><tbody>${s.zones.map((v,z)=>`<tr><td>Z${z+1}</td><td>${z===0 ? `Under ${Math.round(a.hrMax*0.6)}` : `${Math.round(a.hrMax*ZONES[z][0])}–${z===4 ? a.hrMax : Math.round(a.hrMax*ZONES[z][1])-1}`}</td><td class="r">${v}</td><td class="r">${zoneTotal ? Math.round(v/zoneTotal*100) : 0}%</td></tr>`).join('')}</tbody></table></div>`;
+  } else body += `<div class="empty" style="margin-top:8px;padding:16px"><p style="margin:0">${ICON.gap} No heart-rate trace for this session. ${s.user ? 'Manual entries only carry the numbers typed in.' : `${pname(s.primary)} didn't provide per-sample heart rate.`}</p></div>`;
+  if (s.notes || (s.manualMerge && s.manualMerge.notes)) body += `<h3 style="margin-top:16px">Notes</h3><p>${esc(s.notes || s.manualMerge.notes)}</p>`;
+  body += `</div>`;
+  dlg.innerHTML = body;
+  if (!dlg.open) dlg.showModal();
+  requestAnimationFrame(() => drawCharts(dlg));
+}
+
+/* Wellness */
+R.wellness = (a, C) => {
+  const coach = S.role === 'coach', T = N-1;
+  let h = `<div class="sec"><h2 id="h-ci" tabindex="-1">Today's check-in</h2><p class="lede">Seven quick ratings from 1 to 5, where 5 is always best. Notes are optional.</p>`;
+  const today = C ? C.ciToday : null;
+  if (coach) h += today ? ciSummary(today) : `<div class="empty" style="margin-top:12px"><p style="margin:0">${a.first} hasn't checked in today. Check-ins are completed by the athlete.</p></div>`;
+  else if (today && !UI.editCi) h += ciSummary(today) + `<div class="row" style="margin-top:10px"><button class="btn" data-action="edit-ci">Edit today's check-in</button></div>`;
+  else h += ciForm(a, today);
+  h += `</div>`;
+  if (!C){ return h + emptyState('No check-in history yet', 'Once check-ins start, they appear here next to daily load so you can see how the two move together.', ''); }
+  const idx = range(N-14, N).reverse();
+  h += `<div class="sec"><h2>History next to load</h2><p class="lede">Daily load on top and the check-in average underneath, on the same dates. Hollow squares mark days without a check-in.</p>
+    <div class="block"><div class="chart" data-chart="wellness"></div><ul class="legend"><li><span class="lg lg-bar"></span>Daily load</li><li><span class="lg lg-pt"></span>Check-in average</li><li><span class="lg lg-miss"></span>No check-in</li></ul></div>
+    <h3 style="margin-top:18px">Last 14 days</h3>
+    <div class="tablewrap rt"><table class="rtable"><caption class="vh">Check-ins and load for the last 14 days</caption><thead><tr><th scope="col">Day</th><th scope="col" class="r">Load</th>${CI_ITEMS.map(x=>`<th scope="col" class="r">${x[1]}</th>`).join('')}<th scope="col">Notes</th></tr></thead><tbody>` +
+    idx.map(i => { const c = C.cis[i];
+      return `<tr><td><span class="lab">Day</span>${i === T ? 'Today' : fmtDay(dayDate(i))}</td><td class="r"><span class="lab">Load</span>${i === T ? 'Day in progress' : C.nS[i] ? fmtN(C.load[i]) + ' AU' + (C.unc[i] ? ' + not counted' : '') : 'Rest day'}</td>` +
+        (c ? CI_ITEMS.map(x => `<td class="r"><span class="lab">${x[1]}</span>${c[x[0]]}</td>`).join('') + `<td><span class="lab">Notes</span>${c.notes ? esc(c.notes) : '<span class="muted">None</span>'}</td>`
+           : `<td colspan="${CI_ITEMS.length + 1}"><span class="lab">Check-in</span>${nd('No check-in')}</td>`) + `</tr>`; }).join('') +
+    `</tbody></table></div></div>`;
+  return h;
+};
+function ciSummary(c){
+  return `<div class="block"><p style="margin-top:0"><strong>Checked in at ${fmtTime(new Date(c.time || nowSim()))}.</strong> Average ${mean(CI_ITEMS.map(x=>c[x[0]])).toFixed(1)} of 5.</p>
+    <div class="tablewrap"><table><caption class="vh">Today's check-in</caption><thead><tr>${CI_ITEMS.map(x=>`<th scope="col">${x[1]}</th>`).join('')}</tr></thead><tbody><tr>${CI_ITEMS.map(x=>`<td>${c[x[0]]} of 5</td>`).join('')}</tr></tbody></table></div>
+    ${c.notes ? `<p><span class="muted">Notes:</span> ${esc(c.notes)}</p>` : ''}</div>`;
+}
+function ciForm(a, existing){
+  return `<form id="ciform" class="block form" novalidate aria-labelledby="h-ciform"><h3 id="h-ciform">How are you today, ${a.first}?</h3><div id="ci-sum"></div><div class="ci-grid">` +
+    CI_ITEMS.map(([k, label, lo, hi]) => `<fieldset class="likert" id="ci-${k}" aria-describedby="ci-${k}-err"><legend>${label}</legend><div class="opts">` +
+      [1,2,3,4,5].map(v => `<input type="radio" name="${k}" id="ci-${k}-${v}" value="${v}" ${existing && existing[k] === v ? 'checked' : ''}><label for="ci-${k}-${v}"><b>${v}</b>${v === 1 ? `<small>${lo}</small>` : v === 5 ? `<small>${hi}</small>` : ''}</label>`).join('') +
+      `</div><p class="ferr" id="ci-${k}-err" hidden style="margin-top:.3rem"></p></fieldset>`).join('') +
+    `</div><div class="field"><label for="ci-notes">Notes <span class="req">(optional)</span></label><textarea id="ci-notes" name="notes" maxlength="500" aria-describedby="ci-notes-count">${existing ? esc(existing.notes || '') : ''}</textarea><p class="hint" id="ci-notes-count">Up to 500 characters.</p></div>
+    <div class="row"><button class="btn btn-primary" type="submit">Save check-in</button>${existing ? '<button class="btn" type="button" data-action="cancel-ci">Cancel</button>' : ''}</div></form>`;
+}
+function submitCheckin(form){
+  const fd = new FormData(form), errs = {}, o = {};
+  CI_ITEMS.forEach(([k, label]) => { const v = fd.get(k); if (!v) errs['ci-' + k] = `Choose a rating from 1 to 5.`; else o[k] = Number(v); FIELD_NAMES['ci-' + k] = label; });
+  showErrors(form, errs, 'ci-sum', 'save your check-in');
+  if (Object.keys(errs).length) return;
+  o.notes = (fd.get('notes') || '').slice(0, 500); o.time = nowSim();
+  (S.checkins[S.aid] = S.checkins[S.aid] || {})[N-1] = o;
+  VER++; save(); UI.editCi = false; render('#h-ci');
+  toast(`Check-in saved. Readiness now includes the wellness input.`, 'ok');
+}
+
+/* Connections */
+R.connections = (a) => {
+  const coach = S.role === 'coach';
+  let h = `<div class="sec"><h2 id="h-conn" tabindex="-1">Connections</h2><p class="lede">Where ${a.first}'s data comes from. Each card shows what a real integration would take as of 15 Oct 2026. Connecting here is simulated.</p>`;
+  if (!coach) h += `<label class="toggle"><input type="checkbox" id="failNext" ${S.failNext ? 'checked' : ''}><span>Make the next connect or sync fail with an expired authorization</span></label>`;
+  else h += `<p class="small muted">Only the athlete can connect or disconnect accounts. Coaches see the status.</p>`;
+  h += `<div class="conns">` + PROVIDERS.map(p => connCard(a, p, coach)).join('') + `</div></div>`;
+  return h;
+};
+function connCard(a, p, coach){
+  const c = connState(a.id, p.id), busy = c.status === 'connecting' || c.status === 'syncing', msg = UI.connMsg[a.id + p.id];
+  let st;
+  if (c.status === 'builtin') st = chip('ok','Available');
+  else if (c.status === 'connected') st = ageH(c.lastSync) > 36 ? chip('watch','Connected, stale','clock') : chip('ok','Connected');
+  else if (c.status === 'expired') st = chip('review','Authorization expired');
+  else if (busy) st = `<span class="chip chip-info"><span class="fdot" aria-hidden="true"></span><span>${c.status === 'connecting' ? 'Connecting' : 'Syncing'}</span></span>`;
+  else st = chip('plain','Not connected','plug');
+  let meta = '';
+  if (c.status === 'connected' || c.status === 'syncing') meta = `Last sync ${c.lastSync ? fmtDay(new Date(c.lastSync)) + ', ' + fmtTime(new Date(c.lastSync)) + ' (' + rel(c.lastSync) + ')' : 'never'}.`;
+  else if (c.status === 'expired') meta = `Last good sync ${c.lastSync ? fmtDay(new Date(c.lastSync)) + ' (' + rel(c.lastSync) + ')' : 'unknown'}. Nothing new will arrive until ${a.first} reconnects.`;
+  const roles = [a.wsrc === p.id ? 'workouts' : null, a.rsrc === p.id ? 'HRV, resting HR, and sleep' : null, a.dsrc === p.id && a.dsrc !== 'manual' ? 'duplicate workouts' : null].filter(Boolean);
+  const days = Math.round((new Date(2026,9,30) - TODAY)/DAYMS);
+  let acts = '';
+  const B = (op, label, primary) => `<button class="btn ${primary ? 'btn-primary' : ''}" type="button" data-action="conn" data-op="${op}" data-p="${p.id}" ${busy ? 'aria-disabled="true"' : ''}>${busy && primary ? `<span class="fdot" aria-hidden="true"></span>` : ''}${label}</button>`;
+  if (!coach && p.id !== 'manual' && S.mode !== 'empty'){
+    if (UI.pendingDisc === p.id) acts = `<div class="confirm" role="group" aria-labelledby="cf-${p.id}"><p id="cf-${p.id}" style="margin-top:0"><strong>Disconnect ${pname(p.id)}?</strong> Data already synced stays in AthleteLoad. New data stops arriving.</p><div class="row"><button class="btn btn-primary" type="button" data-action="conn" data-op="confirm-disc" data-p="${p.id}">Disconnect</button><button class="btn" type="button" data-action="conn" data-op="cancel-disc" data-p="${p.id}">Keep connected</button></div></div>`;
+    else if (c.status === 'connected' || c.status === 'syncing') acts = B('sync', busy ? 'Syncing' : 'Sync now', true) + B('disconnect', 'Disconnect');
+    else if (c.status === 'expired') acts = B('reconnect', 'Reconnect', true) + B('disconnect', 'Disconnect');
+    else acts = B('connect', busy ? 'Connecting' : 'Connect', true);
+  } else if (!coach && p.id === 'manual') acts = `<button class="btn" type="button" data-action="goto" data-tab="workouts" data-open="add">Add a workout</button>`;
+  else if (!coach && S.mode === 'empty') acts = `<button class="btn btn-primary" type="button" data-action="conn" data-op="connect" data-p="${p.id}" aria-disabled="true">Connect</button><span class="small muted">Switch to Live data to try connecting.</span>`;
+  return `<article class="conn" aria-labelledby="cn-${p.id}"><div class="conn-head"><h3 id="cn-${p.id}">${p.name}</h3>${st}</div>
+    <p class="path ${p.flag ? 'flag' : ''}">${p.flag ? ICON.watch + ' ' : ''}${p.path}${p.id === 'fitbit' ? ` (in ${days} days)` : ''}</p>
+    <p class="note">${p.note}</p>
+    <p class="meta"><span class="muted">Provides:</span> ${p.uses}.${roles.length ? ` <span class="muted">${a.first} uses it for</span> ${roles.join(' and ')}.` : ''}</p>
+    ${meta ? `<p class="meta">${meta}</p>` : ''}
+    ${msg ? `<p class="msg msg-${msg.kind}">${ICON[msg.kind]}<span>${esc(msg.text)}</span></p>` : ''}
+    <div class="acts" id="ca-${p.id}">${acts}</div></article>`;
+}
+function connAct(op, pid){
+  const aId = S.aid, name = pname(pid), all = S.conn[aId] = S.conn[aId] || {}, c = all[pid] = all[pid] || {status:'disconnected', lastSync:null};
+  const focusCard = () => { const el = document.querySelector(`#ca-${pid} button`); if (el) el.focus(); };
+  if (op === 'disconnect'){ UI.pendingDisc = pid; renderPanelOnly(); focusCard(); return; }
+  if (op === 'cancel-disc'){ UI.pendingDisc = null; renderPanelOnly(); focusCard(); return; }
+  if (op === 'confirm-disc'){ c.status = 'disconnected'; UI.pendingDisc = null; UI.connMsg[aId+pid] = null; VER++; save(); renderPanelOnly(); focusCard(); toast(`${name} disconnected. Data already synced stays in AthleteLoad.`, 'ok'); return; }
+  if (c.status === 'connecting' || c.status === 'syncing') return;
+  const prev = c.status;
+  c.status = op === 'sync' ? 'syncing' : 'connecting';
+  UI.connMsg[aId+pid] = null; renderPanelOnly(); focusCard();
+  announce(`${op === 'sync' ? 'Syncing' : 'Connecting to'} ${name}.`);
+  setTimeout(() => {
+    const fail = S.failNext || S.mode === 'error';
+    if (fail){
+      c.status = 'expired'; c.expiredAt = nowSim(); S.failNext = false;
+      if (!c.lastSync) c.lastSync = null;
+      UI.connMsg[aId+pid] = {kind:'review', text:`Authorization expired. ${name} rejected the saved access token. Reconnect to resume syncing.`};
+      toast(`${name}: authorization expired. Reconnect to resume syncing.`, 'review');
+    } else {
+      c.status = 'connected'; c.lastSync = nowSim();
+      const extra = pid === 'fitbit' ? 'Connected through the Google Health API with Google sign-in. A real build would backfill the missed nights.'
+        : pid === 'apple' ? 'Simulated. In a real build the athlete approves access in the AthleteLoad iOS app.'
+        : pid === 'samsung' ? 'Simulated. In a real build the athlete approves access in the AthleteLoad Android app.'
+        : pid === 'garmin' && prev === 'disconnected' ? 'Simulated. A real connection needs Garmin to approve AthleteLoad as a business developer first.'
+        : op === 'sync' ? 'No new sessions in this simulation.' : 'Simulated OAuth sign-in completed.';
+      UI.connMsg[aId+pid] = {kind:'ok', text: (op === 'sync' ? 'Synced just now. ' : op === 'reconnect' ? 'Reconnected. ' : 'Connected. ') + extra};
+      toast(`${name} ${op === 'sync' ? 'synced' : op === 'reconnect' ? 'reconnected' : 'connected'}.`, 'ok');
+    }
+    VER++; save();
+    if (S.tab === 'connections' && S.aid === aId){ const ae = document.activeElement, inCard = ae && ae.closest && ae.closest('#ca-' + pid); renderPanelOnly(); if (inCard) focusCard(); }
+  }, 1300);
+}
+
+/* Coach roster */
+R.roster = () => {
+  const list = ATHLETES.map(a => { const C = compute(a.id); const pr = C.alerts.filter(x => x.sev === 'review').length*10 + C.alerts.filter(x => x.sev === 'watch').length*3 + C.alerts.filter(x => x.sev === 'gap').length; return {a, C, pr}; }).sort((x,y) => y.pr - x.pr);
+  let h = `<div class="sec"><h2>Roster</h2><p class="lede">Four athletes, sorted so whoever needs a conversation first is at the top.</p>`;
+  if (S.mode === 'empty') return h + emptyState('No athletes on your roster yet', 'Invite an athlete and their readiness, load, and check-ins will appear here once they connect a device.', `<button class="btn btn-primary" type="button" data-action="noop">Invite an athlete</button>`) + '</div>';
+  h += `<div class="tablewrap rt"><table class="rtable"><caption class="vh">Athlete roster</caption><thead><tr><th scope="col">Athlete</th><th scope="col">Readiness</th><th scope="col">Load ratio</th><th scope="col">Indicators and data flags</th><th scope="col">Last check-in</th><th scope="col" style="min-width:260px">Coach note</th></tr></thead><tbody>` +
+    list.map(({a, C}) => {
+      const rd = C.readiness, T = N-1;
+      const flags = C.alerts.filter(x => x.flag).map(x => chip('gap', esc(x.flag)));
+      const ind = C.alerts.filter(x => x.sev === 'review' || x.sev === 'watch').map(x => chip(x.sev, esc(x.title)));
+      const ci = C.lastCi == null ? nd('Never') : C.lastCi === T ? `Today, ${fmtTime(new Date(C.cis[T].time))}` : `${fmtDay(dayDate(C.lastCi))} (${T - C.lastCi} day${T - C.lastCi > 1 ? 's' : ''} ago)`;
+      const note = S.notes[a.id] || {text:''};
+      return `<tr><td><span class="lab">Athlete</span><span><strong>${a.name}</strong><br><span class="small muted">${a.sport}. ${a.phase}.</span><br><button class="linkbtn" data-action="open-athlete" data-id="${a.id}">Open ${a.first}'s dashboard</button></span></td>
+        <td><span class="lab">Readiness</span><span>${rd.score == null ? '' : `<strong class="rnum">${rd.score}</strong> `}${chip(rd.kind, rd.label)}</span></td>
+        <td><span class="lab">Load ratio</span><span>${C.acwr == null ? nd('No load') : `<strong class="rnum">${C.acwr.toFixed(2)}</strong>`}${C.lowConf ? `<br>${chip('gap','Low confidence')}` : ''}</span></td>
+        <td><span class="lab">Flags</span><div class="chips">${ind.concat(flags).join('') || chip('ok','None')}</div></td>
+        <td><span class="lab">Last check-in</span>${ci}</td>
+        <td><span class="lab">Coach note</span><div><label class="vh" for="note-${a.id}">Coach note for ${a.name}</label><textarea id="note-${a.id}" rows="3">${esc(note.text)}</textarea><div class="row" style="margin-top:6px"><button class="btn" type="button" data-action="save-note" data-id="${a.id}">Save note</button><span class="small muted" id="note-${a.id}-st">${note.saved ? 'Saved ' + rel(note.saved) : ''}</span></div></div></td></tr>`;
+    }).join('') + `</tbody></table></div></div>`;
+  return h;
+};
+
+/* ---------- Shell rendering ---------- */
+const TABS_ATH = [['overview','Overview'],['load','Load'],['recovery','Recovery'],['workouts','Workouts'],['wellness','Wellness'],['connections','Connections']];
+const TABS_COACH = [['roster','Roster']].concat(TABS_ATH);
+const $ = id => document.getElementById(id);
+function renderTabs(){
+  const tabs = S.role === 'coach' ? TABS_COACH : TABS_ATH;
+  if (!tabs.find(t => t[0] === S.tab)) S.tab = tabs[0][0];
+  $('tablist').innerHTML = tabs.map(([id, l]) => `<button type="button" role="tab" id="tab-${id}" aria-controls="panel" aria-selected="${id === S.tab}" tabindex="${id === S.tab ? 0 : -1}" data-tab="${id}">${l}</button>`).join('');
+  $('panel').setAttribute('aria-labelledby', 'tab-' + S.tab);
+}
+function renderCtx(){
+  const a = A[S.aid];
+  if (S.tab === 'roster'){ $('ctx').innerHTML = `<div class="ctx"><div><h1>Coach view</h1><p class="meta">Team overview for the four fictional athletes.</p></div><p class="asof">Simulated today: Thu 15 Oct 2026, 08:30</p></div>`; return; }
+  $('ctx').innerHTML = `<div class="ctx"><div><h1>${a.name}</h1><p class="meta">${a.sport}. ${a.phase}.${S.role === 'coach' ? ' Viewing as coach.' : ''}</p></div><p class="asof">Simulated today: Thu 15 Oct 2026, 08:30</p></div>`;
+}
+function skeleton(){
+  return `<div class="loadmsg" role="status"><span class="fdot" aria-hidden="true"></span><span>Loading ${A[S.aid].first}'s training data</span></div>
+    <div class="tiles" aria-hidden="true">${range(0,6).map(i=>`<div class="sk" style="height:${i?150:170}px"></div>`).join('')}</div><div class="sk" aria-hidden="true" style="height:240px;margin-top:16px"></div>`;
+}
+function errorState(){
+  const a = A[S.aid];
+  return `<div class="errstate" role="alert"><div class="head">${ICON.review}<h2>${S.tab === 'roster' ? "Couldn't load the roster" : `Couldn't load ${a.first}'s training data`}</h2></div>
+    <p>The simulated AthleteLoad service returned an error (503, service unavailable). Nothing you entered was lost. Try again in a moment; if it keeps happening, check Connections.</p>
+    <div class="row" style="margin-top:12px"><button class="btn btn-primary" type="button" data-action="retry">Try again</button>${S.tab !== 'connections' ? '<button class="btn" type="button" data-action="goto" data-tab="connections">Open connections</button>' : ''}</div></div>`;
+}
+function renderPanelOnly(focusSel){
+  const a = A[S.aid], panel = $('panel');
+  if (S.mode === 'loading'){ panel.setAttribute('aria-busy','true'); panel.innerHTML = previewNote() + skeleton(); return; }
+  panel.removeAttribute('aria-busy');
+  if (S.mode === 'error' && S.tab !== 'connections'){ panel.innerHTML = previewNote() + errorState(); return; }
+  const C = S.mode === 'empty' ? null : (S.tab === 'roster' ? null : compute(S.aid));
+  panel.innerHTML = previewNote() + R[S.tab](a, C);
+  drawCharts(panel);
+  const fn = $('failNext'); if (fn) fn.addEventListener('change', e => { S.failNext = e.target.checked; });
+  if (focusSel){ const el = panel.querySelector(focusSel); if (el){ if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex','-1'); el.focus(); el.scrollIntoView({block:'start'}); } }
+}
+function render(focusSel){
+  $('simbadge').innerHTML = ICON.flask + '<span>Simulated data</span>';
+  $('athleteSel').innerHTML = ATHLETES.map(a => `<option value="${a.id}" ${a.id === S.aid ? 'selected' : ''}>${a.name} (${a.sport})</option>`).join('');
+  $('role-ath').checked = S.role === 'athlete'; $('role-coach').checked = S.role === 'coach';
+  $('stateSel').value = S.mode;
+  renderTabs(); renderCtx(); renderPanelOnly(focusSel);
+}
+function setTab(id, focusSel){ S.tab = id; UI.pendingDisc = null; save(); render(focusSel); }
+function announce(t){ const l = $('live'); l.textContent = ''; setTimeout(() => { l.textContent = t; }, 30); }
+let toastT = null;
+function toast(text, kind){
+  const el = $('toast'); el.innerHTML = `<div class="t">${ICON[kind || 'ok']}<span>${esc(text)}</span></div>`;
+  clearTimeout(toastT); toastT = setTimeout(() => { el.innerHTML = ''; }, 5200);
+}
+
+/* ---------- Events ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-action],[role=tab],[data-focus-field]'); if (!t) return;
+  if (t.matches('[data-focus-field]')){ e.preventDefault(); const f = document.getElementById(t.dataset.focusField); if (f){ const inp = f.tagName === 'FIELDSET' ? f.querySelector('input') : f; inp.focus(); } return; }
+  if (t.getAttribute('role') === 'tab'){ setTab(t.dataset.tab); $('tab-' + S.tab).focus(); return; }
+  const act = t.dataset.action;
+  if (t.getAttribute('aria-disabled') === 'true') return;
+  if (act === 'goto'){
+    const tab = (S.role !== 'coach' || t.dataset.tab !== 'roster') ? t.dataset.tab : 'roster';
+    if (t.dataset.open === 'add') UI.addOpen = true;
+    setTab(tab, t.dataset.focus || (t.dataset.open === 'add' ? '#f-date' : null));
+    if (!t.dataset.focus && !t.dataset.open){ const tb = $('tab-' + tab); if (tb) tb.focus(); }
+  }
+  else if (act === 'reset'){ try { localStorage.removeItem(STORE_KEY); } catch(err){}
+    S = defaults(); VER++; Object.assign(UI, {wf:{q:'', sport:'all', source:'all', status:'all', limit:25}, pendingDisc:null, connMsg:{}, editCi:false, addOpen:false}); render(); toast('Prototype reset to its starting data.', 'ok'); }
+  else if (act === 'retry'){ S.mode = 'loading'; render(); setTimeout(() => { S.mode = 'live'; render(); const h = $('panel').querySelector('h2'); if (h){ h.setAttribute('tabindex','-1'); h.focus(); } announce('Data loaded.'); }, 900); }
+  else if (act === 'open-workout') openWorkout(t.dataset.id, t);
+  else if (act === 'close-dlg') $('wdlg').close();
+  else if (act === 'save-rpe'){ const v = Number($('dlg-rpe').value); S.rpeEdits[t.dataset.id] = v; VER++; save(); renderPanelOnly(); openWorkout(t.dataset.id); toast(`RPE ${v} saved. The session now counts toward load.`, 'ok'); const cb = $('wdlg').querySelector('[data-action=close-dlg]'); if (cb) cb.focus(); }
+  else if (act === 'toggle-add'){ UI.addOpen = !UI.addOpen; renderPanelOnly(UI.addOpen ? '#f-date' : null); if (!UI.addOpen){ const b = $('panel').querySelector('[data-action=toggle-add]'); if (b) b.focus(); } }
+  else if (act === 'more'){ UI.wf.limit += 25; updateWorkouts(); }
+  else if (act === 'clear-filters'){ UI.wf = {q:'', sport:'all', source:'all', status:'all', limit:25}; renderPanelOnly('#wq'); }
+  else if (act === 'conn') connAct(t.dataset.op, t.dataset.p);
+  else if (act === 'open-athlete'){ S.aid = t.dataset.id; setTab('overview'); $('tab-overview').focus(); }
+  else if (act === 'save-note'){ const id = t.dataset.id; S.notes[id] = {text:$('note-' + id).value.slice(0, 1000), saved:nowSim()}; save(); const st = $('note-' + id + '-st'); if (st) st.textContent = 'Saved just now'; toast(`Note saved for ${A[id].first}.`, 'ok'); }
+  else if (act === 'edit-ci'){ UI.editCi = true; renderPanelOnly('#h-ciform'); }
+  else if (act === 'cancel-ci'){ UI.editCi = false; renderPanelOnly('#h-ci'); }
+  else if (act === 'noop') toast('Invites are outside this prototype.', 'info');
+});
+$('tablist').addEventListener('keydown', e => {
+  const tabs = [...$('tablist').querySelectorAll('[role=tab]')], i = tabs.indexOf(document.activeElement); if (i < 0) return;
+  let j = null;
+  if (e.key === 'ArrowRight') j = (i+1) % tabs.length; else if (e.key === 'ArrowLeft') j = (i-1+tabs.length) % tabs.length; else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length-1;
+  if (j == null) return; e.preventDefault(); setTab(tabs[j].dataset.tab); $('tab-' + S.tab).focus();
+});
+$('athleteSel').addEventListener('change', e => { S.aid = e.target.value; UI.pendingDisc = null; UI.editCi = false; UI.addOpen = false; UI.wf = {q:'', sport:'all', source:'all', status:'all', limit:25}; if (S.tab === 'roster') S.tab = 'overview'; save(); render(); announce(`Showing ${A[S.aid].name}.`); });
+document.querySelectorAll('input[name=role]').forEach(r => r.addEventListener('change', e => { S.role = e.target.value; S.tab = S.role === 'coach' ? 'roster' : 'overview'; UI.editCi = false; save(); render(); announce(S.role === 'coach' ? 'Coach view. Roster tab selected.' : 'Athlete view.'); }));
+$('stateSel').addEventListener('change', e => { S.mode = e.target.value; UI.pendingDisc = null; render(); announce(`Preview state: ${e.target.options[e.target.selectedIndex].text}.`); });
+document.addEventListener('input', e => {
+  const id = e.target.id; if (!['wq','wsport','wsrc','wstat'].includes(id)) return;
+  const map = {wq:'q', wsport:'sport', wsrc:'source', wstat:'status'}; UI.wf[map[id]] = e.target.value; UI.wf.limit = 25; updateWorkouts();
+});
+document.addEventListener('submit', e => {
+  if (e.target.id === 'addform'){ e.preventDefault(); submitWorkout(e.target); }
+  if (e.target.id === 'ciform'){ e.preventDefault(); submitCheckin(e.target); }
+});
+$('wdlg').addEventListener('close', () => { if (lastOpener && document.body.contains(lastOpener)) lastOpener.focus(); else { const b = document.querySelector(`[data-action=open-workout]`); if (b) b.focus(); } lastOpener = null; });
+let lastW = 0;
+new ResizeObserver(() => { const w = $('main').clientWidth; if (Math.abs(w - lastW) > 24){ lastW = w; drawCharts(document); } }).observe($('main'));
+
+render();
+</script>
+</body>
+</html>

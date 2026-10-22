@@ -7,7 +7,7 @@ Personal portfolio for **Shreyas Shirke**, Business Analyst · Project Operation
 
 ## What's on the site
 
-- **Selected work:** UI/UX Guidelines & Design System, Portfolio Report Agent (Actuals vs Forecast automation), and an IT-transformation capstone
+- **Selected work:** UI/UX Guidelines & Design System, Portfolio Report Agent (Actuals vs Forecast automation), and an IT-transformation capstone (with the AthleteLoad prototype linked from the UI/UX project)
 - **Experience, education & skills:** kept in sync with the résumé PDF
 
 ## Structure
@@ -18,6 +18,7 @@ index.html          Single-page site (HTML, inline CSS and JS)
 favicon.svg         Site icon
 images/             Photos and the link-preview card (og-card.png)
 resume/             Current résumé PDF (one file only)
+projects/           Live prototypes (projects/athleteload/)
 robots.txt          Crawler rules
 sitemap.xml         Pages for search engines
 ```
