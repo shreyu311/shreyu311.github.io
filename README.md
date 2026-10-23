@@ -1,9 +1,9 @@
 # Shreyas Shirke — Portfolio
 
-Personal portfolio for **Shreyas Shirke**, Business Analyst · Project Operations · M.S. Project Management at Northeastern University (Dec 2026), Boston, MA.
+Personal portfolio for **Shreyas Shirke**, Project Coordinator · Business Analyst · M.S. Project Management at Northeastern University (Dec 2026), Boston, MA.
 
 **Live site:** https://shreyu311.github.io
-**Résumé:** [Shreyas_Shirke_Resume.pdf](./resume/Shreyas_Shirke_Resume.pdf?v=20261011)
+**Résumé:** [Shreyas_Shirke_Resume.pdf](./resume/Shreyas_Shirke_Resume.pdf?v=20261023)
 
 ## What's on the site
 
