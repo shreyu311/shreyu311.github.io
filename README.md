@@ -3,11 +3,11 @@
 Personal portfolio for **Shreyas Shirke**, Project Coordinator · Business Analyst · M.S. Project Management at Northeastern University (Dec 2026), Boston, MA.
 
 **Live site:** https://shreyu311.github.io
-**Résumé:** [Shreyas_Shirke_Resume.pdf](./resume/Shreyas_Shirke_Resume.pdf?v=20261023)
+**Résumé:** [Shreyas_Shirke_Resume.pdf](./resume/Shreyas_Shirke_Resume.pdf?v=20261116)
 
 ## What's on the site
 
-- **Selected work:** UI/UX Guidelines & Design System, Portfolio Report Agent (Actuals vs Forecast automation), and an IT-transformation capstone (with the AthleteLoad prototype linked from the UI/UX project)
+- **Selected work:** UI/UX Guidelines & Design System, Portfolio Report Agent (Actuals vs Forecast automation), the Value Realization & Benefits Management capstone (Ardelyx case), and a Requirements Analysis project (Nike case), with the AthleteLoad prototype linked from the UI/UX project
 - **Experience, education & skills:** kept in sync with the résumé PDF
 
 ## Structure
